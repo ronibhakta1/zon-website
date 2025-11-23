@@ -18,6 +18,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "ZON - Zero Overhead Notation",
   description: "A human-readable, efficient data format for the modern web.",
+  icons: {
+    icon: '/logo.png',
+  },
 };
 
 export default function RootLayout({

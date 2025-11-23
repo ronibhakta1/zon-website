@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://zon-format.github.io/sitemap.xml
