@@ -10,6 +10,7 @@ import { CodeBlock } from "@/components/ui/code-block"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { cn } from "@/lib/utils"
 
 const features = [
   {
@@ -77,12 +78,12 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
                 v1.0 Entropy Engine
               </Badge>
             </motion.div>
-            <motion.h1 variants={fadeInUp} className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-primary mb-6 sm:mb-8 leading-[0.95]">
-              Compression <br className="hidden sm:block" />
-              for LLMs
+            <motion.h1 variants={fadeInUp} className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-primary mb-4 sm:mb-6 leading-[0.95]">
+              <span className="text-primary">ZON</span> <br className="hidden sm:inline" />
+              <span className="text-lg sm:text-xl md:text-5xl font-medium text-muted-foreground">Zero Overhead Notation</span>
             </motion.h1>
             <motion.p variants={fadeInUp} className="max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed font-medium px-4">
-              Human-readable data format optimized for LLM token efficiency. 30-42% compression while staying 100% readable.
+              A compressed, human-readable JSON-model format 30–42% leaner for LLMs without losing readability.
             </motion.p>
           </motion.div>
           <motion.div
@@ -103,7 +104,7 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
             </Link>
           </motion.div>
         </div>
-        
+
         {/* Grid Background */}
         <div className="absolute inset-0 -z-10 h-full w-full bg-background bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]">
           <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-primary/5 opacity-20 blur-[100px]"></div>
@@ -111,9 +112,9 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
       </section>
 
       {/* Benchmarks Section - Moved up for visibility */}
-      <section className="py-12 sm:py-16 border-b border-border/40 bg-secondary/10">
+      <section id="benchmarks" className="py-12 sm:py-16 border-b border-border/40 bg-secondary/10">
         <div className="container mx-auto max-w-5xl px-4">
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -128,10 +129,10 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
               Real-world compression across diverse datasets
             </p>
           </motion.div>
-          
+
           <div className="grid sm:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-10">
             {/* Standard Datasets */}
-            <motion.div 
+            <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
@@ -179,7 +180,7 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
             </motion.div>
 
             {/* Real-World Data */}
-            <motion.div 
+            <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
@@ -227,12 +228,77 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
             </motion.div>
           </div>
 
-          <motion.div 
+          {/* Format Comparison */}
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeInUp}
-            className="text-center"
+            className="mt-12 sm:mt-16"
+          >
+            <h3 className="text-lg sm:text-xl font-semibold mb-6 text-center">Token Efficiency Comparison</h3>
+            <Card className="bg-background/50 backdrop-blur border-border/50">
+              <CardContent className="p-4 sm:p-6">
+                <div className="space-y-4">
+                  {[
+                    { name: "ZON", score: 31.2, accuracy: "76.0%", tokens: 2544, color: "from-primary to-primary/80", highlight: true },
+                    { name: "TOON", score: 26.9, accuracy: "73.9%", tokens: 2744, color: "from-purple-500 to-purple-600" },
+                    { name: "JSON compact", score: 22.9, accuracy: "70.7%", tokens: 3081, color: "from-blue-500 to-blue-600" },
+                    { name: "YAML", score: 18.6, accuracy: "69.0%", tokens: 3719, color: "from-orange-500 to-orange-600" },
+                    { name: "JSON", score: 15.3, accuracy: "69.7%", tokens: 4545, color: "from-gray-500 to-gray-600" },
+                    { name: "XML", score: 13.0, accuracy: "67.1%", tokens: 5167, color: "from-red-500 to-red-600" },
+                  ].map((format, i) => (
+                    <motion.div
+                      key={format.name}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: i * 0.1 }}
+                      className={cn(
+                        "flex items-center gap-3 sm:gap-4",
+                        format.highlight && "px-2 py-1 -mx-2 rounded-lg bg-primary/5"
+                      )}
+                    >
+                      <div className="w-20 sm:w-24 text-xs sm:text-sm font-mono font-medium text-foreground flex items-center gap-1">
+                        {format.name}
+                        {format.highlight && <span className="text-xs text-primary">★</span>}
+                      </div>
+                      <div className="flex-1 flex items-center gap-2">
+                        <div className="flex-1 h-6 sm:h-7 bg-secondary/30 rounded-full overflow-hidden">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            whileInView={{ width: `${(format.score / 31.2) * 100}%` }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 1, delay: i * 0.1, ease: "easeOut" }}
+                            className={cn(
+                              "h-full bg-gradient-to-r rounded-full flex items-center justify-end pr-2",
+                              `bg-gradient-to-r ${format.color}`
+                            )}
+                          >
+                            <span className="text-xs font-bold text-white">{format.score}</span>
+                          </motion.div>
+                        </div>
+                        <div className="hidden sm:flex items-center gap-2 sm:gap-4 text-xs text-muted-foreground font-mono">
+                          <span className="w-16">{format.accuracy} acc</span>
+                          <span className="w-20">{format.tokens.toLocaleString()} tokens</span>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+                <div className="mt-4 text-xs text-muted-foreground text-center">
+                  Higher score = better compression × accuracy on GPT-4
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="text-center mt-8 sm:mt-12"
           >
             <div className="inline-flex flex-col sm:flex-row items-center gap-3 sm:gap-4 rounded-lg bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 px-4 py-3">
               <div className="flex items-center gap-2">
@@ -256,7 +322,7 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
       <section className="py-16 sm:py-20 md:py-24 border-b border-border/40 bg-secondary/20">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="grid gap-8 sm:gap-12 lg:grid-cols-2 items-center">
-            <motion.div 
+            <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
@@ -271,8 +337,8 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
               </motion.p>
               <ul className="space-y-3 sm:space-y-4 mt-6 sm:mt-8">
                 {["Native Python support", "Optimized for token efficiency", "Human-readable format", "Type-safe serialization"].map((item, i) => (
-                  <motion.li 
-                    key={item} 
+                  <motion.li
+                    key={item}
                     variants={fadeInUp}
                     custom={i}
                     className="flex items-center gap-3"
@@ -285,7 +351,7 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
                 ))}
               </ul>
             </motion.div>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
@@ -301,11 +367,11 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
                   <div className="ml-2 text-xs text-muted-foreground font-medium">quick_start.py</div>
                 </div>
                 <div className="overflow-x-auto">
-                  <CodeBlock 
-                    code={quickStartCode || "# Loading example..."} 
-                    language="python" 
-                    filename="quick_start.py" 
-                    className="border-0 rounded-none bg-transparent text-xs sm:text-sm" 
+                  <CodeBlock
+                    code={quickStartCode || "# Loading example..."}
+                    language="python"
+                    filename="quick_start.py"
+                    className="border-0 rounded-none bg-transparent text-xs sm:text-sm"
                     hideHeader={true}
                   />
                 </div>
@@ -318,7 +384,7 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
       {/* Features Section */}
       <section className="py-24 border-b border-border/40">
         <div className="container mx-auto max-w-6xl px-4">
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -332,7 +398,7 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
               Built for performance, designed for developer happiness.
             </p>
           </motion.div>
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -364,7 +430,7 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
       {/* Code Examples with Tabs */}
       <section className="py-24 border-b border-border/40">
         <div className="container mx-auto max-w-5xl px-4">
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -391,17 +457,17 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
                 <TabsTrigger value="basic">Basic Encoding</TabsTrigger>
                 <TabsTrigger value="advanced">Advanced Usage</TabsTrigger>
               </TabsList>
-              
+
               <TabsContent value="basic" className="space-y-4">
-                <CodeBlock 
+                <CodeBlock
                   code={basicEncodingCode || "# Loading example..."}
                   language="python"
                   filename="basic_encoding.py"
                 />
               </TabsContent>
-              
+
               <TabsContent value="advanced" className="space-y-4">
-                <CodeBlock 
+                <CodeBlock
                   code={advancedUsageCode || "# Loading example..."}
                   language="python"
                   filename="advanced_usage.py"
@@ -415,7 +481,7 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
       {/* FAQ Section with Accordion */}
       <section className="py-24 border-b border-border/40 bg-secondary/20">
         <div className="container mx-auto max-w-3xl px-4">
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -442,47 +508,47 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
                   Is ZON compatible with existing JSON workflows?
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground">
-                  Yes! ZON is designed to be a drop-in replacement for JSON in many Python workflows. 
+                  Yes! ZON is designed to be a drop-in replacement for JSON in many Python workflows.
                   It maps directly to Python dictionaries and lists, making integration seamless.
                 </AccordionContent>
               </AccordionItem>
-              
+
               <AccordionItem value="item-2">
                 <AccordionTrigger className="text-left">
                   How do I install ZON?
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground">
-                  Simply run <code className="bg-secondary px-2 py-0.5 rounded">pip install zon-format</code>. 
+                  Simply run <code className="bg-secondary px-2 py-0.5 rounded">pip install zon-format</code>.
                   It requires Python 3.8 or higher.
                 </AccordionContent>
               </AccordionItem>
-              
+
               <AccordionItem value="item-3">
                 <AccordionTrigger className="text-left">
                   Does ZON support other languages?
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground">
-                  Currently, ZON is optimized for Python, but the format specification is open and language-agnostic. 
+                  Currently, ZON is optimized for Python, but the format specification is open and language-agnostic.
                   Community drivers for other languages are welcome!
                 </AccordionContent>
               </AccordionItem>
-              
+
               <AccordionItem value="item-4">
                 <AccordionTrigger className="text-left">
                   Why use ZON for LLMs?
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground">
-                  ZON significantly reduces token usage compared to JSON (30-40% reduction), which directly translates 
+                  ZON significantly reduces token usage compared to JSON (30-40% reduction), which directly translates
                   to lower API costs and faster inference times for Large Language Models.
                 </AccordionContent>
               </AccordionItem>
-              
+
               <AccordionItem value="item-5">
                 <AccordionTrigger className="text-left">
                   Can I use ZON in production?
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground">
-                  Yes! ZON v1.0 is stable and production-ready. It&apos;s battle-tested, follows semantic versioning, 
+                  Yes! ZON v1.0 is stable and production-ready. It&apos;s battle-tested, follows semantic versioning,
                   and has comprehensive test coverage.
                 </AccordionContent>
               </AccordionItem>
@@ -494,7 +560,7 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
       {/* CTA Section */}
       <section className="py-24 border-t border-border/40 bg-background">
         <div className="container mx-auto max-w-4xl px-4 text-center">
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
