@@ -2,10 +2,11 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Search, Menu } from "lucide-react"
+import { Menu } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet"
+import { SearchDialog } from "@/components/search-dialog"
 import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { cn } from "@/lib/utils"
 
 interface DocsLayoutProps {
@@ -14,12 +15,14 @@ interface DocsLayoutProps {
 
 const sidebarLinks = [
   { title: "Introduction", href: "/docs" },
-  { title: "Installation", href: "/docs#installation" },
-  { title: "Quick Start", href: "/docs#quick-start" },
-  { title: "Basic Encoding", href: "/docs#basic-encoding" },
-  { title: "Advanced Usage", href: "/docs#advanced-usage" },
-  { title: "API Reference", href: "/docs#api-reference" },
-  { title: "Benchmarks", href: "/docs#benchmark-results" },
+  { title: "What is ZON?", href: "/docs#-what-is-zon" },
+  { title: "Installation", href: "/docs#-installation" },
+  { title: "Quick Start", href: "/docs#-quick-start" },
+  { title: "Beginner Tutorial", href: "/docs#-beginner-tutorial" },
+  { title: "Advanced Usage", href: "/docs#-advanced-usage" },
+  { title: "API Reference", href: "/docs#-api-reference" },
+  { title: "Benchmarks", href: "/docs#-benchmark-results" },
+  { title: "Best Practices", href: "/docs#-best-practices" },
   { title: "Spec", href: "/docs/spec" },
   { title: "Contributing", href: "/docs/contributing" },
 ]
@@ -70,13 +73,7 @@ export default function DocsLayout({ children }: DocsLayoutProps) {
       <aside className="fixed top-14 z-30 hidden h-[calc(100vh-3.5rem)] w-full shrink-0 md:sticky md:block md:w-64 border-r border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="h-full py-6 pl-8 pr-6 lg:py-8">
           <div className="mb-6">
-            <Button variant="outline" className="w-full justify-start text-muted-foreground h-9 px-4 shadow-none bg-muted/50 hover:bg-muted/80 hover:text-foreground transition-colors">
-              <Search className="mr-2 h-4 w-4" />
-              Search docs...
-              <kbd className="pointer-events-none absolute right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
-                <span className="text-xs">⌘</span>K
-              </kbd>
-            </Button>
+            <SearchDialog />
           </div>
           <ScrollArea className="h-full pr-6">
             <div className="flex flex-col space-y-1">
