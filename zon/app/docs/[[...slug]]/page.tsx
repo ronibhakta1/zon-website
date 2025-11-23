@@ -17,7 +17,7 @@ export default async function DocPage({ params }: DocPageProps) {
   }
 
   return (
-    <article className="prose prose-zinc dark:prose-invert max-w-none">
+    <article className="prose prose-neutral dark:prose-invert max-w-none prose-headings:font-bold prose-headings:text-foreground prose-p:text-foreground prose-li:text-foreground prose-strong:text-foreground prose-h1:text-4xl prose-h1:tracking-tight prose-a:text-primary prose-code:text-primary prose-code:bg-muted/50 prose-code:px-1 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none">
       <h1>{doc.title}</h1>
       {doc.content}
     </article>

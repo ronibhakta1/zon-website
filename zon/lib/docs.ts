@@ -1,4 +1,5 @@
 import { compileMDX } from "next-mdx-remote/rsc"
+import rehypeSlug from "rehype-slug"
 import { docsMap } from "./docs-config"
 
 const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/ZON-Format/ZON/main'
@@ -31,7 +32,12 @@ export async function getDocContent(slug: string) {
 
   const { content, frontmatter } = await compileMDX({
     source,
-    options: { parseFrontmatter: true },
+    options: { 
+      parseFrontmatter: true,
+      mdxOptions: {
+        rehypePlugins: [rehypeSlug]
+      }
+    },
     components: {
         // Add custom components here if needed
     }

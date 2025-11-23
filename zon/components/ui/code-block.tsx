@@ -4,12 +4,14 @@ interface CodeBlockProps extends React.HTMLAttributes<HTMLDivElement> {
   code: string
   language?: string
   filename?: string
+  hideHeader?: boolean
 }
 
 export function CodeBlock({
   code,
   filename,
   className,
+  hideHeader = false,
   ...props
 }: CodeBlockProps) {
   return (
@@ -20,7 +22,7 @@ export function CodeBlock({
       )}
       {...props}
     >
-      {filename && (
+      {filename && !hideHeader && (
         <div className="flex items-center border-b bg-muted px-4 py-2 text-xs text-muted-foreground">
           {filename}
         </div>
