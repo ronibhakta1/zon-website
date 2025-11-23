@@ -111,6 +111,148 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
         </div>
       </section>
 
+      {/* Benchmarks Section - Moved up for visibility */}
+      <section className="py-12 sm:py-16 border-b border-border/40 bg-secondary/10">
+        <div className="container mx-auto max-w-5xl px-4">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="text-center mb-8 sm:mb-10"
+          >
+            <Badge variant="secondary" className="mb-2 text-xs">Performance</Badge>
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight mb-2">
+              Proven Token Savings
+            </h2>
+            <p className="text-sm sm:text-base text-muted-foreground max-w-xl mx-auto px-4">
+              Real-world compression across diverse datasets
+            </p>
+          </motion.div>
+          
+          <div className="grid sm:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-10">
+            {/* Standard Datasets */}
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={staggerContainer}
+              className="space-y-3 sm:space-y-4"
+            >
+              <div className="flex items-center justify-between mb-3 sm:mb-4">
+                <h3 className="text-sm sm:text-base font-semibold">Standard Datasets</h3>
+                <div className="text-xs text-muted-foreground">vs JSON</div>
+              </div>
+              <div className="space-y-2.5 sm:space-y-3">
+                {[
+                  { name: "employees.json", reduction: 63.1, color: "from-emerald-500 to-green-600" },
+                  { name: "orders.json", reduction: 30.3, color: "from-blue-500 to-cyan-600" },
+                  { name: "complex_nested.json", reduction: 76.0, color: "from-purple-500 to-pink-600" },
+                ].map((bench, i) => (
+                  <motion.div key={i} variants={fadeInUp}>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <div className="text-xs sm:text-sm font-medium text-foreground truncate pr-2">{bench.name}</div>
+                      <div className="text-base sm:text-lg font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent whitespace-nowrap">
+                        {bench.reduction}%
+                      </div>
+                    </div>
+                    <div className="relative h-2 bg-secondary/50 rounded-full overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${bench.reduction}%` }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1, delay: i * 0.08, ease: "easeOut" }}
+                        className={`h-full bg-gradient-to-r ${bench.color}`}
+                        style={{
+                          backgroundImage: `repeating-linear-gradient(
+                            45deg,
+                            transparent,
+                            transparent 8px,
+                            rgba(255,255,255,0.15) 8px,
+                            rgba(255,255,255,0.15) 16px
+                          )`
+                        }}
+                      />
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Real-World Data */}
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={staggerContainer}
+              className="space-y-3 sm:space-y-4"
+            >
+              <div className="flex items-center justify-between mb-3 sm:mb-4">
+                <h3 className="text-sm sm:text-base font-semibold">Real-World API Data</h3>
+                <div className="text-xs text-muted-foreground">vs JSON</div>
+              </div>
+              <div className="space-y-2.5 sm:space-y-3">
+                {[
+                  { name: "Random Users API", reduction: 42.4, color: "from-orange-500 to-red-600" },
+                  { name: "StackOverflow Q&A", reduction: 42.4, color: "from-amber-500 to-orange-600" },
+                  { name: "GitHub Repos", reduction: 33.9, color: "from-violet-500 to-purple-600" },
+                ].map((bench, i) => (
+                  <motion.div key={i} variants={fadeInUp}>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <div className="text-xs sm:text-sm font-medium text-foreground truncate pr-2">{bench.name}</div>
+                      <div className="text-base sm:text-lg font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent whitespace-nowrap">
+                        {bench.reduction}%
+                      </div>
+                    </div>
+                    <div className="relative h-2 bg-secondary/50 rounded-full overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${bench.reduction}%` }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1, delay: i * 0.08, ease: "easeOut" }}
+                        className={`h-full bg-gradient-to-r ${bench.color}`}
+                        style={{
+                          backgroundImage: `repeating-linear-gradient(
+                            45deg,
+                            transparent,
+                            transparent 8px,
+                            rgba(255,255,255,0.15) 8px,
+                            rgba(255,255,255,0.15) 16px
+                          )`
+                        }}
+                      />
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+            className="text-center"
+          >
+            <div className="inline-flex flex-col sm:flex-row items-center gap-3 sm:gap-4 rounded-lg bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 px-4 py-3">
+              <div className="flex items-center gap-2">
+                <Zap className="h-4 w-4 text-primary flex-shrink-0" />
+                <div className="text-left">
+                  <div className="text-xs font-medium text-muted-foreground">Average</div>
+                  <div className="text-sm sm:text-base font-bold text-primary whitespace-nowrap">30.5% smaller</div>
+                </div>
+              </div>
+              <div className="hidden sm:block h-8 w-px bg-border/50" />
+              <div className="text-left">
+                <div className="text-xs font-medium text-muted-foreground">vs TOON</div>
+                <div className="text-sm sm:text-base font-bold text-green-600 whitespace-nowrap">+24.1% better</div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Comparison Section - Now showing Python usage */}
       <section className="py-24 border-b border-border/40 bg-secondary/20">
         <div className="container mx-auto max-w-6xl px-4">
@@ -217,106 +359,6 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
         </div>
       </section>
 
-      {/* Benchmarks Section */}
-      <section className="py-24 border-b border-border/40 bg-secondary/20">
-        <div className="container mx-auto max-w-6xl px-4">
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeInUp}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
-              Performance Benchmarks
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              Proven efficiency gains over standard JSON
-            </p>
-          </motion.div>
-          
-          <div className="grid gap-8 lg:grid-cols-2">
-            {/* Standard Datasets */}
-            <motion.div 
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={staggerContainer}
-              className="space-y-6"
-            >
-              <h3 className="text-xl font-semibold mb-4">Standard Datasets</h3>
-              <div className="space-y-4">
-                {[
-                  { name: "employees.json", size: "20 records", reduction: "63.1%", vsToon: "+9.7%" },
-                  { name: "orders.json", size: "50 records", reduction: "30.3%", vsToon: "+2.7%" },
-                  { name: "complex_nested.json", size: "1000 records", reduction: "76.0%", vsToon: "+76.6%" },
-                ].map((bench, i) => (
-                  <motion.div key={i} variants={fadeInUp}>
-                    <Card className="bg-background border-border/50">
-                      <CardContent className="p-4 flex items-center justify-between">
-                        <div>
-                          <div className="font-medium">{bench.name}</div>
-                          <div className="text-sm text-muted-foreground">{bench.size}</div>
-                        </div>
-                        <div className="text-right">
-                          <div className="text-lg font-bold text-green-600 dark:text-green-400">{bench.reduction}</div>
-                          <div className="text-xs text-muted-foreground">reduction vs JSON</div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Real-World Data */}
-            <motion.div 
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={staggerContainer}
-              className="space-y-6"
-            >
-              <h3 className="text-xl font-semibold mb-4">Real-World API Data</h3>
-              <div className="space-y-4">
-                {[
-                  { name: "Random Users API", size: "50 records", reduction: "42.4%", vsToon: "+40.4%" },
-                  { name: "StackOverflow Q&A", size: "50 records", reduction: "42.4%", vsToon: "+40.4%" },
-                  { name: "GitHub Repos", size: "8 records", reduction: "33.9%", vsToon: "+32.8%" },
-                ].map((bench, i) => (
-                  <motion.div key={i} variants={fadeInUp}>
-                    <Card className="bg-background border-border/50">
-                      <CardContent className="p-4 flex items-center justify-between">
-                        <div>
-                          <div className="font-medium">{bench.name}</div>
-                          <div className="text-sm text-muted-foreground">{bench.size}</div>
-                        </div>
-                        <div className="text-right">
-                          <div className="text-lg font-bold text-green-600 dark:text-green-400">{bench.reduction}</div>
-                          <div className="text-xs text-muted-foreground">reduction vs JSON</div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeInUp}
-            className="mt-12 text-center"
-          >
-            <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
-              <Zap className="h-4 w-4" />
-              <span>Average Performance: 30.5% compression, +24.1% better than TOON</span>
-            </div>
-          </motion.div>
-        </div>
-      </section>
 
       {/* Code Examples with Tabs */}
       <section className="py-24 border-b border-border/40">
