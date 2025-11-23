@@ -63,7 +63,7 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
   return (
     <div className="flex flex-col min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-24 md:py-32 lg:py-40 border-b border-border/40">
+      <section className="relative overflow-hidden py-16 sm:py-20 md:py-24 lg:py-32 border-b border-border/40">
         <div className="container mx-auto max-w-6xl px-4 relative z-10 flex flex-col items-center text-center">
           <motion.div
             initial="hidden"
@@ -71,26 +71,25 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
             variants={staggerContainer}
             className="max-w-4xl"
           >
-            <motion.div variants={fadeInUp} className="mb-8 flex justify-center">
-              <Badge variant="secondary" className="px-4 py-2 text-sm font-medium rounded-full border border-border/50 bg-secondary/50 backdrop-blur-sm">
+            <motion.div variants={fadeInUp} className="mb-6 sm:mb-8 flex justify-center">
+              <Badge variant="secondary" className="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-full border border-border/50 bg-secondary/50 backdrop-blur-sm">
                 <span className="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"></span>
-                v1.0 is now available
+                v1.0 Entropy Engine
               </Badge>
             </motion.div>
-            <motion.h1 variants={fadeInUp} className="text-6xl font-bold tracking-tighter sm:text-7xl md:text-8xl text-primary mb-8 leading-[0.9]">
-              The better way to <br className="hidden sm:block" />
-              structure your data
+            <motion.h1 variants={fadeInUp} className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-primary mb-6 sm:mb-8 leading-[0.95]">
+              Compression <br className="hidden sm:block" />
+              for LLMs
             </motion.h1>
-            <motion.p variants={fadeInUp} className="max-w-2xl mx-auto text-xl text-muted-foreground leading-relaxed font-medium">
-              ZON is a human-readable, efficient data format designed for the modern web and LLMs.
-              Zero overhead. Zero fatigue.
+            <motion.p variants={fadeInUp} className="max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed font-medium px-4">
+              Human-readable data format optimized for LLM token efficiency. 30-42% compression while staying 100% readable.
             </motion.p>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.4, ease: "easeOut" }}
-            className="mt-10 flex flex-col sm:flex-row gap-4"
+            className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4"
           >
             <Link href="/docs">
               <Button size="lg" className="h-14 px-10 text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5">
@@ -254,23 +253,23 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
       </section>
 
       {/* Comparison Section - Now showing Python usage */}
-      <section className="py-24 border-b border-border/40 bg-secondary/20">
+      <section className="py-16 sm:py-20 md:py-24 border-b border-border/40 bg-secondary/20">
         <div className="container mx-auto max-w-6xl px-4">
-          <div className="grid gap-12 lg:grid-cols-2 items-center">
+          <div className="grid gap-8 sm:gap-12 lg:grid-cols-2 items-center">
             <motion.div 
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
               variants={staggerContainer}
-              className="space-y-6"
+              className="space-y-4 sm:space-y-6"
             >
-              <motion.h2 variants={fadeInUp} className="text-3xl font-bold tracking-tight sm:text-4xl">
+              <motion.h2 variants={fadeInUp} className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
                 Python Native. LLM Optimized.
               </motion.h2>
-              <motion.p variants={fadeInUp} className="text-muted-foreground text-lg leading-relaxed">
+              <motion.p variants={fadeInUp} className="text-muted-foreground text-base sm:text-lg leading-relaxed">
                 ZON is built for the Python ecosystem. It integrates seamlessly with your existing data pipelines and LLM workflows.
               </motion.p>
-              <ul className="space-y-4 mt-8">
+              <ul className="space-y-3 sm:space-y-4 mt-6 sm:mt-8">
                 {["Native Python support", "Optimized for token efficiency", "Human-readable format", "Type-safe serialization"].map((item, i) => (
                   <motion.li 
                     key={item} 
@@ -278,10 +277,10 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
                     custom={i}
                     className="flex items-center gap-3"
                   >
-                    <div className="h-6 w-6 rounded-full bg-primary flex items-center justify-center">
-                      <Check className="h-3.5 w-3.5 text-primary-foreground" />
+                    <div className="h-5 w-5 sm:h-6 sm:w-6 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
+                      <Check className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-primary-foreground" />
                     </div>
-                    <span className="font-medium">{item}</span>
+                    <span className="font-medium text-sm sm:text-base">{item}</span>
                   </motion.li>
                 ))}
               </ul>
@@ -291,23 +290,25 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="relative group mx-auto max-w-5xl mt-8 lg:mt-0"
+              className="relative group w-full max-w-full mt-8 lg:mt-0 overflow-hidden"
             >
               <div className="absolute -inset-1 bg-gradient-to-r from-gray-200 to-gray-100 rounded-2xl blur opacity-20 transition duration-1000 group-hover:opacity-40"></div>
               <div className="relative rounded-xl border border-border/50 bg-card shadow-2xl overflow-hidden transform transition-transform duration-500 hover:scale-[1.01]">
-                <div className="flex items-center gap-2 px-4 py-3 border-b border-border/50 bg-muted/30">
-                  <div className="h-3 w-3 rounded-full bg-[#FF5F56]"></div>
-                  <div className="h-3 w-3 rounded-full bg-[#FFBD2E]"></div>
-                  <div className="h-3 w-3 rounded-full bg-[#27C93F]"></div>
+                <div className="flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-3 border-b border-border/50 bg-muted/30">
+                  <div className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-[#FF5F56]"></div>
+                  <div className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-[#FFBD2E]"></div>
+                  <div className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-[#27C93F]"></div>
                   <div className="ml-2 text-xs text-muted-foreground font-medium">quick_start.py</div>
                 </div>
-                <CodeBlock 
-                  code={quickStartCode || "# Loading example..."} 
-                  language="python" 
-                  filename="quick_start.py" 
-                  className="border-0 rounded-none bg-transparent" 
-                  hideHeader={true}
-                />
+                <div className="overflow-x-auto">
+                  <CodeBlock 
+                    code={quickStartCode || "# Loading example..."} 
+                    language="python" 
+                    filename="quick_start.py" 
+                    className="border-0 rounded-none bg-transparent text-xs sm:text-sm" 
+                    hideHeader={true}
+                  />
+                </div>
               </div>
             </motion.div>
           </div>
