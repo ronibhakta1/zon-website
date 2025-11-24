@@ -12,7 +12,7 @@ export async function getDocBySlug(slug: string): Promise<string | null> {
 
   try {
     const response = await fetch(`${GITHUB_RAW_BASE}/${filename}`, {
-      next: { revalidate: 0 } // No cache for fresh docs
+      next: { revalidate: 3600 } // Revalidate every 1 hour
     })
     
     if (!response.ok) return null
