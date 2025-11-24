@@ -56,6 +56,9 @@
   --ring: #111111;
   
   --radius: 0.5rem;
+  /* Code color variables */
+  --code-color: #0f172a; /* deep slate for code text in light mode */
+  --code-bg-tint: color-mix(in srgb, var(--muted) 8%, transparent);
 }
 
 .dark {
@@ -86,6 +89,8 @@
   --border: #374151; /* Gray 700 */
   --input: #374151;
   --ring: #d1d5db; /* Gray 300 */
+  --code-color: #93c5fd; /* soft sky blue for code in dark mode */
+  --code-bg-tint: color-mix(in srgb, var(--muted) 6%, transparent);
 }
 
 @layer base {
@@ -126,3 +131,115 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.2;
   letter-spacing: -0.02em;
 }
+
+/* Improve MDX prose tables and pre/code readability */
+.prose :where(table):not(:where([class~="not-prose"] *)) {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.prose :where(th, td):not(:where([class~="not-prose"] *)) {
+  border: 1px solid var(--border);
+  padding: 0.75rem 1rem;
+  text-align: left;
+  vertical-align: top;
+  /* Default table cell text: use full foreground for stronger contrast */
+  color: var(--foreground);
+}
+.prose :where(thead):not(:where([class~="not-prose"] *)) {
+  background: var(--muted);
+}
+.prose :where(thead th):not(:where([class~="not-prose"] *)) {
+  color: var(--foreground);
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
+  border-bottom: 2px solid var(--border);
+}
+.prose :where(tbody tr):not(:where([class~="not-prose"] *)) {
+  border-bottom: 1px solid var(--border);
+  transition: background-color 0.15s ease;
+}
+.prose :where(tbody tr:last-child):not(:where([class~="not-prose"] *)) {
+  border-bottom: none;
+}
+.prose :where(tbody tr:nth-child(even)):not(:where([class~="not-prose"] *)) {
+  background: color-mix(in srgb, var(--muted) 8%, transparent);
+}
+.prose :where(tbody tr:hover):not(:where([class~="not-prose"] *)) {
+  background: color-mix(in srgb, var(--muted) 20%, transparent);
+}
+.prose :where(tbody td):not(:where([class~="not-prose"] *)) {
+  font-size: 0.9375rem;
+  /* Body cells use full foreground color for stronger contrast */
+  color: var(--foreground);
+}
+/* Wrapper for responsive tables */
+.prose :where(div:has(> table)):not(:where([class~="not-prose"] *)) {
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+/* Make pre/code in prose more distinct and readable */
+.prose pre {
+  background: color-mix(in srgb, var(--muted) 40%, var(--card));
+  border: 1px solid var(--border);
+  padding: 1.25rem;
+  border-radius: 0.5rem;
+  overflow: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono", "Courier New", monospace;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+  margin: 1.5rem 0;
+}
+.prose pre code {
+  background: transparent;
+  padding: 0;
+  color: var(--foreground);
+  font-weight: 400;
+  text-shadow: none;
+}
+.prose code {
+  background: color-mix(in srgb, var(--muted) 50%, transparent);
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.3rem;
+  font-size: 0.875em;
+  border: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono", "Courier New", monospace;
+  font-weight: 500;
+}
+
+/* Basic styles for rehype-highlight (adds .hljs classes) */
+.hljs {
+  background: transparent;
+  color: inherit;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono", "Courier New", monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.hljs-comment,
+.hljs-quote {
+  color: var(--muted-foreground);
+  font-style: italic;
+}
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+  color: #7c3aed;
+  font-weight: 600;
+}
+.hljs-string,
+.hljs-title,
+.hljs-name,
+.hljs-type {
+  color: #059669;
+}
+.hljs-number,
+.hljs-meta {
+  color: #d97706;
+}
+

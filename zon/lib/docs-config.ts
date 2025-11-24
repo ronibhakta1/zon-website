@@ -1,16 +1,44 @@
 export const docsMap: Record<string, string> = {
   "index": "README.md",
-  "spec": "SPEC.md",
   "changelog": "CHANGELOG.md",
   "contributing": "CONTRIBUTING.md",
-  "edge-cases": "EDGE_CASES.md",
-  "publishing": "PUBLISHING.md",
-  "qa-report": "QA_REPORT.md",
 }
 
-export function getDocsNav() {
-  return Object.keys(docsMap).map(slug => ({
-    title: slug === "index" ? "Introduction" : slug.charAt(0).toUpperCase() + slug.slice(1).replace("-", " "),
-    href: slug === "index" ? "/docs" : `/docs/${slug}`
-  }))
+export interface NavItem {
+  title: string
+  href: string
+}
+
+export interface NavSection {
+  title?: string
+  items: NavItem[]
+}
+
+export function getDocsNav(): NavSection[] {
+  return [
+    {
+      title: "Getting Started",
+      items: [
+        { title: "Introduction", href: "/docs" },
+        { title: "What is ZON?", href: "/docs#-what-is-zon" },
+        { title: "Quick Start", href: "/docs#-quick-start" },
+        { title: "Installation", href: "/docs#-installation" },
+      ]
+    },
+    {
+      title: "Features",
+      items: [
+        { title: "LLM Framework Integration", href: "/docs#-llm-framework-integration" },
+        { title: "Benchmark Results", href: "/docs#-benchmark-results" },
+        { title: "API Reference", href: "/docs#-api-reference" },
+      ]
+    },
+    {
+      title: "Resources",
+      items: [
+        { title: "Changelog", href: "/docs/changelog" },
+        { title: "Contributing", href: "/docs/contributing" },
+      ]
+    }
+  ]
 }

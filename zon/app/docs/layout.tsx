@@ -8,27 +8,21 @@ import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/s
 import { SearchDialog } from "@/components/search-dialog"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { getDocsNav } from "@/lib/docs-config"
 
 interface DocsLayoutProps {
   children: React.ReactNode
 }
 
-const sidebarLinks = [
-  { title: "Introduction", href: "/docs" },
-  { title: "What is ZON?", href: "/docs#-what-is-zon" },
-  { title: "Installation", href: "/docs#-installation" },
-  { title: "Quick Start", href: "/docs#-quick-start" },
-  { title: "Beginner Tutorial", href: "/docs#-beginner-tutorial" },
-  { title: "Advanced Usage", href: "/docs#-advanced-usage" },
-  { title: "API Reference", href: "/docs#-api-reference" },
-  { title: "Benchmarks", href: "/docs#-benchmark-results" },
-  { title: "Best Practices", href: "/docs#-best-practices" },
-  { title: "Spec", href: "/docs/spec" },
-  { title: "Contributing", href: "/docs/contributing" },
-]
+// Flatten navigation sections into a single array for the layout
+function getFlattenedNav() {
+  const sections = getDocsNav()
+  return sections.flatMap(section => section.items)
+}
 
 export default function DocsLayout({ children }: DocsLayoutProps) {
   const pathname = usePathname()
+  const navSections = getDocsNav()
 
   return (
     <div className="flex min-h-screen flex-col md:flex-row bg-background">
@@ -48,19 +42,27 @@ export default function DocsLayout({ children }: DocsLayoutProps) {
               </Link>
             </div>
             <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
-              <div className="flex flex-col space-y-3">
-                <h4 className="font-medium">Documentation</h4>
-                {sidebarLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className={cn(
-                      "text-muted-foreground hover:text-foreground transition-colors",
-                      pathname === link.href && "text-foreground font-medium"
+              <div className="flex flex-col space-y-4">
+                {navSections.map((section, idx) => (
+                  <div key={idx} className="space-y-3">
+                    {section.title && (
+                      <h4 className="font-semibold text-sm">{section.title}</h4>
                     )}
-                  >
-                    {link.title}
-                  </Link>
+                    <div className="flex flex-col space-y-2">
+                      {section.items.map((link) => (
+                        <Link
+                          key={link.href}
+                          href={link.href}
+                          className={cn(
+                            "text-muted-foreground hover:text-foreground transition-colors text-sm",
+                            pathname === link.href && "text-foreground font-medium"
+                          )}
+                        >
+                          {link.title}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
                 ))}
               </div>
             </ScrollArea>
@@ -76,21 +78,29 @@ export default function DocsLayout({ children }: DocsLayoutProps) {
             <SearchDialog />
           </div>
           <ScrollArea className="h-full pr-6">
-            <div className="flex flex-col space-y-1">
-              <h4 className="mb-2 rounded-md px-2 py-1 text-sm font-semibold text-foreground">Getting Started</h4>
-              {sidebarLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={cn(
-                    "block rounded-md px-2 py-1.5 text-sm font-medium transition-colors",
-                    pathname === link.href 
-                      ? "bg-secondary text-foreground" 
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
+            <div className="flex flex-col space-y-4">
+              {navSections.map((section, idx) => (
+                <div key={idx}>
+                  {section.title && (
+                    <h4 className="mb-2 rounded-md px-2 py-1 text-sm font-semibold text-foreground">{section.title}</h4>
                   )}
-                >
-                  {link.title}
-                </Link>
+                  <div className="flex flex-col space-y-1">
+                    {section.items.map((link) => (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        className={cn(
+                          "block rounded-md px-2 py-1.5 text-sm font-medium transition-colors",
+                          pathname === link.href 
+                            ? "bg-secondary text-foreground" 
+                            : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                        )}
+                      >
+                        {link.title}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
           </ScrollArea>

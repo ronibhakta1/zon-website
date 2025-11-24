@@ -1,5 +1,7 @@
 import { compileMDX } from "next-mdx-remote/rsc"
 import rehypeSlug from "rehype-slug"
+import remarkGfm from "remark-gfm"
+import rehypeHighlight from "rehype-highlight"
 import { docsMap } from "./docs-config"
 
 const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/ZON-Format/ZON/main'
@@ -10,7 +12,7 @@ export async function getDocBySlug(slug: string): Promise<string | null> {
 
   try {
     const response = await fetch(`${GITHUB_RAW_BASE}/${filename}`, {
-      next: { revalidate: 3600 } // Cache for 1 hour
+      next: { revalidate: 0 } // No cache for fresh docs
     })
     
     if (!response.ok) return null
@@ -30,12 +32,20 @@ export async function getDocContent(slug: string) {
     return null
   }
 
+  // Clean common malformed table artifacts from remote README files.
+  // Some upstream READMEs may contain stray pipe-only lines which
+  // break GFM table parsing (e.g. a line that contains just "|\n").
+  // Remove lines that consist only of pipes and whitespace so tables
+  // parse correctly when using `remark-gfm`.
+  const cleanedSource = source.replace(/^\s*\|\s*$/gm, "")
+
   const { content, frontmatter } = await compileMDX({
-    source,
+    source: cleanedSource,
     options: { 
       parseFrontmatter: true,
       mdxOptions: {
-        rehypePlugins: [rehypeSlug]
+        remarkPlugins: [remarkGfm],
+        rehypePlugins: [rehypeSlug, rehypeHighlight]
       }
     },
     components: {

@@ -39,15 +39,6 @@ export function Navbar() {
             >
               Benchmarks
             </Link>
-            <Link
-              href="/docs/spec"
-              className={cn(
-                "transition-colors hover:text-primary",
-                "text-foreground/60"
-              )}
-            >
-              Spec
-            </Link>
           </nav>
         </div>
 

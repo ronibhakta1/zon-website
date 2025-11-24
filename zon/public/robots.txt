@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://zon-format.github.io/sitemap.xml
+Sitemap: https://zon.ronibhakta.in/sitemap.xml

@@ -41,7 +41,7 @@ const features = [
 
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } }
 }
 
 const staggerContainer: Variants = {
@@ -49,7 +49,8 @@ const staggerContainer: Variants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1
+      staggerChildren: 0.07,
+      delayChildren: 0.05
     }
   }
 }
@@ -71,6 +72,7 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
             animate="visible"
             variants={staggerContainer}
             className="max-w-4xl"
+            style={{ willChange: 'opacity, transform' }}
           >
             <motion.div variants={fadeInUp} className="mb-6 sm:mb-8 flex justify-center">
               <Badge variant="secondary" className="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-full border border-border/50 bg-secondary/50 backdrop-blur-sm">
@@ -89,8 +91,9 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.4, ease: "easeOut" }}
+            transition={{ duration: 0.4, delay: 0.3, ease: "easeOut" }}
             className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4"
+            style={{ willChange: 'opacity, transform' }}
           >
             <Link href="/docs">
               <Button size="lg" className="h-14 px-10 text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5">
@@ -117,7 +120,7 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.3 }}
             variants={fadeInUp}
             className="text-center mb-8 sm:mb-10"
           >
@@ -135,7 +138,7 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
             <motion.div
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.3 }}
               variants={staggerContainer}
               className="space-y-3 sm:space-y-4"
             >
@@ -145,9 +148,9 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
               </div>
               <div className="space-y-2.5 sm:space-y-3">
                 {[
-                  { name: "employees.json", reduction: 63.1, color: "from-emerald-500 to-green-600" },
-                  { name: "orders.json", reduction: 30.3, color: "from-blue-500 to-cyan-600" },
-                  { name: "complex_nested.json", reduction: 76.0, color: "from-purple-500 to-pink-600" },
+                  { name: "analytics.json", reduction: 63.6, color: "from-emerald-500 to-green-600" },
+                  { name: "employees.json", reduction: 56.9, color: "from-blue-500 to-cyan-600" },
+                  { name: "complex_nested.json", reduction: 22.2, color: "from-purple-500 to-pink-600" },
                 ].map((bench, i) => (
                   <motion.div key={i} variants={fadeInUp}>
                     <div className="flex items-center justify-between mb-1.5">
@@ -160,18 +163,9 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
                       <motion.div
                         initial={{ width: 0 }}
                         whileInView={{ width: `${bench.reduction}%` }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1, delay: i * 0.08, ease: "easeOut" }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{ duration: 0.8, delay: i * 0.1, ease: [0.4, 0, 0.2, 1] }}
                         className={`h-full bg-gradient-to-r ${bench.color}`}
-                        style={{
-                          backgroundImage: `repeating-linear-gradient(
-                            45deg,
-                            transparent,
-                            transparent 8px,
-                            rgba(255,255,255,0.15) 8px,
-                            rgba(255,255,255,0.15) 16px
-                          )`
-                        }}
                       />
                     </div>
                   </motion.div>
@@ -183,7 +177,7 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
             <motion.div
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.3 }}
               variants={staggerContainer}
               className="space-y-3 sm:space-y-4"
             >
@@ -193,9 +187,9 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
               </div>
               <div className="space-y-2.5 sm:space-y-3">
                 {[
-                  { name: "Random Users API", reduction: 42.4, color: "from-orange-500 to-red-600" },
-                  { name: "StackOverflow Q&A", reduction: 42.4, color: "from-amber-500 to-orange-600" },
-                  { name: "GitHub Repos", reduction: 33.9, color: "from-violet-500 to-purple-600" },
+                  { name: "internet_random_users", reduction: 16.7, color: "from-orange-500 to-red-600" },
+                  { name: "internet_posts", reduction: 14.6, color: "from-amber-500 to-orange-600" },
+                  { name: "internet_github_repos", reduction: 16.0, color: "from-violet-500 to-purple-600" },
                 ].map((bench, i) => (
                   <motion.div key={i} variants={fadeInUp}>
                     <div className="flex items-center justify-between mb-1.5">
@@ -208,18 +202,9 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
                       <motion.div
                         initial={{ width: 0 }}
                         whileInView={{ width: `${bench.reduction}%` }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 1, delay: i * 0.08, ease: "easeOut" }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{ duration: 0.8, delay: i * 0.1, ease: [0.4, 0, 0.2, 1] }}
                         className={`h-full bg-gradient-to-r ${bench.color}`}
-                        style={{
-                          backgroundImage: `repeating-linear-gradient(
-                            45deg,
-                            transparent,
-                            transparent 8px,
-                            rgba(255,255,255,0.15) 8px,
-                            rgba(255,255,255,0.15) 16px
-                          )`
-                        }}
                       />
                     </div>
                   </motion.div>
@@ -232,7 +217,7 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.3 }}
             variants={fadeInUp}
             className="mt-12 sm:mt-16"
           >
@@ -241,19 +226,19 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
               <CardContent className="p-4 sm:p-6">
                 <div className="space-y-4">
                   {[
-                    { name: "ZON", score: 31.2, accuracy: "76.0%", tokens: 2544, color: "from-primary to-primary/80", highlight: true },
-                    { name: "TOON", score: 26.9, accuracy: "73.9%", tokens: 2744, color: "from-purple-500 to-purple-600" },
-                    { name: "JSON compact", score: 22.9, accuracy: "70.7%", tokens: 3081, color: "from-blue-500 to-blue-600" },
-                    { name: "YAML", score: 18.6, accuracy: "69.0%", tokens: 3719, color: "from-orange-500 to-orange-600" },
-                    { name: "JSON", score: 15.3, accuracy: "69.7%", tokens: 4545, color: "from-gray-500 to-gray-600" },
-                    { name: "XML", score: 13.0, accuracy: "67.1%", tokens: 5167, color: "from-red-500 to-red-600" },
+                    { name: "ZON", score: 100, accuracy: "96%", tokens: 9600, color: "from-primary to-primary/80", highlight: true },
+                    { name: "TOON", score: 95, accuracy: "95%", tokens: 10400, color: "from-purple-500 to-purple-600" },
+                    { name: "JSON compact", score: 70, accuracy: "94%", tokens: 13900, color: "from-blue-500 to-blue-600" },
+                    { name: "YAML", score: 53, accuracy: "91%", tokens: 18000, color: "from-orange-500 to-orange-600" },
+                    { name: "JSON", score: 43, accuracy: "94%", tokens: 22900, color: "from-gray-500 to-gray-600" },
+                    { name: "XML", score: 30, accuracy: "89%", tokens: 31000, color: "from-red-500 to-red-600" },
                   ].map((format, i) => (
                     <motion.div
                       key={format.name}
                       initial={{ opacity: 0, x: -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.5, delay: i * 0.1 }}
+                      viewport={{ once: true, amount: 0.3 }}
+                      transition={{ duration: 0.4, delay: i * 0.06 }}
                       className={cn(
                         "flex items-center gap-3 sm:gap-4",
                         format.highlight && "px-2 py-1 -mx-2 rounded-lg bg-primary/5"
@@ -267,9 +252,9 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
                         <div className="flex-1 h-6 sm:h-7 bg-secondary/30 rounded-full overflow-hidden">
                           <motion.div
                             initial={{ width: 0 }}
-                            whileInView={{ width: `${(format.score / 31.2) * 100}%` }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 1, delay: i * 0.1, ease: "easeOut" }}
+                            whileInView={{ width: `${(format.score / 100) * 100}%` }}
+                            viewport={{ once: true, amount: 0.3 }}
+                            transition={{ duration: 0.8, delay: i * 0.08, ease: [0.4, 0, 0.2, 1] }}
                             className={cn(
                               "h-full bg-gradient-to-r rounded-full flex items-center justify-end pr-2",
                               `bg-gradient-to-r ${format.color}`
@@ -287,7 +272,7 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
                   ))}
                 </div>
                 <div className="mt-4 text-xs text-muted-foreground text-center">
-                  Higher score = better compression × accuracy on GPT-4
+                  Higher score = better compression × accuracy on GPT-5 Tokenizer (o200k_base)
                 </div>
               </CardContent>
             </Card>
@@ -296,7 +281,7 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.3 }}
             variants={fadeInUp}
             className="text-center mt-8 sm:mt-12"
           >
@@ -304,14 +289,14 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
               <div className="flex items-center gap-2">
                 <Zap className="h-4 w-4 text-primary flex-shrink-0" />
                 <div className="text-left">
-                  <div className="text-xs font-medium text-muted-foreground">Average</div>
-                  <div className="text-sm sm:text-base font-bold text-primary whitespace-nowrap">30.5% smaller</div>
+                  <div className="text-xs font-medium text-muted-foreground">Average Token Saving</div>
+                  <div className="text-sm sm:text-base font-bold text-primary whitespace-nowrap">58% fewer tokens</div>
                 </div>
               </div>
               <div className="hidden sm:block h-8 w-px bg-border/50" />
               <div className="text-left">
                 <div className="text-xs font-medium text-muted-foreground">vs TOON</div>
-                <div className="text-sm sm:text-base font-bold text-green-600 whitespace-nowrap">+24.1% better</div>
+                <div className="text-sm sm:text-base font-bold text-green-600 whitespace-nowrap">8% more efficient</div>
               </div>
             </div>
           </motion.div>
@@ -325,7 +310,7 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
             <motion.div
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.3 }}
               variants={staggerContainer}
               className="space-y-4 sm:space-y-6"
             >
@@ -354,8 +339,8 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.4, delay: 0.15 }}
               className="relative group w-full max-w-full mt-8 lg:mt-0 overflow-hidden"
             >
               <div className="absolute -inset-1 bg-gradient-to-r from-gray-200 to-gray-100 rounded-2xl blur opacity-20 transition duration-1000 group-hover:opacity-40"></div>
@@ -387,7 +372,7 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.3 }}
             variants={fadeInUp}
             className="text-center mb-20"
           >
@@ -401,7 +386,7 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.3 }}
             variants={staggerContainer}
             className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4"
           >
@@ -427,53 +412,152 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
       </section>
 
 
-      {/* Code Examples with Tabs */}
+      {/* Format Comparison Section */}
       <section className="py-24 border-b border-border/40">
         <div className="container mx-auto max-w-5xl px-4">
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.3 }}
             variants={fadeInUp}
-            className="text-center mb-12"
-          >
-            <Badge variant="secondary" className="mb-4">Examples</Badge>
+            className="text-center mb-12">
+            <Badge variant="secondary" className="mb-4">Format Comparison</Badge>
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
-              See ZON in Action
+              JSON vs ZON vs TOON
             </h2>
             <p className="text-lg text-muted-foreground">
-              Real-world examples fetched directly from our documentation
+              See how ZON compares with the same data
             </p>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.4, delay: 0.15 }}
           >
-            <Tabs defaultValue="basic" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-8">
-                <TabsTrigger value="basic">Basic Encoding</TabsTrigger>
-                <TabsTrigger value="advanced">Advanced Usage</TabsTrigger>
+            <Tabs defaultValue="json" className="w-full">
+              <TabsList className="flex w-full mb-6 sm:mb-8 h-auto gap-1">
+                <TabsTrigger value="json" className="text-xs sm:text-sm px-2 py-2 sm:py-2.5 h-auto min-h-[40px] flex-1 flex items-center justify-center">
+                  <span className="hidden sm:inline">JSON (235 tokens)</span>
+                  <span className="sm:hidden">JSON</span>
+                </TabsTrigger>
+                <TabsTrigger value="zon" className="text-xs sm:text-sm px-2 py-2 sm:py-2.5 h-auto min-h-[40px] flex-1 flex items-center justify-center">
+                  <span className="hidden sm:inline">ZON (96 tokens)</span>
+                  <span className="sm:hidden">ZON</span>
+                </TabsTrigger>
+                <TabsTrigger value="toon" className="text-xs sm:text-sm px-2 py-2 sm:py-2.5 h-auto min-h-[40px] flex-1 flex items-center justify-center">
+                  <span className="hidden sm:inline">TOON (106 tokens)</span>
+                  <span className="sm:hidden">TOON</span>
+                </TabsTrigger>
               </TabsList>
 
-              <TabsContent value="basic" className="space-y-4">
+              <TabsContent value="json" className="space-y-4">
+                <div className="text-xs sm:text-sm text-muted-foreground mb-2 break-words">
+                  GPT-5 Tokenizer (o200k_base): 229 tokens • 680 bytes
+                </div>
                 <CodeBlock
-                  code={basicEncodingCode || "# Loading example..."}
-                  language="python"
-                  filename="basic_encoding.py"
+                  code={`{
+  "context": {
+    "task": "Our favorite hikes together",
+    "location": "Boulder",
+    "season": "spring_2025"
+  },
+  "friends": [
+    "ana",
+    "luis",
+    "sam"
+  ],
+  "hikes": [
+    {
+      "id": 1,
+      "name": "Blue Lake Trail",
+      "distanceKm": 7.5,
+      "elevationGain": 320,
+      "companion": "ana",
+      "wasSunny": true
+    },
+    {
+      "id": 2,
+      "name": "Ridge Overlook",
+      "distanceKm": 9.2,
+      "elevationGain": 540,
+      "companion": "luis",
+      "wasSunny": false
+    },
+    {
+      "id": 3,
+      "name": "Wildflower Loop",
+      "distanceKm": 5.1,
+      "elevationGain": 180,
+      "companion": "sam",
+      "wasSunny": true
+    }
+  ]
+}`}
+                  language="json"
+                  filename="data.json"
                 />
               </TabsContent>
 
-              <TabsContent value="advanced" className="space-y-4">
+              <TabsContent value="zon" className="space-y-4">
+                <div className="text-xs sm:text-sm text-muted-foreground mb-2 break-words">
+                  GPT-5 Tokenizer (o200k_base): 96 tokens • 264 bytes • <span className="text-primary font-semibold">58.1% reduction</span>
+                </div>
                 <CodeBlock
-                  code={advancedUsageCode || "# Loading example..."}
-                  language="python"
-                  filename="advanced_usage.py"
+                  code={`context:"{task:Our favorite hikes together,location:Boulder,season:spring_2025}"
+friends:"[ana,luis,sam]"
+
+@hikes(3):companion,distanceKm,elevationGain,id,name,wasSunny
+ana,7.5,320,1,Blue Lake Trail,T
+luis,9.2,540,2,Ridge Overlook,F
+sam,5.1,180,3,Wildflower Loop,T`}
+                  language="zon"
+                  filename="data.zon"
+                />
+              </TabsContent>
+
+              <TabsContent value="toon" className="space-y-4">
+                <div className="text-xs sm:text-sm text-muted-foreground mb-2 break-words">
+                  GPT-5 Tokenizer (o200k_base): 104 tokens • 286 bytes • <span className="text-amber-600 font-semibold">54.6% reduction</span>
+                </div>
+                <CodeBlock
+                  code={`context:
+  task: Our favorite hikes together
+  location: Boulder
+  season: spring_2025
+friends[3]: ana,luis,sam
+hikes[3]{id,name,distanceKm,elevationGain,companion,wasSunny}:
+  1,Blue Lake Trail,7.5,320,ana,true
+  2,Ridge Overlook,9.2,540,luis,false
+  3,Wildflower Loop,5.1,180,sam,true`}
+                  language="yaml"
+                  filename="data.toon"
                 />
               </TabsContent>
             </Tabs>
+
+            {/* Comparison Summary */}
+            <div className="mt-6 sm:mt-8 p-4 sm:p-6 rounded-lg bg-secondary/20 border border-border/50">
+              <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Token Analysis Summary</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+                <div className="text-center p-3 sm:p-4 rounded bg-background">
+                  <div className="text-xl sm:text-2xl font-bold text-muted-foreground">229</div>
+                  <div className="text-xs sm:text-sm text-muted-foreground">JSON tokens</div>
+                  <div className="text-xs text-muted-foreground mt-1">baseline</div>
+                </div>
+                <div className="text-center p-3 sm:p-4 rounded bg-primary/10 border-2 border-primary">
+                  <div className="text-xl sm:text-2xl font-bold text-primary">96</div>
+                  <div className="text-xs sm:text-sm font-medium">ZON tokens</div>
+                  <div className="text-xs text-primary font-semibold mt-1">7.7% better than TOON</div>
+                </div>
+                <div className="text-center p-3 sm:p-4 rounded bg-background">
+                  <div className="text-xl sm:text-2xl font-bold text-amber-600">104</div>
+                  <div className="text-xs sm:text-sm text-muted-foreground">TOON tokens</div>
+                  <div className="text-xs text-muted-foreground mt-1">8 more than ZON</div>
+                </div>
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -484,7 +568,7 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.3 }}
             variants={fadeInUp}
             className="text-center mb-12"
           >
@@ -499,8 +583,8 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.4, delay: 0.15 }}
           >
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="item-1">
@@ -563,7 +647,7 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.3 }}
             variants={staggerContainer}
           >
             <motion.h2 variants={fadeInUp} className="text-4xl font-bold tracking-tight mb-8">

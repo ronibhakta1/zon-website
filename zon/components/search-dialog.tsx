@@ -11,24 +11,23 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command"
+import { getDocsNav } from "@/lib/docs-config"
 
-const searchItems = [
-  { title: "Introduction", href: "/docs", keywords: ["intro", "start", "beginning"] },
-  { title: "What is ZON?", href: "/docs#-what-is-zon", keywords: ["about", "overview"] },
-  { title: "Installation", href: "/docs#-installation", keywords: ["install", "setup", "pip"] },
-  { title: "Quick Start", href: "/docs#-quick-start", keywords: ["getting started", "tutorial"] },
-  { title: "Beginner Tutorial", href: "/docs#-beginner-tutorial", keywords: ["learn", "guide"] },
-  { title: "Advanced Usage", href: "/docs#-advanced-usage", keywords: ["advanced", "expert"] },
-  { title: "API Reference", href: "/docs#-api-reference", keywords: ["api", "reference", "encode", "decode"] },
-  { title: "Benchmarks", href: "/docs#-benchmark-results", keywords: ["performance", "speed", "comparison"] },
-  { title: "Best Practices", href: "/docs#-best-practices", keywords: ["tips", "recommendations"] },
-  { title: "Spec", href: "/docs/spec", keywords: ["specification", "format"] },
-  { title: "Contributing", href: "/docs/contributing", keywords: ["contribute", "help"] },
-]
+// Flatten navigation for search
+function getSearchItems() {
+  const sections = getDocsNav()
+  return sections.flatMap(section => 
+    section.items.map(item => ({
+      ...item,
+      keywords: [] // Add keywords if needed in the future
+    }))
+  )
+}
 
 export function SearchDialog() {
   const [open, setOpen] = React.useState(false)
   const router = useRouter()
+  const searchItems = getSearchItems()
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {

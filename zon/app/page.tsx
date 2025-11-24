@@ -7,10 +7,26 @@ function extractCodeBlock(content: string, language: string, index: number = 0):
   return matches[index] ? matches[index][1].trim() : ""
 }
 
+const quickStartCode = `import zon
+
+# Your data
+data = {
+  "friends": ["ana", "luis", "sam"],
+  "hikes": [
+    {"name": "Blue Lake Trail", "distance": 7.5, "companion": "ana"},
+    {"name": "Ridge Overlook", "distance": 9.2, "companion": "luis"},
+    {"name": "Wildflower Loop", "distance": 5.1, "companion": "sam"}
+  ]
+}
+
+# Encode & decode
+compressed = zon.encode(data)
+original = zon.decode(compressed)
+assert original == data  # ✓ Perfect!`
+
 export default async function Home() {
   const readmeContent = await getDocBySlug("index") || ""
   
-  const quickStartCode = extractCodeBlock(readmeContent, "python", 0)
   const basicEncodingCode = extractCodeBlock(readmeContent, "python", 3) // Step 2: Basic Encoding
   const advancedUsageCode = extractCodeBlock(readmeContent, "python", 6) // Advanced Usage
 
