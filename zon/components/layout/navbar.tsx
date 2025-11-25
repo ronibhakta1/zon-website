@@ -39,6 +39,15 @@ export function Navbar() {
             >
               Benchmarks
             </Link>
+            <Link
+              href="docs/vs-toon"
+              className={cn(
+                "transition-colors hover:text-foreground/80",
+                "text-foreground/60"
+              )}
+            >
+              ZON vs TOON
+            </Link>
           </nav>
         </div>
 
@@ -103,6 +112,15 @@ export function Navbar() {
               onClick={() => setMobileMenuOpen(false)}
             >
               Benchmarks
+            </Link>
+            <Link
+              href="docs/vs-toon"
+              className={cn(
+                "transition-colors hover:text-foreground/80",
+                "text-foreground/60"
+              )}
+            >
+              ZON vs TOON
             </Link>
             <Link
               href="https://github.com/ZON-Format/ZON"
