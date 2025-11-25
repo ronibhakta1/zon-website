@@ -83,31 +83,31 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
     return () => clearInterval(interval)
   }, [])
   return (
-    <div className="flex flex-col min-h-screen bg-background relative isolate selection:bg-primary/10">
+    <div className="flex flex-col min-h-screen bg-zinc-100 relative isolate selection:bg-primary/10">
       {/* Tailwind-style Rectangular Grid Background - Top Component Only */}
-      <div className="absolute inset-x-0 top-0 -z-10 h-[800px] w-full bg-white bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:6rem_4rem] [mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)] opacity-60"></div>
+      <div className="absolute inset-x-0 top-0 -z-10 h-[800px] w-full bg-zinc-100 bg-[linear-gradient(to_right,#d4d4d8_1px,transparent_1px),linear-gradient(to_bottom,#d4d4d8_1px,transparent_1px)] bg-[size:6rem_4rem] [mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)] opacity-60"></div>
       
       {/* Plus Markers - Aligned to Grid Intersections (multiples of 6rem x 4rem) */}
       <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
         {/* Left side markers */}
-        <div className="absolute left-[6rem] top-[8rem] text-slate-100 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
-        <div className="absolute left-[18rem] top-[16rem] text-slate-100 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
-        <div className="absolute left-[6rem] top-[32rem] text-slate-100 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
+        <div className="absolute left-[6rem] top-[8rem] text-zinc-400 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
+        <div className="absolute left-[18rem] top-[16rem] text-zinc-400 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
+        <div className="absolute left-[6rem] top-[32rem] text-zinc-400 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
         
         {/* Right side markers (using right-0 and negative margins to align with grid from right or just absolute left for consistency) */}
         {/* Note: To align perfectly with a left-aligned grid, we should use left positioning for all, or ensure grid is centered. 
             For simplicity with a left-aligned bg-grid, we use left positioning. */}
-        <div className="absolute left-[42rem] top-[12rem] text-slate-100 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
-        <div className="absolute left-[60rem] top-[24rem] text-slate-100 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
-        <div className="absolute left-[72rem] top-[8rem] text-slate-100 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
-        <div className="absolute left-[84rem] top-[36rem] text-slate-100 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
+        <div className="absolute left-[42rem] top-[12rem] text-zinc-400 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
+        <div className="absolute left-[60rem] top-[24rem] text-zinc-400 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
+        <div className="absolute left-[72rem] top-[8rem] text-zinc-400 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
+        <div className="absolute left-[84rem] top-[36rem] text-zinc-400 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
         
         {/* Center-ish markers */}
-        <div className="absolute left-[30rem] top-[20rem] text-slate-100 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
-        <div className="absolute left-[48rem] top-[40rem] text-slate-100 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
+        <div className="absolute left-[30rem] top-[20rem] text-zinc-400 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
+        <div className="absolute left-[48rem] top-[40rem] text-zinc-400 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
       </div>
       {/* Hero Section */}
-      <section className="relative py-16 sm:py-20 md:py-24 lg:py-32 border-b border-border/40">
+      <section className="relative py-12 sm:py-20 md:py-24 lg:py-32 border-b border-border/40">
         <div className="container mx-auto max-w-6xl px-4 relative z-10 flex flex-col items-center text-center">
           <motion.div
             initial="hidden"
@@ -138,12 +138,12 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
             style={{ willChange: 'opacity, transform' }}
           >
             <Link href="/docs" className="w-full sm:w-auto">
-              <Button size="lg" className="w-full sm:w-auto h-12 sm:h-14 px-8 sm:px-10 text-base sm:text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5">
+              <Button size="lg" className="w-full sm:w-auto h-11 sm:h-12 px-8 text-base shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5">
                 Get Started Free →
               </Button>
             </Link>
             <Link href="https://github.com/ZON-Format/ZON" target="_blank" className="w-full sm:w-auto">
-              <Button variant="outline" size="lg" className="w-full sm:w-auto h-12 sm:h-14 px-4 sm:px-6 text-base sm:text-lg bg-background/50 backdrop-blur-sm hover:bg-secondary/80 transition-all duration-300 flex items-center justify-center gap-2">
+              <Button variant="outline" size="lg" className="w-full sm:w-auto h-11 sm:h-12 px-6 text-base bg-background/50 backdrop-blur-sm hover:bg-secondary/80 transition-all duration-300 flex items-center justify-center gap-2">
                 <svg className="h-4 w-4 sm:h-5 sm:w-5" fill="currentColor" viewBox="0 0 24 24">
                   <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
                 </svg>
@@ -206,7 +206,7 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
       </section>
 
       {/* Visual Comparison Section - THE AHA MOMENT */}
-      <section className="py-16 sm:py-20 border-b border-border/40">
+      <section className="py-12 sm:py-20 border-b border-border/40">
         <div className="container mx-auto max-w-6xl px-4">
           <motion.div
             initial="hidden"
@@ -215,10 +215,10 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
             variants={fadeInUp}
             className="text-center mb-12"
           >
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-2">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
               Same Data, 58% Fewer Tokens
             </h2>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-lg text-muted-foreground">
               Exact same hiking data → Dramatic difference
             </p>
           </motion.div>
@@ -240,7 +240,7 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
                 </CardHeader>
                 <CardContent className="pt-0">
                   <div className="max-h-[300px] sm:max-h-[400px] overflow-y-auto">
-                    <pre className="text-[10px] sm:text-xs font-mono text-muted-foreground leading-relaxed overflow-x-auto">{`{
+                    <pre className="text-xs sm:text-sm font-mono text-muted-foreground leading-relaxed overflow-x-auto">{`{
   "context": {
     "task": "Our favorite hikes",
     "location": "Boulder",
@@ -281,7 +281,7 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
                 </CardHeader>
                 <CardContent className="pt-0 overflow-hidden">
                   <div className="max-h-[300px] sm:max-h-[400px] overflow-auto">
-                    <pre className="text-[10px] sm:text-xs font-mono text-foreground leading-relaxed whitespace-pre-wrap break-all">{`context:"{task:Our favorite hikes,location:Boulder,season:spring_2025}"
+                    <pre className="text-xs sm:text-sm font-mono text-foreground leading-relaxed whitespace-pre-wrap break-all">{`context:"{task:Our favorite hikes,location:Boulder,season:spring_2025}"
 friends:"[ana,luis,sam]"
 
 @hikes(3):companion,distanceKm,elevationGain,id,name,wasSunny
@@ -301,7 +301,7 @@ sam,5.1,180,3,Wildflower Loop,T`}</pre>
       </section>
 
       {/* Benchmarks Section */}
-      <section id="benchmarks" className="py-16 sm:py-20 border-b border-border/40">
+      <section id="benchmarks" className="py-12 sm:py-20 border-b border-border/40">
         <div className="container mx-auto max-w-5xl px-4">
           <motion.div
             initial="hidden"
@@ -310,10 +310,10 @@ sam,5.1,180,3,Wildflower Loop,T`}</pre>
             variants={fadeInUp}
             className="text-center mb-12"
           >
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
               Proven Across Real Datasets
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               From analytics to nested objects, ZON consistently delivers
             </p>
           </motion.div>
@@ -328,8 +328,8 @@ sam,5.1,180,3,Wildflower Loop,T`}</pre>
               className="space-y-3 sm:space-y-4"
             >
               <div className="flex items-center justify-between mb-3 sm:mb-4">
-                <h3 className="text-sm sm:text-base font-semibold">Standard Datasets</h3>
-                <div className="text-xs text-muted-foreground">vs JSON</div>
+                <h3 className="text-lg font-semibold">Standard Datasets</h3>
+                <div className="text-sm text-muted-foreground">vs JSON</div>
               </div>
               <div className="space-y-2.5 sm:space-y-3">
                 {[
@@ -367,8 +367,8 @@ sam,5.1,180,3,Wildflower Loop,T`}</pre>
               className="space-y-3 sm:space-y-4"
             >
               <div className="flex items-center justify-between mb-3 sm:mb-4">
-                <h3 className="text-sm sm:text-base font-semibold">Real-World API Data</h3>
-                <div className="text-xs text-muted-foreground">vs JSON</div>
+                <h3 className="text-lg font-semibold">Real-World API Data</h3>
+                <div className="text-sm text-muted-foreground">vs JSON</div>
               </div>
               <div className="space-y-2.5 sm:space-y-3">
                 {[
@@ -408,7 +408,7 @@ sam,5.1,180,3,Wildflower Loop,T`}</pre>
           >
             <h3 className="text-lg sm:text-xl font-semibold mb-6 text-center">Token Efficiency Comparison</h3>
             <Card className="bg-background/50 backdrop-blur border-border/50">
-              <CardContent className="p-4 sm:p-6">
+              <CardContent className="p-3 sm:p-6">
                 <div className="space-y-4">
                   {[
                     { name: "ZON", score: 100, accuracy: "96%", tokens: 9600, color: "from-primary to-primary/80", highlight: true },
@@ -489,7 +489,7 @@ sam,5.1,180,3,Wildflower Loop,T`}</pre>
       </section>
 
       {/* Comparison Section - Now showing Python usage */}
-      <section className="py-16 sm:py-20 md:py-24 border-b border-border/40 bg-secondary/20">
+      <section className="py-12 sm:py-20 md:py-24 border-b border-border/40 bg-secondary/20">
         <div className="container mx-auto max-w-6xl px-4">
           <div className="grid gap-8 sm:gap-12 lg:grid-cols-2 items-center">
             <motion.div
@@ -499,7 +499,7 @@ sam,5.1,180,3,Wildflower Loop,T`}</pre>
               variants={staggerContainer}
               className="space-y-4 sm:space-y-6"
             >
-              <motion.h2 variants={fadeInUp} className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
+              <motion.h2 variants={fadeInUp} className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
                 Python Native. LLM Optimized.
               </motion.h2>
               <motion.p variants={fadeInUp} className="text-muted-foreground text-base sm:text-lg leading-relaxed">
@@ -552,7 +552,7 @@ sam,5.1,180,3,Wildflower Loop,T`}</pre>
       </section>
 
       {/* Features Section */}
-      <section className="py-24 border-b border-border/40">
+      <section className="py-16 sm:py-24 border-b border-border/40">
         <div className="container mx-auto max-w-6xl px-4">
           <motion.div
             initial="hidden"
@@ -561,7 +561,7 @@ sam,5.1,180,3,Wildflower Loop,T`}</pre>
             variants={fadeInUp}
             className="text-center mb-20"
           >
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
               Why Choose ZON?
             </h2>
             <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -606,11 +606,11 @@ sam,5.1,180,3,Wildflower Loop,T`}</pre>
             viewport={{ once: true, amount: 0.3 }}
             variants={fadeInUp}
             className="text-center mb-8 sm:mb-10">
-            <Badge variant="secondary" className="mb-3">Format Comparison</Badge>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2">
+            <Badge variant="secondary" className="mb-4">Format Comparison</Badge>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
               JSON vs ZON vs TOON
             </h2>
-            <p className="text-sm sm:text-base text-muted-foreground">
+            <p className="text-lg text-muted-foreground">
               See how ZON compares with the same data
             </p>
           </motion.div>
@@ -754,7 +754,7 @@ hikes[3]{id,name,distanceKm,elevationGain,companion,wasSunny}:
       </section>
 
       {/* FAQ Section with Accordion */}
-      <section className="py-24 border-b border-border/40 bg-secondary/20">
+      <section className="py-16 sm:py-24 border-b border-border/40 bg-secondary/20">
         <div className="container mx-auto max-w-3xl px-4">
           <motion.div
             initial="hidden"
@@ -763,7 +763,7 @@ hikes[3]{id,name,distanceKm,elevationGain,companion,wasSunny}:
             variants={fadeInUp}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
               Frequently Asked Questions
             </h2>
             <p className="text-lg text-muted-foreground">

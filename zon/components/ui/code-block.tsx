@@ -32,7 +32,7 @@ export function CodeBlock({
       <div className="p-5 overflow-x-auto bg-muted/20">
         <pre
           className={cn(
-            "text-[0.875rem] font-mono leading-7 whitespace-pre text-foreground",
+            "text-xs sm:text-sm font-mono leading-relaxed whitespace-pre text-foreground",
             // keep code blocks readable on narrow screens
             "[tab-size:2]",
             // better text rendering

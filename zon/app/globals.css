@@ -26,8 +26,8 @@
 }
 
 :root {
-  /* Cal.com-style Neutral Palette - No Zinc/Blue tints */
-  --background: #fcfcfc; /* Subtle off-white canvas */
+  /* Cal.com-style Neutral Palette - Updated to Zinc */
+  --background: #fafafa; /* Zinc-50 */
   --foreground: #111111; /* Near black */
   
   --card: #ffffff; /* Pure white cards */
@@ -39,10 +39,10 @@
   --primary: #111111; /* Black primary */
   --primary-foreground: #ffffff;
   
-  --secondary: #f3f4f6; /* Gray 100 - Neutral */
-  --secondary-foreground: #111111;
+  --secondary: #f4f4f5; /* Zinc-100 */
+  --secondary-foreground: #18181b; /* Zinc-900 */
   
-  --muted: #f3f4f6; /* Gray 100 - Neutral */
+  --muted: #f4f4f5; /* Zinc-100 */
   --muted-foreground: #6b7280; /* Gray 500 - Neutral */
   
   --accent: #f3f4f6; /* Gray 100 - Neutral */
@@ -51,7 +51,7 @@
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
   
-  --border: #e5e7eb; /* Gray 200 - Neutral */
+  --border: #e4e4e7; /* Zinc-200 */
   --input: #e5e7eb;
   --ring: #111111;
   

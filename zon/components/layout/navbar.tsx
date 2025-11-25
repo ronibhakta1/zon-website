@@ -13,19 +13,19 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b border-zinc-200 bg-zinc-50/80 backdrop-blur-md supports-[backdrop-filter]:bg-zinc-50/60">
       <div className="container mx-auto flex h-14 max-w-screen-xl items-center px-4">
         {/* Desktop Navigation */}
         <div className="mr-4 hidden md:flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
             <Wordmark />
           </Link>
-          <nav className="flex items-center gap-6 text-sm">
+          <nav className="flex items-center gap-6 text-sm font-medium">
             <Link
               href="/docs"
               className={cn(
-                "transition-colors hover:text-primary",
-                "text-foreground/60"
+                "transition-colors hover:text-zinc-900",
+                "text-zinc-600"
               )}
             >
               Docs
@@ -33,8 +33,8 @@ export function Navbar() {
             <Link
               href="/#benchmarks"
               className={cn(
-                "transition-colors hover:text-foreground/80",
-                "text-foreground/60"
+                "transition-colors hover:text-zinc-900",
+                "text-zinc-600"
               )}
             >
               Benchmarks
@@ -42,8 +42,8 @@ export function Navbar() {
             <Link
               href="docs/vs-toon"
               className={cn(
-                "transition-colors hover:text-foreground/80",
-                "text-foreground/60"
+                "transition-colors hover:text-zinc-900",
+                "text-zinc-600"
               )}
             >
               ZON vs TOON
@@ -97,7 +97,7 @@ export function Navbar() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-border/40 bg-background">
+        <div className="md:hidden border-t border-zinc-200 bg-zinc-50">
           <nav className="container mx-auto px-4 py-4 flex flex-col space-y-3">
             <Link
               href="/docs"
