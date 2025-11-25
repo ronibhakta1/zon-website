@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
   description: "A human-readable, efficient data format for the modern web. 30-40% leaner than JSON for LLMs.",
   metadataBase: new URL('https://zon.ronibhakta.in'),
-  keywords: ["ZON", "Data Format", "JSON Alternative", "LLM Optimization", "Token Efficiency", "Zero Overhead Notation"],
+  keywords: ["ZON", "Data Format", "JSON Alternative", "LLM Optimization", "Token Efficiency", "Zero Overhead Notation", "TOON vs ZON", "TOON alternative", "Better than TOON", "ZON Format GitHub"],
   authors: [{ name: "Roni Bhakta" }],
   creator: "Roni Bhakta",
   publisher: "Roni Bhakta",

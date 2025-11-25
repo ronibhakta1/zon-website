@@ -4,11 +4,24 @@ import remarkGfm from "remark-gfm"
 import rehypeHighlight from "rehype-highlight"
 import { docsMap } from "./docs-config"
 
+import fs from 'fs/promises'
+import path from 'path'
+
 const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/ZON-Format/ZON/main'
 
 export async function getDocBySlug(slug: string): Promise<string | null> {
   const filename = docsMap[slug]
   if (!filename) return null
+
+  // Try local file first (for development)
+  try {
+    const localPath = path.join(process.cwd(), filename)
+    const content = await fs.readFile(localPath, 'utf-8')
+    return content
+  } catch (e) {
+    // Fallback to GitHub if local file not found (or in production if files aren't bundled)
+    // console.log(`Local file not found: ${filename}, trying GitHub...`)
+  }
 
   try {
     const response = await fetch(`${GITHUB_RAW_BASE}/${filename}`, {
@@ -53,5 +66,7 @@ export async function getDocContent(slug: string) {
     }
   })
 
-  return { content, frontmatter, title: fileName.replace(".md", "") }
+  const cleanTitle = (frontmatter as any).title || path.basename(fileName).replace(/\.mdx?$/, "")
+  
+  return { content, frontmatter, title: cleanTitle }
 }

@@ -1,5 +1,6 @@
 export const docsMap: Record<string, string> = {
   "index": "README.md",
+  "vs-toon": "content/docs/vs-toon.mdx",
   "changelog": "CHANGELOG.md",
   "contributing": "CONTRIBUTING.md",
 }
@@ -20,6 +21,7 @@ export function getDocsNav(): NavSection[] {
       title: "Getting Started",
       items: [
         { title: "Introduction", href: "/docs" },
+        { title: "ZON vs TOON", href: "/docs/vs-toon" },
         { title: "What is ZON?", href: "/docs#-what-is-zon" },
         { title: "Quick Start", href: "/docs#-quick-start" },
         { title: "Installation", href: "/docs#-installation" },

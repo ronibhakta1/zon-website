@@ -34,8 +34,10 @@ export default async function Home() {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
     name: 'ZON (Zero Overhead Notation)',
+    alternateName: 'ZON Format',
     applicationCategory: 'DeveloperApplication',
     operatingSystem: 'Any',
+    sameAs: ['https://github.com/ZON-Format/ZON'],
     offers: {
       '@type': 'Offer',
       price: '0',
