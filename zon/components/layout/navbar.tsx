@@ -105,13 +105,6 @@ export function Navbar() {
               Benchmarks
             </Link>
             <Link
-              href="/docs/spec"
-              className="text-sm font-medium transition-colors hover:text-foreground/80 text-foreground/60 py-2"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Spec
-            </Link>
-            <Link
               href="https://github.com/ZON-Format/ZON"
               target="_blank"
               rel="noreferrer"
