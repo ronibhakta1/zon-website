@@ -70,21 +70,21 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
       {/* Plus Markers - Aligned to Grid Intersections (multiples of 6rem x 4rem) */}
       <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
         {/* Left side markers */}
-        <div className="absolute left-[6rem] top-[8rem] text-slate-300 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
-        <div className="absolute left-[18rem] top-[16rem] text-slate-300 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
-        <div className="absolute left-[6rem] top-[32rem] text-slate-300 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
+        <div className="absolute left-[6rem] top-[8rem] text-slate-100 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
+        <div className="absolute left-[18rem] top-[16rem] text-slate-100 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
+        <div className="absolute left-[6rem] top-[32rem] text-slate-100 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
         
         {/* Right side markers (using right-0 and negative margins to align with grid from right or just absolute left for consistency) */}
         {/* Note: To align perfectly with a left-aligned grid, we should use left positioning for all, or ensure grid is centered. 
             For simplicity with a left-aligned bg-grid, we use left positioning. */}
-        <div className="absolute left-[42rem] top-[12rem] text-slate-300 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
-        <div className="absolute left-[60rem] top-[24rem] text-slate-300 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
-        <div className="absolute left-[72rem] top-[8rem] text-slate-300 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
-        <div className="absolute left-[84rem] top-[36rem] text-slate-300 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
+        <div className="absolute left-[42rem] top-[12rem] text-slate-100 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
+        <div className="absolute left-[60rem] top-[24rem] text-slate-100 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
+        <div className="absolute left-[72rem] top-[8rem] text-slate-100 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
+        <div className="absolute left-[84rem] top-[36rem] text-slate-100 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
         
         {/* Center-ish markers */}
-        <div className="absolute left-[30rem] top-[20rem] text-slate-300 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
-        <div className="absolute left-[48rem] top-[40rem] text-slate-300 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
+        <div className="absolute left-[30rem] top-[20rem] text-slate-100 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
+        <div className="absolute left-[48rem] top-[40rem] text-slate-100 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
       </div>
       {/* Hero Section */}
       <section className="relative py-16 sm:py-20 md:py-24 lg:py-32 border-b border-border/40">
@@ -158,27 +158,27 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
         {/* Decorative Background Elements - Cal.com Style */}
         <div className="absolute inset-0 -z-10 h-full w-full pointer-events-none select-none">
           {/* Crosshair Markers at Grid Intersections */}
-          <div className="absolute left-[5%] top-[15%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
-          <div className="absolute left-[15%] top-[25%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
-          <div className="absolute left-[25%] top-[35%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
-          <div className="absolute left-[35%] top-[15%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
-          <div className="absolute left-[45%] top-[25%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
-          <div className="absolute left-[55%] top-[35%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
-          <div className="absolute left-[65%] top-[15%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
-          <div className="absolute left-[75%] top-[25%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
-          <div className="absolute left-[85%] top-[35%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
-          <div className="absolute left-[95%] top-[15%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
+          <div className="absolute left-[5%] top-[15%] text-slate-500 dark:text-slate-600 text-lg font-light">+</div>
+          <div className="absolute left-[15%] top-[25%] text-slate-500 dark:text-slate-600 text-lg font-light">+</div>
+          <div className="absolute left-[25%] top-[35%] text-slate-500 dark:text-slate-600 text-lg font-light">+</div>
+          <div className="absolute left-[35%] top-[15%] text-slate-500 dark:text-slate-600 text-lg font-light">+</div>
+          <div className="absolute left-[45%] top-[25%] text-slate-500 dark:text-slate-400 text-lg font-light">+</div>
+          <div className="absolute left-[55%] top-[35%] text-slate-500 dark:text-slate-400 text-lg font-light">+</div>
+          <div className="absolute left-[65%] top-[15%] text-slate-500 dark:text-slate-400 text-lg font-light">+</div>
+          <div className="absolute left-[75%] top-[25%] text-slate-500 dark:text-slate-600 text-lg font-light">+</div>
+          <div className="absolute left-[85%] top-[35%] text-slate-500 dark:text-slate-600 text-lg font-light">+</div>
+          <div className="absolute left-[95%] top-[15%] text-slate-500 dark:text-slate-600 text-lg font-light">+</div>
           
-          <div className="absolute left-[5%] top-[45%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
-          <div className="absolute left-[15%] top-[55%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
-          <div className="absolute left-[25%] top-[65%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
-          <div className="absolute left-[35%] top-[75%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
-          <div className="absolute left-[45%] top-[85%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
-          <div className="absolute left-[55%] top-[45%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
-          <div className="absolute left-[65%] top-[55%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
-          <div className="absolute left-[75%] top-[65%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
-          <div className="absolute left-[85%] top-[75%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
-          <div className="absolute left-[95%] top-[85%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
+          <div className="absolute left-[5%] top-[45%] text-slate-500 dark:text-slate-600 text-lg font-light">+</div>
+          <div className="absolute left-[15%] top-[55%] text-slate-500 dark:text-slate-600 text-lg font-light">+</div>
+          <div className="absolute left-[25%] top-[65%] text-slate-500 dark:text-slate-600 text-lg font-light">+</div>
+          <div className="absolute left-[35%] top-[75%] text-slate-500 dark:text-slate-400 text-lg font-light">+</div>
+          <div className="absolute left-[45%] top-[85%] text-slate-500 dark:text-slate-600 text-lg font-light">+</div>
+          <div className="absolute left-[55%] top-[45%] text-slate-500 dark:text-slate-400 text-lg font-light">+</div>
+          <div className="absolute left-[65%] top-[55%] text-slate-500 dark:text-slate-400 text-lg font-light">+</div>
+          <div className="absolute left-[75%] top-[65%] text-slate-500 dark:text-slate-600 text-lg font-light">+</div>
+          <div className="absolute left-[85%] top-[75%] text-slate-500 dark:text-slate-400 text-lg font-light">+</div>
+          <div className="absolute left-[95%] top-[85%] text-slate-500 dark:text-slate-600 text-lg font-light">+</div>
 
           {/* Subtle Glow */}
           <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-primary/5 opacity-40 blur-[100px]"></div>
