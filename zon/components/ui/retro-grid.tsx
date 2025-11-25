@@ -12,7 +12,6 @@ export function RetroGrid({ className }: { className?: string }) {
       <div className="absolute inset-0 [transform:rotateX(35deg)]">
         <div
           className={cn(
-            "animate-[grid_15s_linear_infinite]",
             "[background-repeat:repeat] [background-size:60px_60px]",
             "[height:300%] [inset:0%_0px] [margin-left:-50%] [transform-origin:100%_0_0] [width:600%]",
             // Zinc-400 lines for better visibility
