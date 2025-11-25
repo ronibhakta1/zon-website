@@ -63,9 +63,20 @@ interface HomePageClientProps {
 
 export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsageCode }: HomePageClientProps) {
   return (
-    <div className="flex flex-col min-h-screen bg-background">
+    <div className="flex flex-col min-h-screen bg-background relative isolate selection:bg-primary/10">
+      {/* Tailwind-style Rectangular Grid Background */}
+      <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:6rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+      
+      {/* Plus Markers */}
+      <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
+        <div className="absolute left-[10%] top-[10%] text-slate-300 text-xl font-light">+</div>
+        <div className="absolute right-[10%] top-[10%] text-slate-300 text-xl font-light">+</div>
+        <div className="absolute left-[10%] top-[40%] text-slate-300 text-xl font-light">+</div>
+        <div className="absolute right-[10%] top-[40%] text-slate-300 text-xl font-light">+</div>
+        <div className="absolute left-[50%] top-[25%] text-slate-300 text-xl font-light">+</div>
+      </div>
       {/* Hero Section */}
-      <section className="relative overflow-hidden py-16 sm:py-20 md:py-24 lg:py-32 border-b border-border/40">
+      <section className="relative py-16 sm:py-20 md:py-24 lg:py-32 border-b border-border/40">
         <div className="container mx-auto max-w-6xl px-4 relative z-10 flex flex-col items-center text-center">
           <motion.div
             initial="hidden"
@@ -114,7 +125,7 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
               </Button>
             </Link>
           </motion.div>
-          
+
           {/* Trust Signal: Framework logos */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -133,9 +144,33 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
           </motion.div>
         </div>
 
-        {/* Grid Background */}
-        <div className="absolute inset-0 -z-10 h-full w-full bg-background bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]">
-          <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-primary/5 opacity-20 blur-[100px]"></div>
+        {/* Decorative Background Elements - Cal.com Style */}
+        <div className="absolute inset-0 -z-10 h-full w-full pointer-events-none select-none">
+          {/* Crosshair Markers at Grid Intersections */}
+          <div className="absolute left-[5%] top-[15%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
+          <div className="absolute left-[15%] top-[25%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
+          <div className="absolute left-[25%] top-[35%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
+          <div className="absolute left-[35%] top-[15%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
+          <div className="absolute left-[45%] top-[25%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
+          <div className="absolute left-[55%] top-[35%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
+          <div className="absolute left-[65%] top-[15%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
+          <div className="absolute left-[75%] top-[25%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
+          <div className="absolute left-[85%] top-[35%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
+          <div className="absolute left-[95%] top-[15%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
+          
+          <div className="absolute left-[5%] top-[45%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
+          <div className="absolute left-[15%] top-[55%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
+          <div className="absolute left-[25%] top-[65%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
+          <div className="absolute left-[35%] top-[75%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
+          <div className="absolute left-[45%] top-[85%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
+          <div className="absolute left-[55%] top-[45%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
+          <div className="absolute left-[65%] top-[55%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
+          <div className="absolute left-[75%] top-[65%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
+          <div className="absolute left-[85%] top-[75%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
+          <div className="absolute left-[95%] top-[85%] text-gray-300 dark:text-gray-600 text-lg font-light">+</div>
+
+          {/* Subtle Glow */}
+          <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-primary/5 opacity-40 blur-[100px]"></div>
         </div>
       </section>
 
