@@ -62,7 +62,19 @@ export async function getDocContent(slug: string) {
       }
     },
     components: {
-        // Add custom components here if needed
+        table: (props: any) => (
+            <div className="my-6 w-full overflow-hidden rounded-lg border border-primary/30 bg-primary/5 shadow-sm">
+                <div className="overflow-x-auto">
+                    <table {...props} className="w-full text-sm" />
+                </div>
+            </div>
+        ),
+        th: (props: any) => (
+            <th {...props} className="whitespace-nowrap px-4 py-3 text-left font-bold text-primary border-b border-primary/20 bg-primary/10" />
+        ),
+        td: (props: any) => (
+            <td {...props} className="whitespace-nowrap px-4 py-3 border-b border-primary/10 text-foreground/90" />
+        ),
     }
   })
 
