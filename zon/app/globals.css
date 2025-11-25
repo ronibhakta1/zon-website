@@ -243,3 +243,9 @@ h1, h2, h3, h4, h5, h6 {
   color: #d97706;
 }
 
+@keyframes border-beam {
+  100% {
+    offset-distance: 100%;
+  }
+}
+

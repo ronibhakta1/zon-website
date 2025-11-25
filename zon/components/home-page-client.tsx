@@ -11,6 +11,7 @@ import { CodeBlock } from "@/components/ui/code-block"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { BorderBeam } from "@/components/ui/border-beam"
 import { cn } from "@/lib/utils"
 
 const features = [
@@ -272,7 +273,8 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
               transition={{ duration: 0.4, delay: 0.1 }}
               className="min-w-0"
             >
-              <Card className="h-full border-primary/50 bg-primary/5 hover:border-primary transition-colors overflow-hidden">
+              <Card className="relative h-full border-primary/50 bg-primary/5 hover:border-primary transition-colors overflow-hidden">
+                <BorderBeam size={250} duration={12} delay={9} />
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-sm sm:text-base font-semibold text-primary">ZON</CardTitle>
