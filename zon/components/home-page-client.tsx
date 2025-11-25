@@ -64,8 +64,8 @@ interface HomePageClientProps {
 export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsageCode }: HomePageClientProps) {
   return (
     <div className="flex flex-col min-h-screen bg-background relative isolate selection:bg-primary/10">
-      {/* Tailwind-style Rectangular Grid Background */}
-      <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:6rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-60"></div>
+      {/* Tailwind-style Rectangular Grid Background - Top Component Only */}
+      <div className="absolute inset-x-0 top-0 -z-10 h-[800px] w-full bg-white bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:6rem_4rem] [mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,black_60%,transparent_100%)] opacity-60"></div>
       
       {/* Plus Markers - Aligned to Grid Intersections (multiples of 6rem x 4rem) */}
       <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
