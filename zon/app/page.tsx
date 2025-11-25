@@ -30,11 +30,36 @@ export default async function Home() {
   const basicEncodingCode = extractCodeBlock(readmeContent, "python", 3) // Step 2: Basic Encoding
   const advancedUsageCode = extractCodeBlock(readmeContent, "python", 6) // Advanced Usage
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'ZON (Zero Overhead Notation)',
+    applicationCategory: 'DeveloperApplication',
+    operatingSystem: 'Any',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    description: 'A human-readable, efficient data format for the modern web. Optimized for LLMs.',
+    softwareVersion: '1.0',
+    author: {
+      '@type': 'Person',
+      name: 'Roni Bhakta',
+    },
+  }
+
   return (
-    <HomePageClient 
-      quickStartCode={quickStartCode}
-      basicEncodingCode={basicEncodingCode}
-      advancedUsageCode={advancedUsageCode}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <HomePageClient 
+        quickStartCode={quickStartCode}
+        basicEncodingCode={basicEncodingCode}
+        advancedUsageCode={advancedUsageCode}
+      />
+    </>
   )
 }
