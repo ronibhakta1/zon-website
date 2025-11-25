@@ -65,15 +65,26 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
   return (
     <div className="flex flex-col min-h-screen bg-background relative isolate selection:bg-primary/10">
       {/* Tailwind-style Rectangular Grid Background */}
-      <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:6rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+      <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:6rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-60"></div>
       
-      {/* Plus Markers */}
+      {/* Plus Markers - Aligned to Grid Intersections (multiples of 6rem x 4rem) */}
       <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
-        <div className="absolute left-[10%] top-[10%] text-slate-300 text-xl font-light">+</div>
-        <div className="absolute right-[10%] top-[10%] text-slate-300 text-xl font-light">+</div>
-        <div className="absolute left-[10%] top-[40%] text-slate-300 text-xl font-light">+</div>
-        <div className="absolute right-[10%] top-[40%] text-slate-300 text-xl font-light">+</div>
-        <div className="absolute left-[50%] top-[25%] text-slate-300 text-xl font-light">+</div>
+        {/* Left side markers */}
+        <div className="absolute left-[6rem] top-[8rem] text-slate-300 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
+        <div className="absolute left-[18rem] top-[16rem] text-slate-300 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
+        <div className="absolute left-[6rem] top-[32rem] text-slate-300 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
+        
+        {/* Right side markers (using right-0 and negative margins to align with grid from right or just absolute left for consistency) */}
+        {/* Note: To align perfectly with a left-aligned grid, we should use left positioning for all, or ensure grid is centered. 
+            For simplicity with a left-aligned bg-grid, we use left positioning. */}
+        <div className="absolute left-[42rem] top-[12rem] text-slate-300 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
+        <div className="absolute left-[60rem] top-[24rem] text-slate-300 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
+        <div className="absolute left-[72rem] top-[8rem] text-slate-300 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
+        <div className="absolute left-[84rem] top-[36rem] text-slate-300 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
+        
+        {/* Center-ish markers */}
+        <div className="absolute left-[30rem] top-[20rem] text-slate-300 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
+        <div className="absolute left-[48rem] top-[40rem] text-slate-300 text-xl font-light -translate-x-1/2 -translate-y-1/2">+</div>
       </div>
       {/* Hero Section */}
       <section className="relative py-16 sm:py-20 md:py-24 lg:py-32 border-b border-border/40">
