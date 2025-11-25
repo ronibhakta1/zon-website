@@ -7,6 +7,19 @@ function extractCodeBlock(content: string, language: string, index: number = 0):
   return matches[index] ? matches[index][1].trim() : ""
 }
 
+async function getGitHubStars() {
+  try {
+    const res = await fetch('https://api.github.com/repos/ZON-Format/ZON', {
+      next: { revalidate: 3600 }
+    })
+    if (!res.ok) return 0
+    const data = await res.json()
+    return data.stargazers_count
+  } catch (error) {
+    return 0
+  }
+}
+
 const quickStartCode = `import zon
 
 # Your data
@@ -26,6 +39,7 @@ assert original == data  # ✓ Perfect!`
 
 export default async function Home() {
   const readmeContent = await getDocBySlug("index") || ""
+  const stars = await getGitHubStars()
   
   const basicEncodingCode = extractCodeBlock(readmeContent, "python", 3) // Step 2: Basic Encoding
   const advancedUsageCode = extractCodeBlock(readmeContent, "python", 6) // Advanced Usage
@@ -61,6 +75,7 @@ export default async function Home() {
         quickStartCode={quickStartCode}
         basicEncodingCode={basicEncodingCode}
         advancedUsageCode={advancedUsageCode}
+        initialStars={stars}
       />
     </>
   )

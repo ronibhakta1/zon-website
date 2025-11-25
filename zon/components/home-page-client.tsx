@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { useState, useEffect } from "react"
 import { motion, Variants } from "framer-motion"
 import { Check, Zap, FileText, Code2, Shield } from "lucide-react"
 
@@ -59,9 +60,28 @@ interface HomePageClientProps {
   quickStartCode: string
   basicEncodingCode: string
   advancedUsageCode: string
+  initialStars: number
 }
 
-export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsageCode }: HomePageClientProps) {
+export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsageCode, initialStars }: HomePageClientProps) {
+  const [stars, setStars] = useState(initialStars)
+
+  useEffect(() => {
+    const fetchStars = async () => {
+      try {
+        const res = await fetch('https://api.github.com/repos/ZON-Format/ZON')
+        if (res.ok) {
+          const data = await res.json()
+          setStars(data.stargazers_count)
+        }
+      } catch (e) {
+        console.error("Failed to fetch stars", e)
+      }
+    }
+
+    const interval = setInterval(fetchStars, 3600000) // 1 hour
+    return () => clearInterval(interval)
+  }, [])
   return (
     <div className="flex flex-col min-h-screen bg-background relative isolate selection:bg-primary/10">
       {/* Tailwind-style Rectangular Grid Background - Top Component Only */}
@@ -130,7 +150,7 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
                 <span className="flex items-center gap-1.5">
                   <span className="hidden xs:inline">GitHub</span>
                   <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/10 text-primary text-xs font-bold">
-                    ★ 3
+                    ★ {stars}
                   </span>
                 </span>
               </Button>
