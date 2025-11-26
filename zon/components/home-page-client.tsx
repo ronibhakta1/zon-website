@@ -61,12 +61,13 @@ const staggerContainer: Variants = {
 
 interface HomePageClientProps {
   quickStartCode: string
+  quickStartCodeTs: string
   basicEncodingCode: string
   advancedUsageCode: string
   initialStars: number
 }
 
-export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsageCode, initialStars }: HomePageClientProps) {
+export function HomePageClient({ quickStartCode, quickStartCodeTs, basicEncodingCode, advancedUsageCode, initialStars }: HomePageClientProps) {
   const [stars, setStars] = useState(initialStars)
 
   useEffect(() => {
@@ -490,13 +491,13 @@ sam,5.1,180,3,Wildflower Loop,T`}</pre>
               className="space-y-4 sm:space-y-6"
             >
               <motion.h2 variants={fadeInUp} className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
-                Python Native. LLM Optimized.
+                Python & TypeScript Native.
               </motion.h2>
               <motion.p variants={fadeInUp} className="text-muted-foreground text-base sm:text-lg leading-relaxed">
-                ZON is built for the Python ecosystem. It integrates seamlessly with your existing data pipelines and LLM workflows.
+                ZON is built for the modern stack. Whether you're in Python or Node.js, it integrates seamlessly with your existing data pipelines and LLM workflows.
               </motion.p>
               <ul className="space-y-3 sm:space-y-4 mt-6 sm:mt-8">
-                {["Native Python support", "Optimized for token efficiency", "Human-readable format", "Type-safe serialization"].map((item, i) => (
+                {["Native Python & TypeScript support", "Optimized for token efficiency", "Human-readable format", "Type-safe serialization"].map((item, i) => (
                   <motion.li
                     key={item}
                     variants={fadeInUp}
@@ -520,21 +521,39 @@ sam,5.1,180,3,Wildflower Loop,T`}</pre>
             >
               <div className="absolute -inset-1 bg-gradient-to-r from-gray-200 to-gray-100 rounded-2xl blur opacity-20 transition duration-1000 group-hover:opacity-40"></div>
               <div className="relative rounded-xl border border-border/50 bg-card shadow-2xl overflow-hidden transform transition-transform duration-500 hover:scale-[1.01]">
-                <div className="flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-3 border-b border-border/50 bg-muted/30">
-                  <div className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-[#FF5F56]"></div>
-                  <div className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-[#FFBD2E]"></div>
-                  <div className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-[#27C93F]"></div>
-                  <div className="ml-2 text-xs text-muted-foreground font-medium">quick_start.py</div>
-                </div>
-                <div className="overflow-x-auto">
-                  <CodeBlock
-                    code={quickStartCode || "# Loading example..."}
-                    language="python"
-                    filename="quick_start.py"
-                    className="border-0 rounded-none bg-transparent text-xs sm:text-sm"
-                    hideHeader={true}
-                  />
-                </div>
+                <Tabs defaultValue="python" className="w-full">
+                  <div className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3 border-b border-border/50 bg-muted/30">
+                    <div className="flex items-center gap-2">
+                      <div className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-[#FF5F56]"></div>
+                      <div className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-[#FFBD2E]"></div>
+                      <div className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-[#27C93F]"></div>
+                    </div>
+                    <TabsList className="h-7 bg-background/50">
+                      <TabsTrigger value="python" className="text-xs px-2 h-5">Python</TabsTrigger>
+                      <TabsTrigger value="typescript" className="text-xs px-2 h-5">TypeScript</TabsTrigger>
+                    </TabsList>
+                  </div>
+                  <div className="overflow-x-auto">
+                    <TabsContent value="python" className="mt-0">
+                      <CodeBlock
+                        code={quickStartCode || "# Loading example..."}
+                        language="python"
+                        filename="quick_start.py"
+                        className="border-0 rounded-none bg-transparent text-xs sm:text-sm"
+                        hideHeader={true}
+                      />
+                    </TabsContent>
+                    <TabsContent value="typescript" className="mt-0">
+                      <CodeBlock
+                        code={quickStartCodeTs || "// Loading example..."}
+                        language="typescript"
+                        filename="quick_start.ts"
+                        className="border-0 rounded-none bg-transparent text-xs sm:text-sm"
+                        hideHeader={true}
+                      />
+                    </TabsContent>
+                  </div>
+                </Tabs>
               </div>
             </motion.div>
           </div>
@@ -793,8 +812,8 @@ hikes[3]{id,name,distanceKm,elevationGain,companion,wasSunny}:
                   Does ZON support other languages?
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground">
-                  Currently, ZON is optimized for Python, but the format specification is open and language-agnostic.
-                  Community drivers for other languages are welcome!
+                  Yes! ZON has first-class support for both Python and TypeScript/JavaScript.
+                  The format specification is open and language-agnostic.
                 </AccordionContent>
               </AccordionItem>
 

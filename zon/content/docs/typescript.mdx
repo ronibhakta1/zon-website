@@ -1,0 +1,107 @@
+---
+title: ZON for TypeScript/JavaScript
+description: Official TypeScript/JavaScript implementation of the ZON format.
+---
+
+# ZON Format for TypeScript/JavaScript
+
+Zero Overhead Notation - A human-readable data serialization format optimized for LLM token efficiency.
+
+## Installation
+
+### From npm
+
+```bash
+npm install zon-format
+```
+
+### From yarn
+
+```bash
+yarn add zon-format
+```
+
+## Quick Start
+
+```typescript
+import { encode, decode } from 'zon-format';
+
+const data = { message: "Hello ZON!" };
+const encoded = encode(data);
+console.log(encoded); // message:Hello ZON!
+
+const decoded = decode(encoded);
+console.log(decoded); // { message: "Hello ZON!" }
+```
+
+## API Reference
+
+### `encode(data, anchorInterval?)`
+
+Encodes a JavaScript object or array into a ZON-formatted string.
+
+- **data** (any): The input data to encode. Must be JSON-serializable.
+- **anchorInterval** (number, optional): Legacy parameter, defaults to 50. Not used in v1.0.1.
+
+### `decode(zonStr)`
+
+Decodes a ZON-formatted string back into a JavaScript object or array.
+
+- **zonStr** (string): The ZON-encoded string to decode.
+
+## Examples
+
+### Array of Objects (Table Format)
+
+```typescript
+import { encode, decode } from 'zon-format';
+
+const products = [
+  { id: 1, name: "Laptop", price: 999, inStock: true },
+  { id: 2, name: "Mouse", price: 29, inStock: true },
+  { id: 3, name: "Keyboard", price: 79, inStock: false }
+];
+
+const encoded = encode(products);
+console.log(encoded);
+// Output:
+// @data(3):id,inStock,name,price
+// 1,T,Laptop,999
+// 2,T,Mouse,29
+// 3,F,Keyboard,79
+
+const decoded = decode(encoded);
+// decoded === products (exact match)
+```
+
+### LLM Integration Example
+
+```typescript
+import { encode } from 'zon-format';
+import OpenAI from 'openai';
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+// Prepare data
+const users = [
+  { id: 1, name: "Alice", purchases: 15, total: 1500 },
+  { id: 2, name: "Bob", purchases: 8, total: 800 },
+  // ... 100 more users
+];
+
+// Compress with ZON (saves tokens = saves money!)
+const zonData = encode(users);
+
+// Use in prompt
+const response = await openai.chat.completions.create({
+  model: "gpt-4",
+  messages: [
+    { role: "system", content: "You will receive data in ZON format. Decode mentally and analyze." },
+    { role: "user", content: `Analyze this user data:\n\n${zonData}\n\nWhat's the average purchase total?` }
+  ]
+});
+
+console.log(response.choices[0].message.content);
+```
+
+For more details, visit the [GitHub repository](https://github.com/ZON-Format/zon-TS).

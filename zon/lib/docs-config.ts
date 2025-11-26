@@ -1,6 +1,7 @@
 export const docsMap: Record<string, string> = {
   "index": "README.md",
   "vs-toon": "content/docs/vs-toon.mdx",
+  "typescript": "content/docs/typescript.mdx",
   "changelog": "CHANGELOG.md",
   "contributing": "CONTRIBUTING.md",
 }
@@ -22,6 +23,7 @@ export function getDocsNav(): NavSection[] {
       items: [
         { title: "Introduction", href: "/docs" },
         { title: "ZON vs TOON", href: "/docs/vs-toon" },
+        { title: "TypeScript Support", href: "/docs/typescript" },
         { title: "What is ZON?", href: "/docs#-what-is-zon" },
         { title: "Quick Start", href: "/docs#-quick-start" },
         { title: "Installation", href: "/docs#-installation" },
