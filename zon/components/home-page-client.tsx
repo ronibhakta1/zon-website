@@ -158,8 +158,8 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
                   </div>
                 ))}
               </Marquee>
-              <div className="pointer-events-none absolute inset-y-0 left-0 w-1/6 sm:w-1/3 bg-gradient-to-r from-zinc-100 dark:from-background"></div>
-              <div className="pointer-events-none absolute inset-y-0 right-0 w-1/6 sm:w-1/3 bg-gradient-to-l from-zinc-100 dark:from-background"></div>
+              <div className="pointer-events-none absolute inset-y-0 left-0 w-1/6 sm:w-1/3 bg-gradient-to-r from-zinc-100 to-transparent z-10"></div>
+              <div className="pointer-events-none absolute inset-y-0 right-0 w-1/6 sm:w-1/3 bg-gradient-to-l from-zinc-100 to-transparent z-10"></div>
             </div>
           </motion.div>
         </div>
