@@ -585,19 +585,18 @@ sam,5.1,180,3,Wildflower Loop,T`}</pre>
           >
             {features.map((feature, index) => (
               <motion.div key={index} variants={fadeInUp}>
-                <Card className="bg-background border-border/40 hover:border-primary/30 transition-all duration-200 hover:shadow-xl hover:-translate-y-1 h-full group">
-                  <CardHeader>
-                    <div className="h-12 w-12 rounded-xl bg-secondary flex items-center justify-center mb-4 group-hover:bg-primary/10 group-hover:scale-105 transition-all duration-200">
-                      <feature.icon className="h-6 w-6 text-primary group-hover:text-primary transition-colors duration-200" />
+                <div className="group relative h-full p-6 sm:p-8 rounded-3xl bg-zinc-50/50 border border-zinc-200/60 hover:border-primary/20 hover:bg-white hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
+                  <div className="relative z-10 flex flex-col h-full">
+                    <div className="mb-6 inline-flex items-center justify-center h-12 w-12 rounded-2xl bg-white shadow-sm border border-zinc-100 group-hover:scale-110 group-hover:border-primary/20 group-hover:shadow-md group-hover:shadow-primary/10 transition-all duration-300">
+                      <feature.icon className="h-6 w-6 text-zinc-600 group-hover:text-primary transition-colors duration-300" />
                     </div>
-                    <CardTitle className="text-xl">{feature.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground leading-relaxed">
+                    <h3 className="text-xl font-bold mb-3 text-zinc-900 tracking-tight">{feature.title}</h3>
+                    <p className="text-muted-foreground leading-relaxed text-sm sm:text-base flex-grow">
                       {feature.description}
                     </p>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               </motion.div>
             ))}
           </motion.div>
