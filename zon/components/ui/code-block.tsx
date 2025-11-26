@@ -29,7 +29,7 @@ export function CodeBlock({
           <div className="ml-4 text-xs text-muted-foreground/80"></div>
         </div>
       )}
-      <div className="p-5 overflow-x-auto bg-muted/20">
+      <div className="p-3 sm:p-5 overflow-x-auto bg-muted/20">
         <pre
           className={cn(
             "text-xs sm:text-sm font-mono leading-relaxed whitespace-pre text-foreground",

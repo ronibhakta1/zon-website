@@ -100,11 +100,22 @@ export function HomePageClient({ quickStartCode, quickStartCodeTs, initialStars 
             className="max-w-4xl"
             style={{ willChange: 'opacity, transform' }}
           >
-            <motion.div variants={fadeInUp} className="mb-6 sm:mb-8 flex justify-center">
+            <motion.div variants={fadeInUp} className="mb-6 sm:mb-8 flex flex-col items-center gap-3">
               <Badge variant="secondary" className="px-4 py-2 text-xs sm:text-sm font-medium rounded-full border border-border/40 bg-secondary/60 backdrop-blur-sm shadow-sm hover:shadow-md hover:bg-secondary/80 transition-all duration-200">
                 <span className="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"></span>
                 v1.0 Entropy Engine
               </Badge>
+              <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground font-medium animate-in fade-in slide-in-from-bottom-2 duration-700 delay-200 fill-mode-backwards">
+                <span className="opacity-80">Supported in:</span>
+                <div className="flex items-center gap-2">
+                  <span className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[#3776AB]/10 text-[#3776AB] border border-[#3776AB]/20 shadow-sm">
+                    Python
+                  </span>
+                  <span className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[#3178C6]/10 text-[#3178C6] border border-[#3178C6]/20 shadow-sm">
+                    TypeScript
+                  </span>
+                </div>
+              </div>
             </motion.div>
             <motion.h1 variants={fadeInUp} className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-primary mb-4 sm:mb-6 leading-[0.95]">
               <span className="text-primary">ZON</span> <br className="hidden sm:inline" />
@@ -501,11 +512,11 @@ sam,5.1,180,3,Wildflower Loop,T`}</pre>
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.4, delay: 0.15 }}
-              className="relative w-full max-w-full mt-8 lg:mt-0"
+              className="relative w-full max-w-full mt-8 lg:mt-0 min-w-0"
             >
               <div className="relative rounded-xl border border-border/40 bg-background shadow-xl overflow-hidden">
                 <Tabs defaultValue="python" className="w-full">
-                  <div className="flex items-center px-0 border-b border-border/40 bg-muted/40">
+                  <div className="flex items-center px-0 border-b border-border/40 bg-muted/40 overflow-x-auto no-scrollbar">
                     <TabsList className="h-auto w-full justify-start bg-transparent p-0 rounded-none">
                       <TabsTrigger 
                         value="python" 
