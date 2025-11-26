@@ -496,50 +496,40 @@ sam,5.1,180,3,Wildflower Loop,T`}</pre>
               <motion.p variants={fadeInUp} className="text-muted-foreground text-base sm:text-lg leading-relaxed">
                 ZON is built for the modern stack. Whether you're in Python or Node.js, it integrates seamlessly with your existing data pipelines and LLM workflows.
               </motion.p>
-              <ul className="space-y-3 sm:space-y-4 mt-6 sm:mt-8">
-                {["Native Python & TypeScript support", "Optimized for token efficiency", "Human-readable format", "Type-safe serialization"].map((item, i) => (
-                  <motion.li
-                    key={item}
-                    variants={fadeInUp}
-                    custom={i}
-                    className="flex items-center gap-3"
-                  >
-                    <div className="h-5 w-5 sm:h-6 sm:w-6 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
-                      <Check className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-primary-foreground" />
-                    </div>
-                    <span className="font-medium text-sm sm:text-base">{item}</span>
-                  </motion.li>
-                ))}
-              </ul>
+
             </motion.div>
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.4, delay: 0.15 }}
-              className="relative group w-full max-w-full mt-8 lg:mt-0 overflow-hidden"
+              className="relative w-full max-w-full mt-8 lg:mt-0"
             >
-              <div className="absolute -inset-1 bg-gradient-to-r from-gray-200 to-gray-100 rounded-2xl blur opacity-20 transition duration-1000 group-hover:opacity-40"></div>
-              <div className="relative rounded-xl border border-border/50 bg-card shadow-2xl overflow-hidden transform transition-transform duration-500 hover:scale-[1.01]">
+              <div className="relative rounded-xl border border-border/40 bg-background shadow-xl overflow-hidden">
                 <Tabs defaultValue="python" className="w-full">
-                  <div className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3 border-b border-border/50 bg-muted/30">
-                    <div className="flex items-center gap-2">
-                      <div className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-[#FF5F56]"></div>
-                      <div className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-[#FFBD2E]"></div>
-                      <div className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-[#27C93F]"></div>
-                    </div>
-                    <TabsList className="h-7 bg-background/50">
-                      <TabsTrigger value="python" className="text-xs px-2 h-5">Python</TabsTrigger>
-                      <TabsTrigger value="typescript" className="text-xs px-2 h-5">TypeScript</TabsTrigger>
+                  <div className="flex items-center px-0 border-b border-border/40 bg-muted/40">
+                    <TabsList className="h-auto w-full justify-start bg-transparent p-0 rounded-none">
+                      <TabsTrigger 
+                        value="python" 
+                        className="rounded-none border-r border-border/40 px-6 py-3 text-xs sm:text-sm data-[state=active]:bg-background data-[state=active]:shadow-none data-[state=active]:text-primary font-mono text-muted-foreground"
+                      >
+                        quick_start.py
+                      </TabsTrigger>
+                      <TabsTrigger 
+                        value="typescript" 
+                        className="rounded-none border-r border-border/40 px-6 py-3 text-xs sm:text-sm data-[state=active]:bg-background data-[state=active]:shadow-none data-[state=active]:text-primary font-mono text-muted-foreground"
+                      >
+                        quick_start.ts
+                      </TabsTrigger>
                     </TabsList>
                   </div>
-                  <div className="overflow-x-auto">
+                  <div className="overflow-x-auto bg-background">
                     <TabsContent value="python" className="mt-0">
                       <CodeBlock
                         code={quickStartCode || "# Loading example..."}
                         language="python"
                         filename="quick_start.py"
-                        className="border-0 rounded-none bg-transparent text-xs sm:text-sm"
+                        className="border-0 rounded-none bg-transparent shadow-none text-xs sm:text-sm"
                         hideHeader={true}
                       />
                     </TabsContent>
@@ -548,7 +538,7 @@ sam,5.1,180,3,Wildflower Loop,T`}</pre>
                         code={quickStartCodeTs || "// Loading example..."}
                         language="typescript"
                         filename="quick_start.ts"
-                        className="border-0 rounded-none bg-transparent text-xs sm:text-sm"
+                        className="border-0 rounded-none bg-transparent shadow-none text-xs sm:text-sm"
                         hideHeader={true}
                       />
                     </TabsContent>
@@ -606,161 +596,7 @@ sam,5.1,180,3,Wildflower Loop,T`}</pre>
       </section>
 
 
-      {/* Format Comparison Section */}
-      <section className="py-12 sm:py-16 md:py-20 border-b border-border/40">
-        <div className="container mx-auto max-w-5xl px-4">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={fadeInUp}
-            className="text-center mb-8 sm:mb-10">
-            <Badge variant="secondary" className="mb-4">Format Comparison</Badge>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
-              JSON vs ZON vs TOON
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              See how ZON compares with the same data
-            </p>
-          </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.4, delay: 0.15 }}
-          >
-            <Tabs defaultValue="json" className="w-full">
-              <TabsList className="grid w-full grid-cols-3 mb-6 h-auto">
-                <TabsTrigger value="json" className="text-xs sm:text-sm py-2 sm:py-2.5">
-                  <span className="hidden sm:inline">JSON (229)</span>
-                  <span className="sm:hidden">JSON</span>
-                </TabsTrigger>
-                <TabsTrigger value="zon" className="text-xs sm:text-sm py-2 sm:py-2.5">
-                  <span className="hidden sm:inline">ZON (96)</span>
-                  <span className="sm:hidden">ZON</span>
-                </TabsTrigger>
-                <TabsTrigger value="toon" className="text-xs sm:text-sm py-2 sm:py-2.5">
-                  <span className="hidden sm:inline">TOON (104)</span>
-                  <span className="sm:hidden">TOON</span>
-                </TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="json" className="space-y-3">
-                <div className="text-xs sm:text-sm text-muted-foreground">
-                  GPT-5 Tokenizer: 229 tokens • 680 bytes
-                </div>
-                <div className="max-h-[400px] overflow-y-auto">
-                  <CodeBlock
-                    code={`{
-  "context": {
-    "task": "Our favorite hikes together",
-    "location": "Boulder",
-    "season": "spring_2025"
-  },
-  "friends": [
-    "ana",
-    "luis",
-    "sam"
-  ],
-  "hikes": [
-    {
-      "id": 1,
-      "name": "Blue Lake Trail",
-      "distanceKm": 7.5,
-      "elevationGain": 320,
-      "companion": "ana",
-      "wasSunny": true
-    },
-    {
-      "id": 2,
-      "name": "Ridge Overlook",
-      "distanceKm": 9.2,
-      "elevationGain": 540,
-      "companion": "luis",
-      "wasSunny": false
-    },
-    {
-      "id": 3,
-      "name": "Wildflower Loop",
-      "distanceKm": 5.1,
-      "elevationGain": 180,
-      "companion": "sam",
-      "wasSunny": true
-    }
-  ]
-}`}
-                    language="json"
-                    filename="data.json"
-                  />
-                </div>
-              </TabsContent>
-
-              <TabsContent value="zon" className="space-y-3">
-                <div className="text-xs sm:text-sm text-muted-foreground">
-                  GPT-5 Tokenizer: 96 tokens • 264 bytes • <span className="text-primary font-semibold">58.1% reduction</span>
-                </div>
-                <div className="max-h-[400px] overflow-y-auto">
-                  <CodeBlock
-                    code={`context:"{task:Our favorite hikes together,location:Boulder,season:spring_2025}"
-friends:"[ana,luis,sam]"
-
-@hikes(3):companion,distanceKm,elevationGain,id,name,wasSunny
-ana,7.5,320,1,Blue Lake Trail,T
-luis,9.2,540,2,Ridge Overlook,F
-sam,5.1,180,3,Wildflower Loop,T`}
-                    language="zon"
-                    filename="data.zon"
-                  />
-                </div>
-              </TabsContent>
-
-              <TabsContent value="toon" className="space-y-3">
-                <div className="text-xs sm:text-sm text-muted-foreground">
-                  GPT-5 Tokenizer: 104 tokens • 286 bytes • <span className="text-amber-600 font-semibold">54.6% reduction</span>
-                </div>
-                <div className="max-h-[400px] overflow-y-auto">
-                  <CodeBlock
-                    code={`context:
-  task: Our favorite hikes together
-  location: Boulder
-  season: spring_2025
-friends[3]: ana,luis,sam
-hikes[3]{id,name,distanceKm,elevationGain,companion,wasSunny}:
-  1,Blue Lake Trail,7.5,320,ana,true
-  2,Ridge Overlook,9.2,540,luis,false
-  3,Wildflower Loop,5.1,180,sam,true`}
-                    language="yaml"
-                    filename="data.toon"
-                  />
-                </div>
-              </TabsContent>
-            </Tabs>
-
-            {/* Comparison Summary */}
-            <div className="mt-6 sm:mt-8 p-4 sm:p-6 rounded-lg bg-secondary/20 border border-border/50">
-              <h3 className="text-sm sm:text-base font-semibold mb-3 sm:mb-4">Token Analysis Summary</h3>
-              <div className="grid grid-cols-3 gap-3 sm:gap-4">
-                <div className="text-center p-3 sm:p-4 rounded bg-background">
-                  <div className="text-lg sm:text-2xl font-bold text-muted-foreground">229</div>
-                  <div className="text-xs sm:text-sm text-muted-foreground mt-1">JSON tokens</div>
-                  <div className="text-xs text-muted-foreground mt-0.5">baseline</div>
-                </div>
-                <div className="text-center p-3 sm:p-4 rounded bg-primary/10 border-2 border-primary">
-                  <div className="text-lg sm:text-2xl font-bold text-primary">96</div>
-                  <div className="text-xs sm:text-sm font-medium mt-1">ZON tokens</div>
-                  <div className="text-xs text-primary font-semibold mt-0.5">7.7% better</div>
-                </div>
-                <div className="text-center p-3 sm:p-4 rounded bg-background">
-                  <div className="text-lg sm:text-2xl font-bold text-amber-600">104</div>
-                  <div className="text-xs sm:text-sm text-muted-foreground mt-1">TOON tokens</div>
-                  <div className="text-xs text-muted-foreground mt-0.5">8 more</div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
 
       {/* FAQ Section with Accordion */}
       <section className="py-16 sm:py-24 border-b border-border/40 bg-secondary/20">
