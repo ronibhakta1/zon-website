@@ -150,16 +150,16 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
             className="mt-10 sm:mt-16 flex flex-col items-center gap-3"
           >
             <p className="text-xs text-muted-foreground font-medium mb-4">Works with</p>
-            <div className="relative flex w-full max-w-lg flex-col items-center justify-center overflow-hidden rounded-lg bg-background/0">
-              <Marquee pauseOnHover className="[--duration:20s]">
+            <div className="relative flex w-full max-w-lg flex-col items-center justify-center overflow-hidden rounded-lg">
+              <Marquee pauseOnHover className="py-2">
                 {["LangChain", "OpenAI", "DSPy", "LlamaIndex", "AutoGen", "Vercel AI", "Mistral", "Anthropic"].map((item) => (
-                  <div key={item} className="mx-4 flex items-center gap-2 opacity-60 hover:opacity-100 transition-opacity">
+                  <div key={item} className="mx-6 flex items-center gap-2 opacity-60 hover:opacity-100 transition-opacity whitespace-nowrap">
                     <span className="text-sm font-medium">{item}</span>
                   </div>
                 ))}
               </Marquee>
-              <div className="pointer-events-none absolute inset-y-0 left-0 w-1/6 sm:w-1/3 bg-gradient-to-r from-zinc-100 to-zinc-100/0 z-10"></div>
-              <div className="pointer-events-none absolute inset-y-0 right-0 w-1/6 sm:w-1/3 bg-gradient-to-l from-zinc-100 to-zinc-100/0 z-10"></div>
+              <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-zinc-100 to-zinc-100/0"></div>
+              <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-zinc-100 to-zinc-100/0"></div>
             </div>
           </motion.div>
         </div>

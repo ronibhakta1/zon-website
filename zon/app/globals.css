@@ -277,10 +277,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .animate-marquee {
-  animation: marquee var(--duration) linear infinite;
+  animation: marquee 20s linear infinite;
 }
 
 .animate-marquee-vertical {
-  animation: marquee-vertical var(--duration) linear infinite;
+  animation: marquee-vertical 20s linear infinite;
 }
 
