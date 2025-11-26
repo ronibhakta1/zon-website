@@ -102,7 +102,7 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
             style={{ willChange: 'opacity, transform' }}
           >
             <motion.div variants={fadeInUp} className="mb-6 sm:mb-8 flex justify-center">
-              <Badge variant="secondary" className="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-full border border-border/50 bg-secondary/50 backdrop-blur-sm">
+              <Badge variant="secondary" className="px-4 py-2 text-xs sm:text-sm font-medium rounded-full border border-border/40 bg-secondary/60 backdrop-blur-sm shadow-sm hover:shadow-md hover:bg-secondary/80 transition-all duration-200">
                 <span className="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"></span>
                 v1.0 Entropy Engine
               </Badge>
@@ -123,12 +123,12 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
             style={{ willChange: 'opacity, transform' }}
           >
             <Link href="/docs" className="w-full sm:w-auto">
-              <Button size="lg" className="w-full sm:w-auto h-11 sm:h-12 px-8 text-base shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5">
+              <Button size="lg" className="w-full sm:w-auto h-12 px-8 text-base font-semibold shadow-md hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
                 Get Started Free →
               </Button>
             </Link>
             <Link href="https://github.com/ZON-Format/ZON" target="_blank" className="w-full sm:w-auto">
-              <Button variant="outline" size="lg" className="w-full sm:w-auto h-11 sm:h-12 px-6 text-base bg-background/50 backdrop-blur-sm hover:bg-secondary/80 transition-all duration-300 flex items-center justify-center gap-2">
+              <Button variant="outline" size="lg" className="w-full sm:w-auto h-12 px-6 text-base font-medium bg-background/50 backdrop-blur-sm hover:bg-secondary/90 border-border/60 hover:border-border transition-all duration-200 flex items-center justify-center gap-2 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
                 <svg className="h-4 w-4 sm:h-5 sm:w-5" fill="currentColor" viewBox="0 0 24 24">
                   <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
                 </svg>
@@ -220,11 +220,11 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.4 }}
             >
-              <Card className="h-full hover:border-border/80 transition-colors">
+              <Card className="h-full border-border/50 hover:border-border hover:shadow-lg transition-all duration-200">
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-sm sm:text-base font-semibold text-muted-foreground">JSON</CardTitle>
-                    <Badge variant="secondary" className="font-mono text-xs">229 tokens</Badge>
+                    <Badge variant="secondary" className="font-mono text-xs px-3 py-1 shadow-sm">229 tokens</Badge>
                   </div>
                 </CardHeader>
                 <CardContent className="pt-0">
@@ -261,12 +261,12 @@ export function HomePageClient({ quickStartCode, basicEncodingCode, advancedUsag
               transition={{ duration: 0.4, delay: 0.1 }}
               className="min-w-0"
             >
-              <Card className="relative h-full border-primary/50 bg-primary/5 hover:border-primary transition-colors overflow-hidden">
+              <Card className="relative h-full border-primary/40 bg-primary/5 hover:border-primary/60 hover:shadow-xl shadow-md transition-all duration-200 overflow-hidden">
                 <BorderBeam size={250} duration={12} delay={9} />
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-sm sm:text-base font-semibold text-primary">ZON</CardTitle>
-                    <Badge className="font-mono text-xs shrink-0">96 ⚡</Badge>
+                    <Badge className="font-mono text-xs shrink-0 px-3 py-1 shadow-sm">96 ⚡</Badge>
                   </div>
                 </CardHeader>
                 <CardContent className="pt-0 overflow-hidden">
@@ -567,10 +567,10 @@ sam,5.1,180,3,Wildflower Loop,T`}</pre>
           >
             {features.map((feature, index) => (
               <motion.div key={index} variants={fadeInUp}>
-                <Card className="bg-background border-border/50 hover:border-primary/20 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 h-full">
+                <Card className="bg-background border-border/40 hover:border-primary/30 transition-all duration-200 hover:shadow-xl hover:-translate-y-1 h-full group">
                   <CardHeader>
-                    <div className="h-12 w-12 rounded-xl bg-secondary flex items-center justify-center mb-4 group-hover:bg-primary/10 transition-colors">
-                      <feature.icon className="h-6 w-6 text-primary" />
+                    <div className="h-12 w-12 rounded-xl bg-secondary flex items-center justify-center mb-4 group-hover:bg-primary/10 group-hover:scale-105 transition-all duration-200">
+                      <feature.icon className="h-6 w-6 text-primary group-hover:text-primary transition-colors duration-200" />
                     </div>
                     <CardTitle className="text-xl">{feature.title}</CardTitle>
                   </CardHeader>
