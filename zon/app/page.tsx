@@ -1,11 +1,4 @@
-import { getDocBySlug } from "@/lib/docs"
 import { HomePageClient } from "@/components/home-page-client"
-
-function extractCodeBlock(content: string, language: string, index: number = 0): string {
-  const regex = new RegExp(`\`\`\`${language}\\n([\\s\\S]*?)\`\`\``, 'g')
-  const matches = [...content.matchAll(regex)]
-  return matches[index] ? matches[index][1].trim() : ""
-}
 
 async function getGitHubStars() {
   try {
@@ -55,12 +48,8 @@ const original = decode(compressed);
 console.log(original); // Exact match!`
 
 export default async function Home() {
-  const readmeContent = await getDocBySlug("index") || ""
   const stars = await getGitHubStars()
   
-  const basicEncodingCode = extractCodeBlock(readmeContent, "python", 3) // Step 2: Basic Encoding
-  const advancedUsageCode = extractCodeBlock(readmeContent, "python", 6) // Advanced Usage
-
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
@@ -91,8 +80,6 @@ export default async function Home() {
       <HomePageClient 
         quickStartCode={quickStartCode}
         quickStartCodeTs={quickStartCodeTs}
-        basicEncodingCode={basicEncodingCode}
-        advancedUsageCode={advancedUsageCode}
         initialStars={stars}
       />
     </>

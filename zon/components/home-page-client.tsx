@@ -62,12 +62,10 @@ const staggerContainer: Variants = {
 interface HomePageClientProps {
   quickStartCode: string
   quickStartCodeTs: string
-  basicEncodingCode: string
-  advancedUsageCode: string
   initialStars: number
 }
 
-export function HomePageClient({ quickStartCode, quickStartCodeTs, basicEncodingCode, advancedUsageCode, initialStars }: HomePageClientProps) {
+export function HomePageClient({ quickStartCode, quickStartCodeTs, initialStars }: HomePageClientProps) {
   const [stars, setStars] = useState(initialStars)
 
   useEffect(() => {
