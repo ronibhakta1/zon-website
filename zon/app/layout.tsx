@@ -20,9 +20,9 @@ export const metadata: Metadata = {
     default: "ZON - Zero Overhead Notation",
     template: "%s | ZON"
   },
-  description: "A human-readable, efficient data format for the modern web. 30-40% leaner than JSON for LLMs.",
+  description: "ZON is a human-readable, token-efficient data format designed for LLMs. A superior alternative to JSON, YAML, and TOON that saves 30-40% on API costs.",
   metadataBase: new URL('https://zonformat.org'),
-  keywords: ["ZON", "Data Format", "JSON Alternative", "LLM Optimization", "Token Efficiency", "Zero Overhead Notation", "TOON vs ZON", "TOON alternative", "Better than TOON", "ZON Format GitHub"],
+  keywords: ["ZON", "Data Format", "JSON Alternative", "LLM Optimization", "Token Efficiency", "Zero Overhead Notation", "TOON vs ZON", "TOON alternative", "Better than TOON", "ZON Format GitHub", "JSON", "YAML", "XML", "CSV", "Protobuf", "Avro", "MsgPack", "BSON", "TOML", "Data Serialization", "LLM Data Format", "JSON vs ZON", "YAML vs ZON", "Best Data Format for LLMs, TOON vs JSON, TOON vs YAML, TOON vs XML, TOON vs CSV, TOON vs Protobuf, TOON vs Avro, TOON vs MsgPack, TOON vs BSON, TOON vs TOML, TOON vs CSV, TOON vs Protobuf, TOON vs Avro, TOON vs MsgPack, TOON vs BSON, TOON vs TOML"],
   authors: [{ name: "Roni Bhakta" }],
   creator: "Roni Bhakta",
   publisher: "Roni Bhakta",
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://zonformat.org",
     title: "ZON - Zero Overhead Notation",
-    description: "A human-readable, efficient data format for the modern web. Optimized for LLMs.",
+    description: "ZON is a human-readable, token-efficient data format designed for LLMs. A superior alternative to JSON, YAML, and TOON that saves 30-40% on API costs.",
     siteName: "ZON",
     images: [
       {
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "ZON - Zero Overhead Notation",
-    description: "A human-readable, efficient data format for the modern web. Optimized for LLMs.",
+    description: "ZON is a human-readable, token-efficient data format designed for LLMs. A superior alternative to JSON, YAML, and TOON that saves 30-40% on API costs.",
     creator: "@ronibhakta", // Assuming this handle, can be updated
     images: ["/og-image.png"],
   },
