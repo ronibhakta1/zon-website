@@ -2,10 +2,10 @@
 
 export function Footer() {
   return (
-    <footer className="border-t border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950 py-6 md:py-0">
-      <div className="container flex flex-col items-center justify-center gap-4 md:h-24 md:flex-row">
-        <div className="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
-          <p className="text-center text-sm leading-loose text-zinc-500 dark:text-zinc-400 md:text-center">
+    <footer className="border-t border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950 py-6">
+      <div className="container mx-auto flex flex-col items-center justify-center gap-4">
+        <div className="flex flex-col items-center gap-1 px-8">
+          <p className="text-center text-sm leading-normal text-zinc-500 dark:text-zinc-400 md:text-center">
             Built by the ZON community. The source code is available on{" "}
             <a
               href="https://github.com/ZON-Format/ZON"
@@ -16,6 +16,12 @@ export function Footer() {
               GitHub
             </a>
             .
+          </p>
+          <p className="text-center text-sm leading-normal text-zinc-500 dark:text-zinc-400 md:text-center">
+            Released under the MIT License.
+          </p>
+          <p className="text-center text-sm leading-normal text-zinc-500 dark:text-zinc-400 md:text-center">
+            Copyright © 2025-PRESENT <a href="https://ronibhakta.in" target="_blank" rel="noreferrer" className="font-medium underline underline-offset-4 text-zinc-900 dark:text-zinc-50 hover:text-zinc-700 dark:hover:text-zinc-300">Roni Bhakta</a>. All rights reserved.
           </p>
         </div>
       </div>

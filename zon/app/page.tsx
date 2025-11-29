@@ -13,39 +13,7 @@ async function getGitHubStars() {
   }
 }
 
-const quickStartCode = `import zon
 
-# Your data
-data = {
-  "friends": ["ana", "luis", "sam"],
-  "hikes": [
-    {"name": "Blue Lake Trail", "distance": 7.5, "companion": "ana"},
-    {"name": "Ridge Overlook", "distance": 9.2, "companion": "luis"},
-    {"name": "Wildflower Loop", "distance": 5.1, "companion": "sam"}
-  ]
-}
-
-# Encode & decode
-compressed = zon.encode(data)
-original = zon.decode(compressed)
-assert original == data  # ✓ Perfect!`
-
-const quickStartCodeTs = `import { encode, decode } from 'zon-format';
-
-// Your data
-const data = {
-  friends: ["ana", "luis", "sam"],
-  hikes: [
-    { name: "Blue Lake Trail", distance: 7.5, companion: "ana" },
-    { name: "Ridge Overlook", distance: 9.2, companion: "luis" },
-    { name: "Wildflower Loop", distance: 5.1, companion: "sam" }
-  ]
-};
-
-// Encode & decode
-const compressed = encode(data);
-const original = decode(compressed);
-console.log(original); // Exact match!`
 
 export default async function Home() {
   const stars = await getGitHubStars()
@@ -78,8 +46,6 @@ export default async function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <HomePageClient 
-        quickStartCode={quickStartCode}
-        quickStartCodeTs={quickStartCodeTs}
         initialStars={stars}
       />
     </>

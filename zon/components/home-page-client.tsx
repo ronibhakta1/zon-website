@@ -3,45 +3,15 @@
 import Link from "next/link"
 import { useState, useEffect } from "react"
 import { motion, Variants } from "framer-motion"
-import { Check, Zap, FileText, Code2, Shield } from "lucide-react"
-
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { CodeBlock } from "@/components/ui/code-block"
 import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { BorderBeam } from "@/components/ui/border-beam"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { RetroGrid } from "@/components/ui/retro-grid"
 import { Marquee } from "@/components/ui/marquee"
 import { cn } from "@/lib/utils"
+import { Zap, Shield, Layers, DollarSign } from "lucide-react"
 
-const features = [
-  {
-    title: "Human Readable",
-    description:
-      "Designed to be read and written by humans. No more trailing comma errors or strict quoting rules.",
-    icon: FileText,
-  },
-  {
-    title: "Zero Overhead",
-    description:
-      "Parses faster than JSON in many cases. Optimized for modern LLM tokenizers.",
-    icon: Zap,
-  },
-  {
-    title: "Type Safe",
-    description:
-      "Built-in support for types and schema validation. Catch errors before they happen.",
-    icon: Shield,
-  },
-  {
-    title: "Streaming Ready",
-    description:
-      "First-class support for streaming data. Process large datasets with minimal memory footprint.",
-    icon: Code2,
-  },
-]
+
 
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 20 },
@@ -60,12 +30,10 @@ const staggerContainer: Variants = {
 }
 
 interface HomePageClientProps {
-  quickStartCode: string
-  quickStartCodeTs: string
   initialStars: number
 }
 
-export function HomePageClient({ quickStartCode, quickStartCodeTs, initialStars }: HomePageClientProps) {
+export function HomePageClient({ initialStars }: HomePageClientProps) {
   const [stars, setStars] = useState(initialStars)
 
   useEffect(() => {
@@ -199,531 +167,80 @@ export function HomePageClient({ quickStartCode, quickStartCodeTs, initialStars 
           <div className="absolute left-[85%] top-[75%] text-slate-500 dark:text-slate-400 text-lg font-light">+</div>
           <div className="absolute left-[95%] top-[85%] text-slate-500 dark:text-slate-600 text-lg font-light">+</div>
 
-          {/* Subtle Glow */}
-          <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-primary/5 opacity-40 blur-[100px]"></div>
         </div>
       </section>
 
-      {/* Visual Comparison Section - THE AHA MOMENT */}
-      <section className="py-12 sm:py-20 border-b border-border/40">
+      {/* Meaningful Cards Section */}
+      <section className="py-12 sm:py-20 border-b border-border/40 bg-secondary/20">
         <div className="container mx-auto max-w-6xl px-4">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={fadeInUp}
-            className="text-center mb-12"
-          >
-            <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
-              Same Data, 58% Fewer Tokens
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              Exact same hiking data → Dramatic difference
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 gap-6 sm:gap-8">
-            {/* JSON */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.4 }}
-            >
-              <Card className="h-full border-border/50 hover:border-border hover:shadow-lg transition-all duration-200">
-                <CardHeader className="pb-3">
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-sm sm:text-base font-semibold text-muted-foreground">JSON</CardTitle>
-                    <Badge variant="secondary" className="font-mono text-xs px-3 py-1 shadow-sm">229 tokens</Badge>
-                  </div>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <div className="max-h-[300px] sm:max-h-[400px] overflow-y-auto">
-                    <pre className="text-xs sm:text-sm font-mono text-muted-foreground leading-relaxed overflow-x-auto">{`{
-  "context": {
-    "task": "Our favorite hikes",
-    "location": "Boulder",
-    "season": "spring_2025"
-  },
-  "friends": ["ana", "luis", "sam"],
-  "hikes": [
-    {
-      "id": 1,
-      "name": "Blue Lake Trail",
-      "distanceKm": 7.5,
-      "elevationGain": 320,
-      "companion": "ana",
-      "wasSunny": true
-    }
-    // ... 2 more records
-  ]
-}`}</pre>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            {/* ZON */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.4, delay: 0.1 }}
-              className="min-w-0"
-            >
-              <Card className="relative h-full border-primary/40 bg-primary/5 hover:border-primary/60 hover:shadow-xl shadow-md transition-all duration-200 overflow-hidden">
-                <BorderBeam size={250} duration={12} delay={9} />
-                <CardHeader className="pb-3">
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-sm sm:text-base font-semibold text-primary">ZON</CardTitle>
-                    <Badge className="font-mono text-xs shrink-0 px-3 py-1 shadow-sm">96 ⚡</Badge>
-                  </div>
-                </CardHeader>
-                <CardContent className="pt-0 overflow-hidden">
-                  <div className="max-h-[300px] sm:max-h-[400px] overflow-auto">
-                    <pre className="text-xs sm:text-sm font-mono text-foreground leading-relaxed whitespace-pre-wrap break-all">{`context:"{task:Our favorite hikes,location:Boulder,season:spring_2025}"
-friends:"[ana,luis,sam]"
-
-@hikes(3):companion,distanceKm,elevationGain,id,name,wasSunny
-ana,7.5,320,1,Blue Lake Trail,T
-luis,9.2,540,2,Ridge Overlook,F
-sam,5.1,180,3,Wildflower Loop,T`}</pre>
-                  </div>
-                  <div className="mt-3 pt-3 border-t border-primary/20 flex items-center gap-2 text-[10px] sm:text-xs text-primary font-medium">
-                    <Check className="h-3 w-3 sm:h-3.5 sm:w-3.5 shrink-0" />
-                    <span>58% smaller · readable</span>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Benchmarks Section */}
-      <section id="benchmarks" className="py-12 sm:py-20 border-b border-border/40">
-        <div className="container mx-auto max-w-5xl px-4">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={fadeInUp}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
-              Proven Across Real Datasets
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              From analytics to nested objects, ZON consistently delivers
-            </p>
-          </motion.div>
-
-          <div className="grid sm:grid-cols-2 gap-6 sm:gap-8 mb-8 sm:mb-10">
-            {/* Standard Datasets */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
-              variants={staggerContainer}
-              className="space-y-3 sm:space-y-4"
-            >
-              <div className="flex items-center justify-between mb-3 sm:mb-4">
-                <h3 className="text-lg font-semibold">Standard Datasets</h3>
-                <div className="text-sm text-muted-foreground">vs JSON</div>
-              </div>
-              <div className="space-y-2.5 sm:space-y-3">
-                {[
-                  { name: "analytics.json", reduction: 63.6, color: "from-emerald-500 to-green-600" },
-                  { name: "employees.json", reduction: 56.9, color: "from-blue-500 to-cyan-600" },
-                  { name: "complex_nested.json", reduction: 22.2, color: "from-purple-500 to-pink-600" },
-                ].map((bench, i) => (
-                  <motion.div key={i} variants={fadeInUp}>
-                    <div className="flex items-center justify-between mb-1.5">
-                      <div className="text-xs sm:text-sm font-medium text-foreground truncate pr-2">{bench.name}</div>
-                      <div className="text-base sm:text-lg font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent whitespace-nowrap">
-                        {bench.reduction}%
-                      </div>
-                    </div>
-                    <div className="relative h-2 bg-secondary/50 rounded-full overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${bench.reduction}%` }}
-                        viewport={{ once: true, amount: 0.3 }}
-                        transition={{ duration: 0.8, delay: i * 0.1, ease: [0.4, 0, 0.2, 1] }}
-                        className={`h-full bg-gradient-to-r ${bench.color}`}
-                      />
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Real-World Data */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
-              variants={staggerContainer}
-              className="space-y-3 sm:space-y-4"
-            >
-              <div className="flex items-center justify-between mb-3 sm:mb-4">
-                <h3 className="text-lg font-semibold">Real-World API Data</h3>
-                <div className="text-sm text-muted-foreground">vs JSON</div>
-              </div>
-              <div className="space-y-2.5 sm:space-y-3">
-                {[
-                  { name: "internet_random_users", reduction: 16.7, color: "from-orange-500 to-red-600" },
-                  { name: "internet_posts", reduction: 14.6, color: "from-amber-500 to-orange-600" },
-                  { name: "internet_github_repos", reduction: 16.0, color: "from-violet-500 to-purple-600" },
-                ].map((bench, i) => (
-                  <motion.div key={i} variants={fadeInUp}>
-                    <div className="flex items-center justify-between mb-1.5">
-                      <div className="text-xs sm:text-sm font-medium text-foreground truncate pr-2">{bench.name}</div>
-                      <div className="text-base sm:text-lg font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent whitespace-nowrap">
-                        {bench.reduction}%
-                      </div>
-                    </div>
-                    <div className="relative h-2 bg-secondary/50 rounded-full overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${bench.reduction}%` }}
-                        viewport={{ once: true, amount: 0.3 }}
-                        transition={{ duration: 0.8, delay: i * 0.1, ease: [0.4, 0, 0.2, 1] }}
-                        className={`h-full bg-gradient-to-r ${bench.color}`}
-                      />
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Format Comparison */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={fadeInUp}
-            className="mt-12 sm:mt-16"
-          >
-            <h3 className="text-lg sm:text-xl font-semibold mb-6 text-center">Token Efficiency Comparison</h3>
-            <Card className="bg-background/50 backdrop-blur border-border/50">
-              <CardContent className="p-3 sm:p-6">
-                <div className="space-y-4">
-                  {[
-                    { name: "ZON", score: 123, accuracy: "100%", tokens: 19995, color: "from-primary to-primary/80", highlight: true },
-                    { name: "TOON", score: 118, accuracy: "100%", tokens: 20988, color: "from-purple-500 to-purple-600" },
-                    { name: "CSV", score: 117, accuracy: "100%", tokens: 20500, color: "from-orange-500 to-orange-600" },
-                    { name: "JSON compact", score: 82, accuracy: "92%", tokens: 27300, color: "from-blue-500 to-blue-600" },
-                    { name: "JSON", score: 78, accuracy: "92%", tokens: 28042, color: "from-gray-500 to-gray-600" },
-                  ].map((format, i) => (
-                    <motion.div
-                      key={format.name}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true, amount: 0.3 }}
-                      transition={{ duration: 0.4, delay: i * 0.06 }}
-                      className={cn(
-                        "flex items-center gap-3 sm:gap-4",
-                        format.highlight && "px-2 py-1 -mx-2 rounded-lg bg-primary/5"
-                      )}
-                    >
-                      <div className="w-20 sm:w-24 text-xs sm:text-sm font-mono font-medium text-foreground flex items-center gap-1">
-                        {format.name}
-                        {format.highlight && <span className="text-xs text-primary">★</span>}
-                      </div>
-                      <div className="flex-1 flex items-center gap-2">
-                        <div className="flex-1 h-6 sm:h-7 bg-secondary/30 rounded-full overflow-hidden">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            whileInView={{ width: `${(format.score / 125) * 100}%` }}
-                            viewport={{ once: true, amount: 0.3 }}
-                            transition={{ duration: 0.8, delay: i * 0.08, ease: [0.4, 0, 0.2, 1] }}
-                            className={cn(
-                              "h-full bg-gradient-to-r rounded-full flex items-center justify-end pr-2",
-                              `bg-gradient-to-r ${format.color}`
-                            )}
-                          >
-                            <span className="text-xs font-bold text-white">{format.score}</span>
-                          </motion.div>
-                        </div>
-                        <div className="hidden sm:flex items-center gap-2 sm:gap-4 text-xs text-muted-foreground font-mono">
-                          <span className="w-16">{format.accuracy} acc</span>
-                          <span className="w-20">{format.tokens.toLocaleString()} tokens</span>
-                        </div>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-                <div className="mt-4 text-xs text-muted-foreground text-center">
-                  Efficiency score = (Accuracy % ÷ Tokens) × 10,000. Higher is better.
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={fadeInUp}
-            className="text-center mt-8 sm:mt-12"
-          >
-            <div className="inline-flex flex-col sm:flex-row items-center gap-3 sm:gap-4 rounded-lg bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 px-4 py-3">
-              <div className="flex items-center gap-2">
-                <Zap className="h-4 w-4 text-primary flex-shrink-0" />
-                <div className="text-left">
-                  <div className="text-xs font-medium text-muted-foreground">Average Token Saving</div>
-                  <div className="text-sm sm:text-base font-bold text-primary whitespace-nowrap">29% fewer tokens</div>
-                </div>
-              </div>
-              <div className="hidden sm:block h-8 w-px bg-border/50" />
-              <div className="text-left">
-                <div className="text-xs font-medium text-muted-foreground">vs TOON</div>
-                <div className="text-sm sm:text-base font-bold text-green-600 whitespace-nowrap">5% more efficient</div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Comparison Section - Now showing Python usage */}
-      <section className="py-12 sm:py-20 md:py-24 border-b border-border/40 bg-secondary/20">
-        <div className="container mx-auto max-w-6xl px-4">
-          <div className="grid gap-8 sm:gap-12 lg:grid-cols-2 items-center">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
-              variants={staggerContainer}
-              className="space-y-4 sm:space-y-6"
-            >
-              <motion.h2 variants={fadeInUp} className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
-                Python & TypeScript Native.
-              </motion.h2>
-              <motion.p variants={fadeInUp} className="text-muted-foreground text-base sm:text-lg leading-relaxed">
-                ZON is built for the modern stack. Whether you're in Python or Node.js, it integrates seamlessly with your existing data pipelines and LLM workflows.
-              </motion.p>
-
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.4, delay: 0.15 }}
-              className="relative w-full max-w-full mt-8 lg:mt-0 min-w-0"
-            >
-              <div className="relative rounded-xl border border-border/40 bg-background shadow-xl overflow-hidden">
-                <Tabs defaultValue="python" className="w-full">
-                  <div className="flex items-center px-0 border-b border-border/40 bg-muted/40 overflow-x-auto no-scrollbar">
-                    <TabsList className="h-auto w-full justify-start bg-transparent p-0 rounded-none">
-                      <TabsTrigger 
-                        value="python" 
-                        className="rounded-none border-r border-border/40 px-6 py-3 text-xs sm:text-sm data-[state=active]:bg-background data-[state=active]:shadow-none data-[state=active]:text-primary font-mono text-muted-foreground"
-                      >
-                        quick_start.py
-                      </TabsTrigger>
-                      <TabsTrigger 
-                        value="typescript" 
-                        className="rounded-none border-r border-border/40 px-6 py-3 text-xs sm:text-sm data-[state=active]:bg-background data-[state=active]:shadow-none data-[state=active]:text-primary font-mono text-muted-foreground"
-                      >
-                        quick_start.ts
-                      </TabsTrigger>
-                    </TabsList>
-                  </div>
-                  <div className="overflow-x-auto bg-background">
-                    <TabsContent value="python" className="mt-0">
-                      <CodeBlock
-                        code={quickStartCode || "# Loading example..."}
-                        language="python"
-                        filename="quick_start.py"
-                        className="border-0 rounded-none bg-transparent shadow-none text-xs sm:text-sm"
-                        hideHeader={true}
-                      />
-                    </TabsContent>
-                    <TabsContent value="typescript" className="mt-0">
-                      <CodeBlock
-                        code={quickStartCodeTs || "// Loading example..."}
-                        language="typescript"
-                        filename="quick_start.ts"
-                        className="border-0 rounded-none bg-transparent shadow-none text-xs sm:text-sm"
-                        hideHeader={true}
-                      />
-                    </TabsContent>
-                  </div>
-                </Tabs>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-16 sm:py-24 border-b border-border/40">
-        <div className="container mx-auto max-w-6xl px-4">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={fadeInUp}
-            className="text-center mb-20"
-          >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
-              Why Choose ZON?
-            </h2>
-            <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto">
-              Built for performance, designed for developer happiness.
-            </p>
-          </motion.div>
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.3 }}
             variants={staggerContainer}
-            className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4"
+            className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
           >
-            {features.map((feature, index) => (
-              <motion.div key={index} variants={fadeInUp}>
-                <div 
-                  className="group relative h-full p-6 sm:p-8 rounded-3xl backdrop-blur-sm border hover:shadow-xl hover:shadow-primary/5 transition-all duration-300"
-                  style={{
-                    backgroundColor: "var(--feature-card-bg)",
-                    borderColor: "var(--feature-card-border)",
-                  }}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
-                  <div className="relative z-10 flex flex-col h-full">
-                    <div 
-                      className="mb-6 inline-flex items-center justify-center h-12 w-12 rounded-2xl shadow-sm border group-hover:scale-110 group-hover:border-primary/20 group-hover:shadow-md group-hover:shadow-primary/10 transition-all duration-300"
-                      style={{
-                        backgroundColor: "var(--feature-icon-bg)",
-                        borderColor: "var(--feature-icon-border)",
-                      }}
-                    >
-                      <feature.icon 
-                        className="h-6 w-6 group-hover:text-primary transition-colors duration-300" 
-                        style={{ color: "var(--feature-icon-text)" }}
-                      />
+            {[
+              {
+                title: "Token Efficiency",
+                value: "35-50%",
+                desc: "Reduction vs JSON",
+                icon: Zap,
+                color: "text-amber-500",
+                bg: "bg-amber-500/10",
+                border: "border-amber-500/20"
+              },
+              {
+                title: "LLM Accuracy",
+                value: "100%",
+                desc: "Retrieval Accuracy",
+                icon: Shield,
+                color: "text-emerald-500",
+                bg: "bg-emerald-500/10",
+                border: "border-emerald-500/20"
+              },
+              {
+                title: "Deep Nesting",
+                value: "91%",
+                desc: "Compression on deep objects",
+                icon: Layers,
+                color: "text-blue-500",
+                bg: "bg-blue-500/10",
+                border: "border-blue-500/20"
+              },
+              {
+                title: "Cost Reduction",
+                value: "30%",
+                desc: "Lower API costs",
+                icon: DollarSign,
+                color: "text-purple-500",
+                bg: "bg-purple-500/10",
+                border: "border-purple-500/20"
+              }
+            ].map((item, i) => (
+              <motion.div key={i} variants={fadeInUp}>
+                <Card className={cn("h-full border transition-all duration-200 hover:shadow-lg", item.border, item.bg)}>
+                  <CardHeader className="pb-2">
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="text-sm font-medium text-muted-foreground">
+                        {item.title}
+                      </CardTitle>
+                      <item.icon className={cn("h-4 w-4", item.color)} />
                     </div>
-                    <h3 className="text-xl font-bold mb-3 tracking-tight" style={{ color: "var(--feature-card-text)" }}>{feature.title}</h3>
-                    <p className="text-muted-foreground leading-relaxed text-sm sm:text-base flex-grow">
-                      {feature.description}
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">{item.value}</div>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {item.desc}
                     </p>
-                  </div>
-                </div>
+                  </CardContent>
+                </Card>
               </motion.div>
             ))}
           </motion.div>
         </div>
       </section>
 
-
-
-
-      {/* FAQ Section with Accordion */}
-      <section className="py-16 sm:py-24 border-b border-border/40 bg-secondary/20">
-        <div className="container mx-auto max-w-3xl px-4">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={fadeInUp}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
-              Frequently Asked Questions
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              Everything you need to know about ZON
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.4, delay: 0.15 }}
-          >
-            <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="item-1">
-                <AccordionTrigger className="text-left">
-                  Is ZON compatible with existing JSON workflows?
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
-                  Yes! ZON is designed to be a drop-in replacement for JSON in many Python workflows.
-                  It maps directly to Python dictionaries and lists, making integration seamless.
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="item-2">
-                <AccordionTrigger className="text-left">
-                  How do I install ZON?
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
-                  Simply run <code className="bg-secondary px-2 py-0.5 rounded">pip install zon-format</code>.
-                  It requires Python 3.8 or higher.
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="item-3">
-                <AccordionTrigger className="text-left">
-                  Does ZON support other languages?
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
-                  Yes! ZON has first-class support for both Python and TypeScript/JavaScript.
-                  The format specification is open and language-agnostic.
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="item-4">
-                <AccordionTrigger className="text-left">
-                  Why use ZON for LLMs?
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
-                  ZON significantly reduces token usage compared to JSON (30-40% reduction), which directly translates
-                  to lower API costs and faster inference times for Large Language Models.
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="item-5">
-                <AccordionTrigger className="text-left">
-                  Can I use ZON in production?
-                </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground">
-                  Yes! ZON v1.0 is stable and production-ready. It&apos;s battle-tested, follows semantic versioning,
-                  and has comprehensive test coverage.
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24 border-t border-border/40 bg-background">
-        <div className="container mx-auto max-w-4xl px-4 text-center">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={staggerContainer}
-          >
-            <motion.h2 variants={fadeInUp} className="text-4xl font-bold tracking-tight mb-8">
-              Ready to simplify your data?
-            </motion.h2>
-            <motion.p variants={fadeInUp} className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
-              Join the growing community of developers switching to ZON.
-            </motion.p>
-            <motion.div variants={fadeInUp}>
-              <Link href="/docs">
-                <Button size="lg" className="h-14 px-10 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                  Read the Docs
-                </Button>
-              </Link>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
     </div>
   )
 }
