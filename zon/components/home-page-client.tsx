@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { motion, Variants } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -31,6 +31,69 @@ const staggerContainer: Variants = {
 
 interface HomePageClientProps {
   initialStars: number
+}
+
+function SpotlightCard({ children, className = "", gradientColor = "#262626" }: { children: React.ReactNode; className?: string; gradientColor?: string }) {
+  const divRef = useRef<HTMLDivElement>(null)
+  const [position, setPosition] = useState({ x: 0, y: 0 })
+  const [opacity, setOpacity] = useState(0)
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!divRef.current) return
+
+    const div = divRef.current
+    const rect = div.getBoundingClientRect()
+
+    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top })
+  }
+
+  const handleFocus = () => {
+    setOpacity(1)
+  }
+
+  const handleBlur = () => {
+    setOpacity(0)
+  }
+
+  const handleMouseEnter = () => {
+    setOpacity(1)
+  }
+
+  const handleMouseLeave = () => {
+    setOpacity(0)
+  }
+
+  return (
+    <div
+      ref={divRef}
+      onMouseMove={handleMouseMove}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className={cn(
+        "relative overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 text-zinc-900 dark:text-zinc-200 shadow-sm transition-all duration-300 hover:shadow-md hover:border-zinc-300 dark:hover:border-zinc-700",
+        className
+      )}
+    >
+      {/* Noise Texture */}
+      <div 
+        className="absolute inset-0 opacity-[0.02] dark:opacity-[0.03] pointer-events-none z-0 mix-blend-overlay"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+        }}
+      />
+      
+      <div
+        className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 z-10"
+        style={{
+          opacity,
+          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, ${gradientColor}, transparent 40%)`,
+        }}
+      />
+      <div className="relative h-full z-20">{children}</div>
+    </div>
+  )
 }
 
 export function HomePageClient({ initialStars }: HomePageClientProps) {
@@ -175,94 +238,88 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
 
 
       {/* Features Section (Why ZON?) */}
-      <section className="py-16 sm:py-24 bg-background dark:bg-zinc-950 text-foreground dark:text-white border-b border-border/40 dark:border-white/10 relative overflow-hidden">
+      <section className="py-20 sm:py-32 bg-white dark:bg-black text-zinc-900 dark:text-white border-b border-zinc-200 dark:border-white/5 relative overflow-hidden">
         {/* Background Gradient */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-primary/10 dark:bg-primary/20 blur-[120px] rounded-full opacity-20 pointer-events-none" />
-        
+        <div className="hidden dark:block absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-primary/20 blur-[120px] rounded-full opacity-20 pointer-events-none" />
         <div className="container mx-auto max-w-6xl px-4 relative z-10">
-          <div className="mb-12 text-center md:text-left">
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter">
+          <div className="mb-16 text-center md:text-left">
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter mb-6">
               Why Choose ZON?
             </h2>
-            <p className="mt-4 text-muted-foreground text-lg max-w-2xl">
+            <p className="text-zinc-600 dark:text-zinc-400 text-lg md:text-xl max-w-2xl leading-relaxed">
               Engineered for the AI era, combining human readability with machine efficiency.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 auto-rows-[minmax(280px,auto)]">
             {[
               {
                 title: "Token-Efficient Architecture",
                 desc: "Achieves 35-50% token reduction compared to JSON by utilizing tabular encoding for arrays and minimizing syntax overhead.",
                 icon: Zap,
                 link: "/docs",
-                gradient: "from-amber-500/20 to-orange-500/20",
-                iconColor: "text-amber-600 dark:text-amber-500"
+                className: "md:col-span-2",
+                gradient: "rgba(245, 158, 11, 0.15)"
               },
               {
                 title: "100% Retrieval Accuracy",
                 desc: "Self-explanatory structure with explicit headers eliminates ambiguity, ensuring LLMs retrieve data with perfect accuracy.",
                 icon: Shield,
                 link: "/docs",
-                gradient: "from-emerald-500/20 to-teal-500/20",
-                iconColor: "text-emerald-600 dark:text-emerald-500"
+                className: "md:col-span-1",
+                gradient: "rgba(16, 185, 129, 0.15)"
               },
               {
                 title: "JSON Data Model",
                 desc: "Maps 1:1 to JSON types including objects, arrays, strings, numbers, booleans, and nulls. Lossless round-tripping guaranteed.",
                 icon: Database,
                 link: "/docs",
-                gradient: "from-blue-500/20 to-indigo-500/20",
-                iconColor: "text-blue-600 dark:text-blue-500"
+                className: "md:col-span-1",
+                gradient: "rgba(59, 130, 246, 0.15)"
               },
               {
                 title: "Streaming Ready",
                 desc: "Designed for byte-level parsing, allowing large datasets to be processed incrementally with minimal memory footprint.",
                 icon: Layers,
                 link: "/docs",
-                gradient: "from-purple-500/20 to-pink-500/20",
-                iconColor: "text-purple-600 dark:text-purple-500"
+                className: "md:col-span-2",
+                gradient: "rgba(168, 85, 247, 0.15)"
               },
               {
                 title: "Human-Centric Syntax",
                 desc: "Minimal noise, no strict quoting rules, and a clean layout make ZON as readable as Markdown for developers.",
                 icon: FileCode,
                 link: "/docs",
-                gradient: "from-pink-500/20 to-rose-500/20",
-                iconColor: "text-pink-600 dark:text-pink-500"
+                className: "md:col-span-1",
+                gradient: "rgba(236, 72, 153, 0.15)"
               },
               {
                 title: "Multi-Language Support",
                 desc: "Production-ready libraries available for Python and TypeScript, ensuring seamless integration into your stack.",
                 icon: Globe,
                 link: "/docs",
-                gradient: "from-cyan-500/20 to-sky-500/20",
-                iconColor: "text-cyan-600 dark:text-cyan-500"
+                className: "md:col-span-2 md:col-start-2",
+                gradient: "rgba(6, 182, 212, 0.15)"
               }
             ].map((item, i) => (
-              <Link key={i} href={item.link} className="block h-full">
-                <div className="relative group h-full min-h-[320px]">
-                  <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl" />
-                  <div className="absolute inset-[1px] bg-card/50 dark:bg-zinc-900/90 backdrop-blur-xl rounded-xl flex flex-col justify-between p-6 transition-all duration-300 group-hover:bg-card/80 dark:group-hover:bg-zinc-900/80 border border-border/50 dark:border-white/10 group-hover:border-primary/20 dark:group-hover:border-white/20 shadow-sm hover:shadow-md">
-                    <div>
-                      <h3 className="text-lg font-bold mb-2 text-foreground dark:text-zinc-100">{item.title}</h3>
-                      <p className="text-sm text-muted-foreground dark:text-zinc-400 leading-relaxed">
-                        {item.desc}
-                      </p>
+              <Link key={i} href={item.link} className={cn("block h-full group", item.className)}>
+                <SpotlightCard gradientColor={item.gradient} className="h-full transition-transform duration-300 hover:-translate-y-1">
+                  <div className="flex flex-col h-full p-8">
+                    <div className="mb-6 inline-flex p-3 rounded-lg bg-zinc-100 dark:bg-white/5 w-fit">
+                      <item.icon className="w-6 h-6 text-zinc-900 dark:text-zinc-100" strokeWidth={1.5} />
                     </div>
                     
-                    <div className="flex-1 flex items-center justify-center my-6">
-                      <div className={cn("w-20 h-20 rounded-2xl flex items-center justify-center transition-all duration-500 group-hover:scale-110 bg-gradient-to-br shadow-inner", item.gradient)}>
-                        <item.icon className={cn("w-10 h-10 transition-colors duration-300", item.iconColor)} strokeWidth={1.5} />
-                      </div>
-                    </div>
+                    <h3 className="text-xl font-bold mb-3 text-zinc-900 dark:text-zinc-100">{item.title}</h3>
+                    <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed mb-6 flex-grow">
+                      {item.desc}
+                    </p>
 
-                    <div className="flex items-center text-xs font-medium text-muted-foreground dark:text-zinc-500 group-hover:text-primary dark:group-hover:text-white transition-colors mt-auto group/link">
+                    <div className="flex items-center text-xs font-medium text-zinc-500 group-hover:text-zinc-900 dark:group-hover:text-white transition-colors mt-auto">
                       Learn more
                       <ArrowUpRight className="w-3 h-3 ml-1 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </div>
                   </div>
-                </div>
+                </SpotlightCard>
               </Link>
             ))}
           </div>
