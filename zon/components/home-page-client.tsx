@@ -257,7 +257,7 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
                 title: "Token-Efficient Architecture",
                 desc: "Achieves 35-50% token reduction compared to JSON by utilizing tabular encoding for arrays and minimizing syntax overhead.",
                 icon: Zap,
-                link: "/docs",
+                link: "/docs/benchmarks#token-efficiency-benchmark",
                 className: "md:col-span-2",
                 gradient: "rgba(245, 158, 11, 0.15)"
               },
@@ -265,7 +265,7 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
                 title: "100% Retrieval Accuracy",
                 desc: "Self-explanatory structure with explicit headers eliminates ambiguity, ensuring LLMs retrieve data with perfect accuracy.",
                 icon: Shield,
-                link: "/docs",
+                link: "/docs/benchmarks",
                 className: "md:col-span-1",
                 gradient: "rgba(16, 185, 129, 0.15)"
               },
@@ -273,7 +273,7 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
                 title: "JSON Data Model",
                 desc: "Maps 1:1 to JSON types including objects, arrays, strings, numbers, booleans, and nulls. Lossless round-tripping guaranteed.",
                 icon: Database,
-                link: "/docs",
+                link: "/docs/format-overview",
                 className: "md:col-span-1",
                 gradient: "rgba(59, 130, 246, 0.15)"
               },
@@ -281,7 +281,7 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
                 title: "Streaming Ready",
                 desc: "Designed for byte-level parsing, allowing large datasets to be processed incrementally with minimal memory footprint.",
                 icon: Layers,
-                link: "/docs",
+                link: "/docs/specification",
                 className: "md:col-span-2",
                 gradient: "rgba(168, 85, 247, 0.15)"
               },
@@ -289,7 +289,7 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
                 title: "Human-Centric Syntax",
                 desc: "Minimal noise, no strict quoting rules, and a clean layout make ZON as readable as Markdown for developers.",
                 icon: FileCode,
-                link: "/docs",
+                link: "/docs/syntax-cheatsheet",
                 className: "md:col-span-1",
                 gradient: "rgba(236, 72, 153, 0.15)"
               },
@@ -297,7 +297,7 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
                 title: "Multi-Language Support",
                 desc: "Production-ready libraries available for Python and TypeScript, ensuring seamless integration into your stack.",
                 icon: Globe,
-                link: "/docs",
+                link: "/docs/implementations",
                 className: "md:col-span-2 md:col-start-2",
                 gradient: "rgba(6, 182, 212, 0.15)"
               }

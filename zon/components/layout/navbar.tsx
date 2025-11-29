@@ -163,7 +163,7 @@ export function Navbar() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-zinc-200 bg-zinc-50">
+        <div className="md:hidden border-t border-border/40 bg-background">
           <nav className="container mx-auto px-4 py-4 flex flex-col space-y-3">
             <Link
               href="/docs"
