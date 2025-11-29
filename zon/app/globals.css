@@ -56,6 +56,17 @@
   --ring: #111111;
   
   --radius: 0.5rem;
+  /* Retro grid color */
+  --grid-color: #f4f4f5; /* Zinc-100 - extremely faint for light mode */
+  /* Feature Card Variables */
+  --feature-card-bg: rgba(255, 255, 255, 0.5);
+  --feature-card-border: rgba(228, 228, 231, 0.6);
+  --feature-card-hover-bg: #ffffff;
+  --feature-card-text: #18181b;
+  --feature-icon-bg: #ffffff;
+  --feature-icon-border: #f4f4f5;
+  --feature-icon-text: #52525b;
+  
   /* Code color variables */
   --code-color: #0f172a; /* deep slate for code text in light mode */
   --code-bg-tint: color-mix(in srgb, var(--muted) 8%, transparent);
@@ -64,6 +75,15 @@
 .dark {
   --background: #000000;
   --foreground: #ffffff;
+  
+  /* Feature Card Variables Dark */
+  --feature-card-bg: rgba(24, 24, 27, 0.5);
+  --feature-card-border: rgba(39, 39, 42, 0.6);
+  --feature-card-hover-bg: #18181b;
+  --feature-card-text: #f4f4f5;
+  --feature-icon-bg: #09090b;
+  --feature-icon-border: #27272a;
+  --feature-icon-text: #a1a1aa;
   
   --card: #111111;
   --card-foreground: #ffffff;
@@ -89,6 +109,8 @@
   --border: #374151; /* Gray 700 */
   --input: #374151;
   --ring: #d1d5db; /* Gray 300 */
+  /* Retro grid color */
+  --grid-color: #27272a; /* Zinc-800 - subtle for dark mode */
   --code-color: #93c5fd; /* soft sky blue for code in dark mode */
   --code-bg-tint: color-mix(in srgb, var(--muted) 6%, transparent);
 }

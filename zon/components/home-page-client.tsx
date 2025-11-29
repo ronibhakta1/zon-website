@@ -85,7 +85,7 @@ export function HomePageClient({ quickStartCode, quickStartCodeTs, initialStars 
     return () => clearInterval(interval)
   }, [])
   return (
-    <div className="flex flex-col min-h-screen bg-zinc-100 relative isolate selection:bg-primary/10 overflow-x-hidden">
+    <div className="flex flex-col min-h-screen bg-background relative isolate selection:bg-primary/10 overflow-x-hidden">
       {/* Retro Grid Background */}
       <div className="absolute inset-x-0 top-0 -z-10 h-[800px] w-full overflow-hidden">
         <RetroGrid />
@@ -108,10 +108,10 @@ export function HomePageClient({ quickStartCode, quickStartCodeTs, initialStars 
               <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground font-medium animate-in fade-in slide-in-from-bottom-2 duration-700 delay-200 fill-mode-backwards">
                 <span className="opacity-80">Supported in:</span>
                 <div className="flex items-center gap-2">
-                  <span className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[#3776AB]/10 text-[#3776AB] border border-[#3776AB]/20 shadow-sm">
+                  <span className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[#3776AB]/10 text-[#3776AB] dark:text-[#3776AB] border border-[#3776AB]/20 shadow-sm">
                     Python
                   </span>
-                  <span className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[#3178C6]/10 text-[#3178C6] border border-[#3178C6]/20 shadow-sm">
+                  <span className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[#3178C6]/10 text-[#3178C6] dark:text-[#3178C6] border border-[#3178C6]/20 shadow-sm">
                     TypeScript
                   </span>
                 </div>
@@ -168,8 +168,8 @@ export function HomePageClient({ quickStartCode, quickStartCodeTs, initialStars 
                   </div>
                 ))}
               </Marquee>
-              <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-zinc-100 to-zinc-100/0"></div>
-              <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-zinc-100 to-zinc-100/0"></div>
+              <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-background to-background/0"></div>
+              <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-background to-background/0"></div>
             </div>
           </motion.div>
         </div>
@@ -584,13 +584,28 @@ sam,5.1,180,3,Wildflower Loop,T`}</pre>
           >
             {features.map((feature, index) => (
               <motion.div key={index} variants={fadeInUp}>
-                <div className="group relative h-full p-6 sm:p-8 rounded-3xl bg-zinc-50/50 border border-zinc-200/60 hover:border-primary/20 hover:bg-white hover:shadow-xl hover:shadow-primary/5 transition-all duration-300">
+                <div 
+                  className="group relative h-full p-6 sm:p-8 rounded-3xl backdrop-blur-sm border hover:shadow-xl hover:shadow-primary/5 transition-all duration-300"
+                  style={{
+                    backgroundColor: "var(--feature-card-bg)",
+                    borderColor: "var(--feature-card-border)",
+                  }}
+                >
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
                   <div className="relative z-10 flex flex-col h-full">
-                    <div className="mb-6 inline-flex items-center justify-center h-12 w-12 rounded-2xl bg-white shadow-sm border border-zinc-100 group-hover:scale-110 group-hover:border-primary/20 group-hover:shadow-md group-hover:shadow-primary/10 transition-all duration-300">
-                      <feature.icon className="h-6 w-6 text-zinc-600 group-hover:text-primary transition-colors duration-300" />
+                    <div 
+                      className="mb-6 inline-flex items-center justify-center h-12 w-12 rounded-2xl shadow-sm border group-hover:scale-110 group-hover:border-primary/20 group-hover:shadow-md group-hover:shadow-primary/10 transition-all duration-300"
+                      style={{
+                        backgroundColor: "var(--feature-icon-bg)",
+                        borderColor: "var(--feature-icon-border)",
+                      }}
+                    >
+                      <feature.icon 
+                        className="h-6 w-6 group-hover:text-primary transition-colors duration-300" 
+                        style={{ color: "var(--feature-icon-text)" }}
+                      />
                     </div>
-                    <h3 className="text-xl font-bold mb-3 text-zinc-900 tracking-tight">{feature.title}</h3>
+                    <h3 className="text-xl font-bold mb-3 tracking-tight" style={{ color: "var(--feature-card-text)" }}>{feature.title}</h3>
                     <p className="text-muted-foreground leading-relaxed text-sm sm:text-base flex-grow">
                       {feature.description}
                     </p>

@@ -15,15 +15,15 @@ export function RetroGrid({ className }: { className?: string }) {
           className={cn(
             "[background-repeat:repeat] [background-size:40px_40px] sm:[background-size:50px_50px] md:[background-size:60px_60px]",
             "[height:300%] [inset:0%_0px] [margin-left:-50%] [transform-origin:100%_0_0] [width:600%]",
-            // Zinc-300 lines for subtle premium feel
-            "[background-image:linear-gradient(to_right,#d4d4d8_1px,transparent_0),linear-gradient(to_bottom,#d4d4d8_1px,transparent_0)]",
+            // Uses CSS variable that changes with light/dark mode
+            "[background-image:linear-gradient(to_right,var(--grid-color)_1px,transparent_0),linear-gradient(to_bottom,var(--grid-color)_1px,transparent_0)]",
             "[transform:translateZ(0)]"
           )}
         />
       </div>
 
-      {/* Background Gradient - Very aggressive fade from top and bottom */}
-      <div className="absolute inset-0 bg-gradient-to-b from-zinc-100 via-transparent to-zinc-100 from-[0%] via-[50%] to-[80%]" />
+      {/* Background Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent to-60%" />
     </div>
   );
 }
