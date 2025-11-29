@@ -3,6 +3,9 @@ import rehypeSlug from "rehype-slug"
 import remarkGfm from "remark-gfm"
 import rehypeHighlight from "rehype-highlight"
 import { docsMap } from "./docs-config"
+import { Details, Summary } from "@/components/docs/details"
+import { Callout } from "@/components/docs/callout"
+import React from "react"
 
 import fs from 'fs/promises'
 import path from 'path'
@@ -14,24 +17,13 @@ export async function getDocBySlug(slug: string): Promise<string | null> {
   if (!filename) return null
 
   // Try local file first (for development)
+  // Try local file first (for development)
   try {
     const localPath = path.join(process.cwd(), filename)
     const content = await fs.readFile(localPath, 'utf-8')
     return content
   } catch (e) {
-    // Fallback to GitHub if local file not found (or in production if files aren't bundled)
-    // console.log(`Local file not found: ${filename}, trying GitHub...`)
-  }
-
-  try {
-    const response = await fetch(`${GITHUB_RAW_BASE}/${filename}`, {
-      next: { revalidate: 3600 } // Revalidate every 1 hour
-    })
-    
-    if (!response.ok) return null
-    return await response.text()
-  } catch (error) {
-    console.error(`Error fetching ${filename}:`, error)
+    console.error(`Local file not found: ${filename}`)
     return null
   }
 }
@@ -75,6 +67,46 @@ export async function getDocContent(slug: string) {
         td: (props: any) => (
             <td {...props} className="whitespace-nowrap px-4 py-3 border-b border-primary/10 text-foreground/90" />
         ),
+        blockquote: (props: any) => {
+          const children = React.Children.toArray(props.children)
+          const firstChild = children[0] as any
+          
+          if (firstChild?.type === "p") {
+            const pChildren = React.Children.toArray(firstChild.props.children)
+            const firstText = pChildren[0]
+            
+            if (typeof firstText === "string") {
+              const match = firstText.match(/^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]/i)
+              
+              if (match) {
+                const type = match[1].toLowerCase()
+                const rawRemaining = firstText.replace(/^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*/i, "")
+                
+                // Reconstruct the paragraph content without the tag
+                const newPChildren = rawRemaining.trim() 
+                  ? [rawRemaining, ...pChildren.slice(1)]
+                  : pChildren.slice(1)
+                  
+                // If the paragraph is now empty (was just the tag), skip it
+                const newChildren = newPChildren.length > 0
+                  ? [<p key="first">{newPChildren}</p>, ...children.slice(1)]
+                  : children.slice(1)
+
+                return <Callout type={type as any}>{newChildren}</Callout>
+              }
+            }
+          }
+          
+          // Fallback for standard blockquotes
+          return (
+            <blockquote className="mt-6 border-l-2 pl-6 italic" {...props} />
+          )
+        },
+        details: Details,
+        summary: Summary,
+        Details,
+        Summary,
+        Callout,
     }
   })
 

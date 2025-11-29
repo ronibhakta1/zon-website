@@ -1,0 +1,42 @@
+---
+title: Format Overview
+description: Learn how ZON auto-selects the optimal representation for your data.
+---
+
+ZON auto-selects the optimal representation for your data.
+
+## Tabular Arrays
+
+Best for arrays of objects with consistent structure:
+
+```
+users:@(3):active,id,name,role
+T,1,Alice,Admin
+T,2,Bob,User
+F,3,Carol,Guest
+```
+
+- `@(3)` = row count
+- Column names listed once
+- Data rows follow
+
+## Nested Objects
+
+Best for configuration and nested structures:
+
+```
+config:"{database:{host:db.example.com,port:5432},features:{darkMode:T}}"
+```
+
+## Mixed Structures
+
+ZON intelligently combines formats:
+
+```
+metadata:"{version:1.0.4,env:production}"
+users:@(5):id,name,active
+1,Alice,T
+2,Bob,F
+...
+logs:"[{id:101,level:INFO},{id:102,level:WARN}]"
+```

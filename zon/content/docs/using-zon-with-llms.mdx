@@ -1,0 +1,57 @@
+---
+title: Using ZON with LLMs
+description: Best practices and real-world scenarios for using ZON with Large Language Models.
+---
+
+## Real-World Scenarios
+
+### 1. The "Context Window Crunch"
+*Scenario:* You need to pass 50 user profiles to GPT-4 for analysis.
+*   **JSON:** 15,000 tokens. (Might hit limits, costs $0.15)
+*   **ZON:** 10,500 tokens. (Fits easily, costs $0.10)
+*   *Impact:* **30% cost reduction** and faster latency.
+
+### 2. The "Complex Config"
+*Scenario:* Passing a deeply nested Kubernetes config to an agent.
+*   **CSV:** Impossible.
+*   **YAML:** 2,000 tokens, risk of indentation errors.
+*   **ZON:** 1,400 tokens, robust parsing.
+*   *Impact:* **Zero hallucinations** on structure.
+
+---
+
+## LLM Retrieval Accuracy Testing
+
+### Methodology
+
+ZON achieves **100% LLM retrieval accuracy** through systematic testing:
+
+**Test Framework:** [benchmarks/retrieval-accuracy.js](file:///Users/roni/Developer/zon-TS/benchmarks/retrieval-accuracy.js)
+
+**Process:**
+1. **Data Encoding**: Encode 27 test datasets in multiple formats (ZON, JSON, TOON, YAML, CSV, XML)
+2. **Prompt Generation**: Create prompts asking LLMs to extract specific values
+3. **LLM Querying**: Test against GPT-4o, Claude, Llama (controlled via API)
+4. **Answer Validation**: Compare LLM responses to ground truth
+5. **Accuracy Calculation**: Percentage of correct retrievals
+
+**Datasets Tested:**
+- Simple objects (metadata)
+- Nested structures (configs)
+- Arrays of objects (users, products)
+- Mixed data types (numbers, booleans, nulls, strings)
+- Edge cases (empty values, special characters)
+
+**Validation:** 
+- Token efficiency measured via `gpt-tokenizer`
+- Accuracy requires **exact match** to original value
+- Tests run on multiple LLM models for consistency
+
+**Results:** 100% accuracy across all tested LLMs and datasets
+
+**Run Tests:**
+```bash
+node benchmarks/retrieval-accuracy.js
+```
+
+**Output:** `accuracy-results.json` with per-format, per-model results

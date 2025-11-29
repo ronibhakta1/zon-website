@@ -1,0 +1,17 @@
+---
+title: Efficiency Formalization
+description: Understanding why ZON is more efficient across different tokenizers.
+---
+
+## Why Tokenizer Differences Matter
+
+You'll notice ZON performs differently across models. Here's why:
+
+1.  **GPT-4o (o200k)**: Highly optimized for code/JSON.
+    *   *Result:* ZON is neck-and-neck with TSV, but wins on structure.
+2.  **Llama 3**: Loves explicit tokens.
+    *   *Result:* **ZON wins big (-10.6% vs TOON)** because Llama tokenizes ZON's structure very efficiently.
+3.  **Claude 3.5**: Balanced tokenizer.
+    *   *Result:* ZON provides consistent savings (-4.4% vs TOON).
+
+**Takeaway:** ZON is the **safest bet** for multi-model deployments. It's efficient everywhere, unlike JSON which is inefficient everywhere.

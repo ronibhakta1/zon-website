@@ -1,0 +1,44 @@
+---
+title: CLI Reference
+description: Command Line Interface for ZON format.
+---
+
+The ZON package includes a CLI tool for converting files between JSON and ZON format.
+
+## Installation
+
+```bash
+npm install -g zon-format
+```
+
+## Usage
+
+```bash
+# Encode JSON to ZON format
+zon encode data.json > data.zonf
+
+# Decode ZON back to JSON
+zon decode data.zonf > output.json
+```
+
+## Examples
+
+```bash
+# Convert a JSON file to ZON
+zon encode users.json > users.zonf
+
+# View ZON output directly
+zon encode config.json
+
+# Convert ZON back to formatted JSON
+zon decode users.zonf > users.json
+```
+
+## File Extension
+
+ZON files conventionally use the `.zonf` extension to distinguish them from other formats.
+
+**Notes:**
+- The CLI reads from the specified file and outputs to stdout
+- Use shell redirection (`>`) to save output to a file
+- Both commands preserve data integrity with lossless conversion

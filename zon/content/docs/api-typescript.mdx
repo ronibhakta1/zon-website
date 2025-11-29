@@ -1,0 +1,62 @@
+---
+title: API (TypeScript)
+description: Complete API documentation for zon-format v1.0.4.
+---
+
+## `encode(data: any): string`
+
+Encodes JavaScript data to ZON format.
+
+```typescript
+import { encode } from 'zon-format';
+
+const zon = encode({
+  users: [
+    { id: 1, name: "Alice" },
+    { id: 2, name: "Bob" }
+  ]
+});
+```
+
+**Returns:** ZON-formatted string
+
+## `decode(zonString: string, options?: DecodeOptions): any`
+
+Decodes ZON format back to JavaScript data.
+
+```typescript
+import { decode } from 'zon-format';
+
+const data = decode(`
+users:@(2):id,name
+1,Alice
+2,Bob
+`);
+```
+
+**Options:**
+
+```typescript
+// Strict mode (default) - validates table structure
+const data = decode(zonString);
+
+// Non-strict mode - allows row/field count mismatches  
+const data = decode(zonString, { strict: false });
+```
+
+**Error Handling:**
+
+```typescript
+import { decode, ZonDecodeError } from 'zon-format';
+
+try {
+  const data = decode(invalidZon);
+} catch (e) {
+  if (e instanceof ZonDecodeError) {
+    console.log(e.code);    // "E001" or "E002"
+    console.log(e.message); // Detailed error message
+  }
+}
+```
+
+**Returns:** Original JavaScript data structure

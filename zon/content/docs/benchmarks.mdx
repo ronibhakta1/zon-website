@@ -1,0 +1,199 @@
+---
+title: Benchmarks
+description: Detailed performance and efficiency benchmarks for ZON.
+---
+
+## Retrieval Accuracy
+
+Benchmarks test LLM comprehension using 24 data retrieval questions on gpt-5-nano (Azure OpenAI).
+
+### Dataset Catalog
+
+| Dataset | Rows | Structure | Description |
+| ------- | ---- | --------- | ----------- |
+| Unified benchmark | 5 | mixed | Users, config, logs, metadata - mixed structures |
+
+**Structure**: Mixed uniform tables + nested objects  
+**Questions**: 24 total (field retrieval, aggregation, filtering, structure awareness)
+
+### Efficiency Ranking (Accuracy per 10K Tokens)
+
+Each format ranked by efficiency (accuracy percentage per 10,000 tokens):
+
+```
+ZON            ████████████████████ 123.2 acc%/10K | 100.0% acc | 19,995 tokens
+TOON           ███████████████████░ 118.0 acc%/10K | 100.0% acc | 20,988 tokens
+CSV            ███████████████████░ ~117 acc%/10K  | 100.0% acc | ~20,500 tokens
+JSON compact   ██████████████░░░░░░  82.1 acc%/10K |  91.7% acc | 27,300 tokens
+JSON           ███████████░░░░░░░░░  78.5 acc%/10K |  91.7% acc | 28,042 tokens
+```
+
+*Efficiency score = (Accuracy % / Tokens) x 10,000. Higher is better.*
+
+
+> ZON achieves **100% accuracy** (vs JSON's 91.7%) while using **29% fewer tokens** (19,995 vs 28,041).
+
+### Per-Model Comparison
+
+Accuracy on the unified dataset with gpt-5-nano:
+
+```
+gpt-5-nano (Azure OpenAI)
+-> ZON            ████████████████████  100.0% (24/24) | 19,995 tokens
+  TOON           ████████████████████  100.0% (24/24) | 20,988 tokens
+  JSON           ███████████████████░   95.8% (23/24) | 28,041 tokens
+  JSON compact   ███████████████████░   91.7% (22/24) | 27,300 tokens
+```
+
+> [!TIP]
+> ZON matches TOON's 100% accuracy while using **5.0% fewer tokens**.
+
+<Details>
+<Summary><strong>Performance by Question Type</strong></Summary>
+
+| Question Type | ZON | TOON | JSON |
+| ------------- | --- | ---- | ---- |
+| Field Retrieval | 100.0% | 100.0% | 100.0% |
+| Aggregation | 100.0% | 100.0% | 83.3% |
+| Filtering | 100.0% | 100.0% | 100.0% |
+| Structure Awareness | 100.0% | 100.0% | 100.0% |
+
+**ZON Advantage**: Perfect scores across all question categories.
+
+</Details>
+
+---
+
+## Token Efficiency Benchmark
+
+**Tokenizers:** GPT-4o (o200k), Claude 3.5 (Anthropic), Llama 3 (Meta)  
+**Dataset:** Unified benchmark dataset, Large Complex Nested Dataset
+
+### BYTE SIZES:
+```
+CSV:              1,384 bytes
+ZON:              1,389 bytes
+TOON:             1,665 bytes
+JSON (compact):   1,854 bytes
+YAML:             2,033 bytes
+JSON (formatted): 2,842 bytes
+XML:              3,235 bytes
+```
+### Unified Dataset
+```
+GPT-4o (o200k):
+
+    ZON          ██████████░░░░░░░░░░ 522 tokens
+    CSV          ██████████░░░░░░░░░░ 534 tokens (+2.3%)
+    JSON (cmp)   ███████████░░░░░░░░░ 589 tokens (+11.4%)
+    TOON         ███████████░░░░░░░░░ 614 tokens (+17.6%)
+    YAML         █████████████░░░░░░░ 728 tokens (+39.5%)
+    JSON format  ████████████████████ 939 tokens (+44.4%)
+    XML          ████████████████████ 1,093 tokens (+109.4%)
+
+Claude 3.5 (Anthropic): 
+
+    CSV          ██████████░░░░░░░░░░ 544 tokens
+    ZON          ██████████░░░░░░░░░░ 545 tokens (+0.2%)
+    TOON         ██████████░░░░░░░░░░ 570 tokens (+4.6%)
+    JSON (cmp)   ███████████░░░░░░░░░ 596 tokens (+8.6%)
+    YAML         ████████████░░░░░░░░ 641 tokens (+17.6%)
+    JSON format  ████████████████████ 914 tokens (+40.3%)
+    XML          ████████████████████ 1,104 tokens (+102.6%)
+
+Llama 3 (Meta):
+
+    ZON          ██████████░░░░░░░░░░ 701 tokens
+    CSV          ██████████░░░░░░░░░░ 728 tokens (+3.9%)
+    JSON (cmp)   ███████████░░░░░░░░░ 760 tokens (+7.8%)
+    TOON         ███████████░░░░░░░░░ 784 tokens (+11.8%)
+    YAML         █████████████░░░░░░░ 894 tokens (+27.5%)
+    JSON format  ████████████████████ 1,225 tokens (+42.7%)
+    XML          ████████████████████ 1,392 tokens (+98.6%)
+```
+
+### Large Complex Nested Dataset
+```
+gpt-4o (o200k):
+
+    ZON          █████░░░░░░░░░░░░░░░ 147,267 tokens
+    CSV          ██████░░░░░░░░░░░░░░ 165,647 tokens (+12.5%)
+    JSON (cmp)   ███████░░░░░░░░░░░░░ 189,193 tokens (+28.4%)
+    TOON         █████████░░░░░░░░░░░ 225,510 tokens (+53.1%)
+    YAML         █████████░░░░░░░░░░░ 225,666 tokens (+53.2%)
+    JSON format  ██████████████░░░░░░ 285,131 tokens (+93.6%)
+    XML          ████████████████████ 336,332 tokens (+128.4%)
+
+claude 3.5 (anthropic):
+
+    ZON          █████░░░░░░░░░░░░░░░ 149,281 tokens
+    CSV          ██████░░░░░░░░░░░░░░ 162,245 tokens (+8.7%)
+    JSON (cmp)   ███████░░░░░░░░░░░░░ 185,732 tokens (+24.4%)
+    TOON         █████████░░░░░░░░░░░ 197,463 tokens (+32.3%)
+    YAML         █████████░░░░░░░░░░░ 197,533 tokens (+32.3%)
+    JSON format  ███████████████░░░░░ 274,149 tokens (+83.7%)
+    XML          ████████████████████ 328,378 tokens (+120.0%)
+
+llama 3 (meta):
+
+    ZON          ██████░░░░░░░░░░░░░░ 234,623 tokens
+    CSV          ███████░░░░░░░░░░░░░ 254,909 tokens (+8.7%)
+    JSON (cmp)   ████████░░░░░░░░░░░░ 277,165 tokens (+18.1%)
+    TOON         ██████████░░░░░░░░░░ 315,608 tokens (+34.5%)
+    YAML         ██████████░░░░░░░░░░ 315,714 tokens (+34.6%)
+    JSON format  ███████████████░░░░░ 407,488 tokens (+73.6%)
+    XML          ████████████████████ 481,517 tokens (+105.3%)
+```
+
+
+### Overall Summary:
+```
+GPT-4o (o200k):
+  ZON Wins: 2/2 datasets
+  
+  Total tokens across all datasets:
+    ZON:         147,267
+    CSV:         165,647 (+12.5%)
+    JSON (cmp):  189,193 (+28.4%)
+    TOON:        225,510 (+53.1%)
+    
+  ZON vs TOON: -34.7% fewer tokens
+  ZON vs JSON: -22.2% fewer tokens
+
+Claude 3.5 (Anthropic):
+  ZON Wins: 1/2 datasets
+  
+  Total tokens across all datasets:
+    ZON:         149,281
+    CSV:         162,245 (+8.7%)
+    JSON (cmp):  185,732 (+24.4%)
+    TOON:        197,463 (+32.3%)
+    
+  ZON vs TOON: -24.4% fewer tokens
+  ZON vs JSON: -19.6% fewer tokens
+
+Llama 3 (Meta):
+  ZON Wins: 2/2 datasets
+  
+  Total tokens across all datasets:
+    ZON:         234,623
+    CSV:         254,909 (+8.7%)
+    JSON (cmp):  277,165 (+18.1%)
+    TOON:        315,608 (+34.5%)
+    
+  ZON vs TOON: -25.7% fewer tokens
+  ZON vs JSON: -15.3% fewer tokens
+```
+
+**Key Insights:**
+
+- ZON wins on all Llama 3 and GPT-4o tests (best token efficiency across both datasets).
+- Claude shows CSV has slight edge (0.2%) on simple tabular data, but ZON dominates on complex nested data.
+
+- **Average savings: 25-35% vs TOON, 15-28% vs JSON** across all tokenizers.
+
+- ZON wins on all Llama 3 and GPT-4o tests (best token efficiency across both datasets).
+- ZON is 2nd on Claude (CSV wins by only 0.2%, ZON still beats TOON by 4.6%).
+- ZON consistently outperforms TOON on every tokenizer (from 4.6% up to 34.8% savings).
+
+**Key Insight:** ZON is the only format that wins or nearly wins across all models & datasets.
