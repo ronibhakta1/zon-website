@@ -1,8 +1,11 @@
 export const docsMap: Record<string, string> = {
-  "index": "README.md",
+  "index": "content/docs/introduction.mdx",
   "vs-toon": "content/docs/vs-toon.mdx",
   "typescript": "content/docs/typescript.mdx",
-  "changelog": "CHANGELOG.md",
+  "specification": "content/docs/specification.mdx",
+  "changelog": "content/docs/changelog.mdx",
+  "api-reference": "content/docs/api-reference.mdx",
+  "syntax-cheatsheet": "content/docs/syntax-cheatsheet.mdx",
   "contributing": "CONTRIBUTING.md",
 }
 
@@ -24,23 +27,20 @@ export function getDocsNav(): NavSection[] {
         { title: "Introduction", href: "/docs" },
         { title: "ZON vs TOON", href: "/docs/vs-toon" },
         { title: "TypeScript Support", href: "/docs/typescript" },
-        { title: "What is ZON?", href: "/docs#-what-is-zon" },
-        { title: "Quick Start", href: "/docs#-quick-start" },
-        { title: "Installation", href: "/docs#-installation" },
+        { title: "Changelog", href: "/docs/changelog" },
       ]
     },
     {
-      title: "Features",
+      title: "Reference",
       items: [
-        { title: "LLM Framework Integration", href: "/docs#-llm-framework-integration" },
-        { title: "Benchmark Results", href: "/docs#-benchmark-results" },
-        { title: "API Reference", href: "/docs#-api-reference" },
+        { title: "Specification", href: "/docs/specification" },
+        { title: "API Reference", href: "/docs/api-reference" },
+        { title: "Syntax Cheatsheet", href: "/docs/syntax-cheatsheet" },
       ]
     },
     {
       title: "Resources",
       items: [
-        { title: "Changelog", href: "/docs/changelog" },
         { title: "Contributing", href: "/docs/contributing" },
       ]
     }

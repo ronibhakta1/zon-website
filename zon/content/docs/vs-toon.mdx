@@ -9,31 +9,29 @@ When choosing a data format for LLMs and modern web applications, every token co
 
 | Feature | ZON | TOON | Winner |
 | :--- | :--- | :--- | :--- |
-| **Token Efficiency** | **96 tokens** (example) | 104 tokens (example) | **ZON ⚡** |
-| **Byte Size** | **264 bytes** | 286 bytes | **ZON** |
-| **Token Reduction vs JSON** | **~58%** | ~54% | **ZON** |
-| **Syntax Style** | Python-native | YAML-like custom | **ZON** |
+| **LLM Accuracy** | **100%** (24/24) | 100% (24/24) | **Tie** |
+| **Token Efficiency** | **19,995 tokens** | 20,988 tokens | **ZON ⚡** |
+| **Savings vs TOON** | **-5.0%** (Unified) | - | **ZON** |
+| **Savings vs JSON** | **-29%** (Unified) | -25% | **ZON** |
 | **Boolean Tokens** | `T` / `F` (1 char) | `true` / `false` (4-5 chars) | **ZON** |
-| **Table Format** | `@table(count):cols` | `table[count]{cols}:` | **ZON** |
-| **Ecosystem** | Native Python | Requires parsers | **ZON** |
-| **LLM Cost Savings** | **30-40%** vs JSON | Similar | **Tie** |
+| **Table Format** | `@(N):cols` | `table[count]{cols}:` | **ZON** |
+| **Ecosystem** | Native Python/TS | Requires parsers | **ZON** |
 
 ## Real Example: The Token Difference
 
 Using the same hiking data:
 
-### ZON (96 tokens, 264 bytes)
+### ZON (96 tokens)
 ```zon
 context:"{task:Our favorite hikes together,location:Boulder,season:spring_2025}"
 friends:"[ana,luis,sam]"
-
-@hikes(3):companion,distanceKm,elevationGain,id,name,wasSunny
+hikes:@(3):companion,distanceKm,elevationGain,id,name,wasSunny
 ana,7.5,320,1,Blue Lake Trail,T
 luis,9.2,540,2,Ridge Overlook,F
 sam,5.1,180,3,Wildflower Loop,T
 ```
 
-### TOON (104 tokens, 286 bytes)
+### TOON (104 tokens)
 ```yaml
 context:
   task: Our favorite hikes together
@@ -50,15 +48,7 @@ hikes[3]{id,name,distanceKm,elevationGain,companion,wasSunny}:
 
 ## Why ZON Wins
 
-### 1. Entropy Tournament (Adaptive Compression)
-ZON's **v1.0 Entropy Engine** automatically selects the best compression strategy per column. This isn't a one-size-fits-all approach—it intelligently analyzes your data structure and applies the optimal encoding.
-
-**Key Benefits:**
-- **Auto-optimization**: No manual configuration needed
-- **100% Safe**: Guaranteed lossless reconstruction
-- **Real-world Results**: ~20.4% overall compression vs compact JSON across diverse datasets
-
-### 2. Superior Token Efficiency
+### 1. Superior Token Efficiency
 Every character matters when you're paying per token. ZON's design choices compound to massive savings:
 
 | Feature | ZON Choice | TOON Choice | Savings |
@@ -67,134 +57,55 @@ Every character matters when you're paying per token. ZON's design choices compo
 | Table headers | Compact `@` syntax | Verbose `[count]{cols}:` | ~30% |
 | Nesting | Inline quotes `"{}"` | Multi-line indentation | ~40% |
 
-### 3. Native Python Feel
-**TOON** forces you to learn a new YAML-hybrid syntax. **ZON** feels exactly like the Python code you write every day.
+### 2. 100% LLM Accuracy
+ZON achieves **100% retrieval accuracy** in benchmarks (24/24 questions), matching TOON's accuracy but with fewer tokens. Its explicit structure (`@(N)`) eliminates ambiguity for LLMs.
 
-```python
-import zon
+### 3. Native Feel
+**TOON** forces you to learn a new YAML-hybrid syntax. **ZON** feels exactly like the code you write every day.
 
-# Your existing Python dictionaries work perfectly
-data = {
-    "friends": ["ana", "luis", "sam"],
-    "hikes": [...]
-}
+```typescript
+import { encode, decode } from 'zon-format';
 
-# One line to compress
-compressed = zon.encode(data)
+// Your existing data works perfectly
+const data = {
+    friends: ["ana", "luis", "sam"],
+    hikes: [...]
+};
 
-# One line to restore
-original = zon.decode(compressed)
-assert original == data  # ✓ Perfect!
+// One line to compress
+const compressed = encode(data);
+
+// One line to restore
+const original = decode(compressed);
 ```
-
-### 4. LLM Cost Savings
-When working with GPT-4 or similar models:
-
-```python
-import zon
-import openai
-
-users = [{"id": i, "name": f"User{i}", "active": True} for i in range(100)]
-
-# Compress with ZON (saves tokens = saves money!)
-zon_data = zon.encode(users)
-
-response = openai.ChatCompletion.create(
-    model="gpt-4",
-    messages=[
-        {"role": "system", "content": "Analyze the ZON data below."},
-        {"role": "user", "content": f"Data:\n\n{zon_data}\n\nHow many active users?"}
-    ]
-)
-```
-
-**Result**: 30-40% fewer tokens vs JSON = **30-40% lower API costs** ⚡
-
-### 5. Zero Configuration
-No complex setup. No learning curve. Install and start saving tokens immediately:
-
-```bash
-pip install zon-format
-```
-
-That's it. You're done.
-
-## Format Comparison
-
-### ZON Syntax
-```
-key:value
-nested.key:value
-list:[item1,item2,item3]
-
-@tablename(count):col1,col2,col3
-val1,val2,val3
-```
-
-**Features:**
-- No spaces after `:` for compactness
-- Dot notation for nested objects
-- `@` marks table start with row count
-- Boolean compression: `T` / `F`
-
-### TOON Syntax
-```
-key: value
-  nested_key: value
-list[count]: item1,item2
-
-table[count]{cols}:
-  values
-```
-
-**Drawbacks:**
-- Requires spaces and indentation (more bytes)
-- Verbose boolean representation
-- Less compact table syntax
 
 ## Benchmark Summary
 
-Across standard datasets:
-- **Total JSON compact size**: 963.9 KB
-- **Total ZON size**: 767.3 KB
-- **Overall compression**: **20.4%**
+**Efficiency Ranking (Accuracy per 10K Tokens)**
 
-ZON consistently outperforms TOON in:
-- Token count per record
-- Byte efficiency
-- Parse speed (Python-native structures)
-
-## Migration Guide
-
-Moving from TOON to ZON takes minutes:
-
-1. **Install ZON**
-```bash
-pip install zon-format
+```
+ZON            ████████████████████ 123.2 acc%/10K │ 100.0% acc │ 19,995 tokens 👑
+TOON           ███████████████████░ 118.0 acc%/10K │ 100.0% acc │ 20,988 tokens
+CSV            ███████████████████░ ~117 acc%/10K  │ 100.0% acc │ ~20,500 tokens
+JSON compact   ██████████████░░░░░░  82.1 acc%/10K │  91.7% acc │ 27,300 tokens
+JSON           ███████████░░░░░░░░░  78.5 acc%/10K │  91.7% acc │ 28,042 tokens
 ```
 
-2. **Replace encoder**
-```python
-import zon
+*Efficiency score = (Accuracy % ÷ Tokens) × 10,000. Higher is better.*
 
-# Instead of: toon.dump(data)
-compressed = zon.encode(data)
-
-# Instead of: toon.load(text)
-original = zon.decode(compressed)
-```
-
-3. **Enjoy savings** 🎉
+> [!TIP]
+> ZON achieves **100% accuracy** (vs JSON's 91.7%) while using **29% fewer tokens** (19,995 vs 28,041).
 
 ## The Verdict
 
 If you value:
-- ✅ Maximum token efficiency
+- ✅ Maximum token efficiency (**29% savings vs JSON**)
+- ✅ Perfect LLM accuracy (**100%**)
 - ✅ Zero configuration
-- ✅ Python-native integration
-- ✅ Proven 30-40% cost savings
+- ✅ Native integration
 - ✅ 100% lossless data
 
 **Choose ZON.**
 
 Join the future of data serialization. [Get started →](/docs)
+

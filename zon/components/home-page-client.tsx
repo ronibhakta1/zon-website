@@ -411,12 +411,11 @@ sam,5.1,180,3,Wildflower Loop,T`}</pre>
               <CardContent className="p-3 sm:p-6">
                 <div className="space-y-4">
                   {[
-                    { name: "ZON", score: 100, accuracy: "96%", tokens: 9600, color: "from-primary to-primary/80", highlight: true },
-                    { name: "TOON", score: 95, accuracy: "95%", tokens: 10400, color: "from-purple-500 to-purple-600" },
-                    { name: "JSON compact", score: 70, accuracy: "94%", tokens: 13900, color: "from-blue-500 to-blue-600" },
-                    { name: "YAML", score: 53, accuracy: "91%", tokens: 18000, color: "from-orange-500 to-orange-600" },
-                    { name: "JSON", score: 43, accuracy: "94%", tokens: 22900, color: "from-gray-500 to-gray-600" },
-                    { name: "XML", score: 30, accuracy: "89%", tokens: 31000, color: "from-red-500 to-red-600" },
+                    { name: "ZON", score: 123, accuracy: "100%", tokens: 19995, color: "from-primary to-primary/80", highlight: true },
+                    { name: "TOON", score: 118, accuracy: "100%", tokens: 20988, color: "from-purple-500 to-purple-600" },
+                    { name: "CSV", score: 117, accuracy: "100%", tokens: 20500, color: "from-orange-500 to-orange-600" },
+                    { name: "JSON compact", score: 82, accuracy: "92%", tokens: 27300, color: "from-blue-500 to-blue-600" },
+                    { name: "JSON", score: 78, accuracy: "92%", tokens: 28042, color: "from-gray-500 to-gray-600" },
                   ].map((format, i) => (
                     <motion.div
                       key={format.name}
@@ -437,7 +436,7 @@ sam,5.1,180,3,Wildflower Loop,T`}</pre>
                         <div className="flex-1 h-6 sm:h-7 bg-secondary/30 rounded-full overflow-hidden">
                           <motion.div
                             initial={{ width: 0 }}
-                            whileInView={{ width: `${(format.score / 100) * 100}%` }}
+                            whileInView={{ width: `${(format.score / 125) * 100}%` }}
                             viewport={{ once: true, amount: 0.3 }}
                             transition={{ duration: 0.8, delay: i * 0.08, ease: [0.4, 0, 0.2, 1] }}
                             className={cn(
@@ -457,7 +456,7 @@ sam,5.1,180,3,Wildflower Loop,T`}</pre>
                   ))}
                 </div>
                 <div className="mt-4 text-xs text-muted-foreground text-center">
-                  Higher score = better compression × accuracy on GPT-5 Tokenizer (o200k_base)
+                  Efficiency score = (Accuracy % ÷ Tokens) × 10,000. Higher is better.
                 </div>
               </CardContent>
             </Card>
@@ -475,13 +474,13 @@ sam,5.1,180,3,Wildflower Loop,T`}</pre>
                 <Zap className="h-4 w-4 text-primary flex-shrink-0" />
                 <div className="text-left">
                   <div className="text-xs font-medium text-muted-foreground">Average Token Saving</div>
-                  <div className="text-sm sm:text-base font-bold text-primary whitespace-nowrap">58% fewer tokens</div>
+                  <div className="text-sm sm:text-base font-bold text-primary whitespace-nowrap">29% fewer tokens</div>
                 </div>
               </div>
               <div className="hidden sm:block h-8 w-px bg-border/50" />
               <div className="text-left">
                 <div className="text-xs font-medium text-muted-foreground">vs TOON</div>
-                <div className="text-sm sm:text-base font-bold text-green-600 whitespace-nowrap">8% more efficient</div>
+                <div className="text-sm sm:text-base font-bold text-green-600 whitespace-nowrap">5% more efficient</div>
               </div>
             </div>
           </motion.div>
