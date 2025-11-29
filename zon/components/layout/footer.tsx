@@ -17,8 +17,8 @@ export function Footer() {
             </a>
             .
           </p>
-          <p className="text-center text-sm leading-normal text-zinc-500 dark:text-zinc-400 md:text-center">
-            Released under the MIT License.
+          <p className="text-center text-sm leading-normal text-muted-foreground">
+            Released under the <a href="https://github.com/ZON-Format/ZON/blob/main/LICENSE" target="_blank" rel="noreferrer" className="font-medium underline underline-offset-4 hover:text-foreground">MIT License</a>.
           </p>
           <p className="text-center text-sm leading-normal text-zinc-500 dark:text-zinc-400 md:text-center">
             Copyright © 2025-PRESENT <a href="https://ronibhakta.in" target="_blank" rel="noreferrer" className="font-medium underline underline-offset-4 text-zinc-900 dark:text-zinc-50 hover:text-zinc-700 dark:hover:text-zinc-300">Roni Bhakta</a>. All rights reserved.

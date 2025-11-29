@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { RetroGrid } from "@/components/ui/retro-grid"
 import { Marquee } from "@/components/ui/marquee"
 import { cn } from "@/lib/utils"
-import { Zap, Shield, Layers, DollarSign, FileCode, Globe, Database } from "lucide-react"
+import { Zap, Shield, Layers, DollarSign, FileCode, Globe, Database, ArrowUpRight, Cpu, Network, Server, Archive } from "lucide-react"
 
 
 
@@ -170,85 +170,102 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
         </div>
       </section>
 
-      {/* Feature Grid Section */}
-      <section className="py-16 sm:py-24 border-b border-border/40 bg-secondary/20">
-        <div className="container mx-auto max-w-6xl px-4">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={staggerContainer}
-            className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
-          >
+
+
+
+
+      {/* Features Section (Why ZON?) */}
+      <section className="py-16 sm:py-24 bg-background dark:bg-zinc-950 text-foreground dark:text-white border-b border-border/40 dark:border-white/10 relative overflow-hidden">
+        {/* Background Gradient */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-primary/10 dark:bg-primary/20 blur-[120px] rounded-full opacity-20 pointer-events-none" />
+        
+        <div className="container mx-auto max-w-6xl px-4 relative z-10">
+          <div className="mb-12 text-center md:text-left">
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter">
+              Why Choose ZON?
+            </h2>
+            <p className="mt-4 text-muted-foreground text-lg max-w-2xl">
+              Engineered for the AI era, combining human readability with machine efficiency.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
                 title: "Token-Efficient Architecture",
                 desc: "Achieves 35-50% token reduction compared to JSON by utilizing tabular encoding for arrays and minimizing syntax overhead.",
                 icon: Zap,
-                color: "text-amber-500",
-                bg: "bg-amber-500/10",
-                border: "border-amber-500/20"
+                link: "/docs",
+                gradient: "from-amber-500/20 to-orange-500/20",
+                iconColor: "text-amber-600 dark:text-amber-500"
               },
               {
                 title: "100% Retrieval Accuracy",
                 desc: "Self-explanatory structure with explicit headers eliminates ambiguity, ensuring LLMs retrieve data with perfect accuracy.",
                 icon: Shield,
-                color: "text-emerald-500",
-                bg: "bg-emerald-500/10",
-                border: "border-emerald-500/20"
+                link: "/docs",
+                gradient: "from-emerald-500/20 to-teal-500/20",
+                iconColor: "text-emerald-600 dark:text-emerald-500"
               },
               {
                 title: "JSON Data Model",
                 desc: "Maps 1:1 to JSON types including objects, arrays, strings, numbers, booleans, and nulls. Lossless round-tripping guaranteed.",
                 icon: Database,
-                color: "text-blue-500",
-                bg: "bg-blue-500/10",
-                border: "border-blue-500/20"
+                link: "/docs",
+                gradient: "from-blue-500/20 to-indigo-500/20",
+                iconColor: "text-blue-600 dark:text-blue-500"
               },
               {
                 title: "Streaming Ready",
                 desc: "Designed for byte-level parsing, allowing large datasets to be processed incrementally with minimal memory footprint.",
                 icon: Layers,
-                color: "text-purple-500",
-                bg: "bg-purple-500/10",
-                border: "border-purple-500/20"
+                link: "/docs",
+                gradient: "from-purple-500/20 to-pink-500/20",
+                iconColor: "text-purple-600 dark:text-purple-500"
               },
               {
                 title: "Human-Centric Syntax",
                 desc: "Minimal noise, no strict quoting rules, and a clean layout make ZON as readable as Markdown for developers.",
                 icon: FileCode,
-                color: "text-pink-500",
-                bg: "bg-pink-500/10",
-                border: "border-pink-500/20"
+                link: "/docs",
+                gradient: "from-pink-500/20 to-rose-500/20",
+                iconColor: "text-pink-600 dark:text-pink-500"
               },
               {
                 title: "Multi-Language Support",
                 desc: "Production-ready libraries available for Python and TypeScript, ensuring seamless integration into your stack.",
                 icon: Globe,
-                color: "text-cyan-500",
-                bg: "bg-cyan-500/10",
-                border: "border-cyan-500/20"
+                link: "/docs",
+                gradient: "from-cyan-500/20 to-sky-500/20",
+                iconColor: "text-cyan-600 dark:text-cyan-500"
               }
             ].map((item, i) => (
-              <motion.div key={i} variants={fadeInUp} className="h-full">
-                <Card className={cn("h-full border bg-card/50 backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1", item.border)}>
-                  <CardHeader className="pb-4">
-                    <div className={cn("w-12 h-12 rounded-lg flex items-center justify-center mb-4", item.bg)}>
-                      <item.icon className={cn("h-6 w-6", item.color)} />
+              <Link key={i} href={item.link} className="block h-full">
+                <div className="relative group h-full min-h-[320px]">
+                  <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl" />
+                  <div className="absolute inset-[1px] bg-card/50 dark:bg-zinc-900/90 backdrop-blur-xl rounded-xl flex flex-col justify-between p-6 transition-all duration-300 group-hover:bg-card/80 dark:group-hover:bg-zinc-900/80 border border-border/50 dark:border-white/10 group-hover:border-primary/20 dark:group-hover:border-white/20 shadow-sm hover:shadow-md">
+                    <div>
+                      <h3 className="text-lg font-bold mb-2 text-foreground dark:text-zinc-100">{item.title}</h3>
+                      <p className="text-sm text-muted-foreground dark:text-zinc-400 leading-relaxed">
+                        {item.desc}
+                      </p>
                     </div>
-                    <CardTitle className="text-xl font-bold">
-                      {item.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {item.desc}
-                    </p>
-                  </CardContent>
-                </Card>
-              </motion.div>
+                    
+                    <div className="flex-1 flex items-center justify-center my-6">
+                      <div className={cn("w-20 h-20 rounded-2xl flex items-center justify-center transition-all duration-500 group-hover:scale-110 bg-gradient-to-br shadow-inner", item.gradient)}>
+                        <item.icon className={cn("w-10 h-10 transition-colors duration-300", item.iconColor)} strokeWidth={1.5} />
+                      </div>
+                    </div>
+
+                    <div className="flex items-center text-xs font-medium text-muted-foreground dark:text-zinc-500 group-hover:text-primary dark:group-hover:text-white transition-colors mt-auto group/link">
+                      Learn more
+                      <ArrowUpRight className="w-3 h-3 ml-1 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    </div>
+                  </div>
+                </div>
+              </Link>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
