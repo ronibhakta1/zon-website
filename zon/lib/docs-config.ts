@@ -29,7 +29,7 @@ export interface NavSection {
 export function getDocsNav(): NavSection[] {
   return [
     {
-      title: "Guide",
+      title: "Essentials",
       items: [
         { title: "Getting Started", href: "/docs/getting-started" },
         { title: "Format Overview", href: "/docs/format-overview" },
@@ -38,20 +38,20 @@ export function getDocsNav(): NavSection[] {
       ]
     },
     {
-      title: "Tooling",
+      title: "Toolkit",
       items: [
         { title: "CLI Reference", href: "/docs/cli-reference" },
         { title: "Tools & Playgrounds", href: "/docs/tools-playgrounds" },
       ]
     },
     {
-      title: "Ecosystem",
+      title: "Libraries",
       items: [
         { title: "Implementations", href: "/docs/implementations" },
       ]
     },
     {
-      title: "Reference",
+      title: "Technical Reference",
       items: [
         { title: "API (TypeScript)", href: "/docs/api-typescript" },
         { title: "Syntax Cheatsheet", href: "/docs/syntax-cheatsheet" },
