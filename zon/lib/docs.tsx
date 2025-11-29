@@ -127,3 +127,5 @@ export async function getDocContent(slug: string) {
 
   return { content, frontmatter, title: cleanTitle, headings }
 }
+
+

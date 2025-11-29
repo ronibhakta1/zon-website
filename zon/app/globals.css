@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @plugin "tailwindcss-animate";
+@plugin "@tailwindcss/typography";
 
 @theme {
   --color-background: hsl(var(--background));
@@ -48,14 +49,17 @@
     from {
       height: 0;
     }
+
     to {
       height: var(--radix-accordion-content-height);
     }
   }
+
   @keyframes accordion-up {
     from {
       height: var(--radix-accordion-content-height);
     }
+
     to {
       height: 0;
     }
@@ -71,6 +75,7 @@
   color utility to any element that depends on these defaults.
 */
 @layer base {
+
   *,
   ::after,
   ::before,
@@ -88,23 +93,29 @@
 
 @layer base {
   :root {
-    --background: 0 0% 98%; /* Zinc-50 */
-    --foreground: 240 10% 3.9%; /* Zinc-950 */
+    --background: 0 0% 98%;
+    /* Zinc-50 */
+    --foreground: 240 10% 3.9%;
+    /* Zinc-950 */
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%; /* Zinc-900 */
+    --primary: 240 5.9% 10%;
+    /* Zinc-900 */
     --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%; /* Zinc-100 */
+    --secondary: 240 4.8% 95.9%;
+    /* Zinc-100 */
     --secondary-foreground: 240 5.9% 10%;
     --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%; /* Zinc-500 */
+    --muted-foreground: 240 3.8% 46.1%;
+    /* Zinc-500 */
     --accent: 240 4.8% 95.9%;
     --accent-foreground: 240 5.9% 10%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%; /* Zinc-200 */
+    --border: 240 5.9% 90%;
+    /* Zinc-200 */
     --input: 240 5.9% 90%;
     --ring: 240 10% 3.9%;
     --chart-1: 12 76% 61%;
@@ -115,8 +126,9 @@
     --radius: 0.5rem;
 
     /* Retro grid color */
-    --grid-color: hsl(240 5.9% 90%); /* Zinc-200 */
-    
+    --grid-color: hsl(240 5.9% 90%);
+    /* Zinc-200 */
+
     /* Feature Card Variables */
     --feature-card-bg: hsl(0 0% 100% / 0.5);
     --feature-card-border: hsl(240 5.9% 90% / 0.6);
@@ -125,25 +137,30 @@
     --feature-icon-bg: hsl(0 0% 100%);
     --feature-icon-border: hsl(240 4.8% 95.9%);
     --feature-icon-text: hsl(240 3.8% 46.1%);
-    
+
     /* Code color variables */
-    --code-color: #0f172a; 
+    --code-color: #0f172a;
     --code-bg-tint: color-mix(in srgb, var(--muted) 8%, transparent);
   }
 
   .dark {
-    --background: 0 0% 0%; /* Black */
-    --foreground: 0 0% 98%; /* Zinc-50 */
-    --card: 240 10% 3.9%; /* Zinc-950 */
+    --background: 0 0% 0%;
+    /* Black */
+    --foreground: 0 0% 98%;
+    /* Zinc-50 */
+    --card: 240 10% 3.9%;
+    /* Zinc-950 */
     --card-foreground: 0 0% 98%;
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
     --primary: 0 0% 98%;
     --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%; /* Zinc-800 */
+    --secondary: 240 3.7% 15.9%;
+    /* Zinc-800 */
     --secondary-foreground: 0 0% 98%;
     --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%; /* Zinc-400 */
+    --muted-foreground: 240 5% 64.9%;
+    /* Zinc-400 */
     --accent: 240 3.7% 15.9%;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
@@ -158,18 +175,26 @@
     --chart-5: 340 75% 55%;
 
     /* Retro grid color */
-    --grid-color: hsl(240 3.7% 15.9%); /* Zinc-800 */
-    
-    /* Feature Card Variables Dark */
-    --feature-card-bg: hsl(240 10% 3.9% / 0.5); /* Zinc-950/50 */
-    --feature-card-border: hsl(240 3.7% 15.9% / 0.6); /* Zinc-800/60 */
-    --feature-card-hover-bg: hsl(240 5.9% 10%); /* Zinc-900 */
-    --feature-card-text: hsl(0 0% 98%);
-    --feature-icon-bg: hsl(240 5.9% 10%); /* Zinc-900 */
-    --feature-icon-border: hsl(240 3.7% 15.9%); /* Zinc-800 */
-    --feature-icon-text: hsl(240 5% 64.9%); /* Zinc-400 */
+    --grid-color: hsl(240 3.7% 15.9%);
+    /* Zinc-800 */
 
-    --code-color: #93c5fd; /* soft sky blue for code in dark mode */
+    /* Feature Card Variables Dark */
+    --feature-card-bg: hsl(240 10% 3.9% / 0.5);
+    /* Zinc-950/50 */
+    --feature-card-border: hsl(240 3.7% 15.9% / 0.6);
+    /* Zinc-800/60 */
+    --feature-card-hover-bg: hsl(240 5.9% 10%);
+    /* Zinc-900 */
+    --feature-card-text: hsl(0 0% 98%);
+    --feature-icon-bg: hsl(240 5.9% 10%);
+    /* Zinc-900 */
+    --feature-icon-border: hsl(240 3.7% 15.9%);
+    /* Zinc-800 */
+    --feature-icon-text: hsl(240 5% 64.9%);
+    /* Zinc-400 */
+
+    --code-color: #93c5fd;
+    /* soft sky blue for code in dark mode */
     --code-bg-tint: color-mix(in srgb, var(--muted) 6%, transparent);
   }
 }
@@ -178,6 +203,7 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
@@ -188,27 +214,35 @@
 ::-webkit-scrollbar {
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: var(--muted-foreground);
+  background: hsl(var(--muted-foreground));
   border-radius: 4px;
   opacity: 0.3;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--foreground);
+  background: hsl(var(--foreground));
   opacity: 0.5;
 }
 
 /* Ergonomic Focus Ring */
 :focus-visible {
-  outline: 2px solid var(--ring);
+  outline: 2px solid hsl(var(--ring));
   outline-offset: 2px;
   border-radius: 2px;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   line-height: 1.2;
   letter-spacing: -0.02em;
 }
@@ -219,45 +253,54 @@ h1, h2, h3, h4, h5, h6 {
   border-collapse: collapse;
   margin: 1.5rem 0;
   border-radius: 0.5rem;
-  border: 1px solid var(--border);
+  border: 1px solid hsl(var(--border));
   overflow: hidden;
 }
+
 .prose :where(th, td):not(:where([class~="not-prose"] *)) {
-  border: 1px solid var(--border);
+  border: 1px solid hsl(var(--border));
   padding: 0.75rem 1rem;
   text-align: left;
   vertical-align: top;
   /* Default table cell text: use full foreground for stronger contrast */
-  color: var(--foreground);
+  color: hsl(var(--foreground));
 }
+
 .prose :where(thead):not(:where([class~="not-prose"] *)) {
-  background: var(--muted);
+  background: hsl(var(--muted));
 }
+
 .prose :where(thead th):not(:where([class~="not-prose"] *)) {
-  color: var(--foreground);
+  color: hsl(var(--foreground));
   font-weight: 700;
   font-size: 0.875rem;
   letter-spacing: 0.02em;
-  border-bottom: 2px solid var(--border);
+  border-bottom: 2px solid hsl(var(--border));
 }
+
 .prose :where(tbody tr):not(:where([class~="not-prose"] *)) {
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid hsl(var(--border));
   transition: background-color 0.15s ease;
 }
+
 .prose :where(tbody tr:last-child):not(:where([class~="not-prose"] *)) {
   border-bottom: none;
 }
+
 .prose :where(tbody tr:nth-child(even)):not(:where([class~="not-prose"] *)) {
-  background: color-mix(in srgb, var(--muted) 8%, transparent);
+  background: color-mix(in srgb, hsl(var(--muted)) 8%, transparent);
 }
+
 .prose :where(tbody tr:hover):not(:where([class~="not-prose"] *)) {
-  background: color-mix(in srgb, var(--muted) 20%, transparent);
+  background: color-mix(in srgb, hsl(var(--muted)) 20%, transparent);
 }
+
 .prose :where(tbody td):not(:where([class~="not-prose"] *)) {
   font-size: 0.9375rem;
   /* Body cells use full foreground color for stronger contrast */
-  color: var(--foreground);
+  color: hsl(var(--foreground));
 }
+
 /* Wrapper for responsive tables */
 .prose :where(div:has(> table)):not(:where([class~="not-prose"] *)) {
   overflow-x: auto;
@@ -266,8 +309,8 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Make pre/code in prose more distinct and readable */
 .prose pre {
-  background: color-mix(in srgb, var(--muted) 40%, var(--card));
-  border: 1px solid var(--border);
+  background: color-mix(in srgb, hsl(var(--muted)) 40%, hsl(var(--card)));
+  border: 1px solid hsl(var(--border));
   padding: 1.25rem;
   border-radius: 0.5rem;
   overflow: auto;
@@ -277,19 +320,21 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
   margin: 1.5rem 0;
 }
+
 .prose pre code {
   background: transparent;
   padding: 0;
-  color: var(--foreground);
+  color: hsl(var(--foreground));
   font-weight: 400;
   text-shadow: none;
 }
+
 .prose code {
-  background: color-mix(in srgb, var(--muted) 50%, transparent);
+  background: color-mix(in srgb, hsl(var(--muted)) 50%, transparent);
   padding: 0.2rem 0.4rem;
   border-radius: 0.3rem;
   font-size: 0.875em;
-  border: 1px solid color-mix(in srgb, var(--border) 50%, transparent);
+  border: 1px solid color-mix(in srgb, hsl(var(--border)) 50%, transparent);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono", "Courier New", monospace;
   font-weight: 500;
 }
@@ -302,23 +347,27 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 0.9rem;
   line-height: 1.6;
 }
+
 .hljs-comment,
 .hljs-quote {
-  color: var(--muted-foreground);
+  color: hsl(var(--muted-foreground));
   font-style: italic;
 }
+
 .hljs-keyword,
 .hljs-selector-tag,
 .hljs-subst {
   color: #7c3aed;
   font-weight: 600;
 }
+
 .hljs-string,
 .hljs-title,
 .hljs-name,
 .hljs-type {
   color: #059669;
 }
+
 .hljs-number,
 .hljs-meta {
   color: #d97706;
@@ -334,6 +383,7 @@ h1, h2, h3, h4, h5, h6 {
   0% {
     transform: translateY(-50%);
   }
+
   100% {
     transform: translateY(0);
   }
@@ -343,6 +393,7 @@ h1, h2, h3, h4, h5, h6 {
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(calc(-100% - var(--gap)));
   }
@@ -352,6 +403,7 @@ h1, h2, h3, h4, h5, h6 {
   from {
     transform: translateY(0);
   }
+
   to {
     transform: translateY(calc(-100% - var(--gap)));
   }
@@ -364,4 +416,3 @@ h1, h2, h3, h4, h5, h6 {
 .animate-marquee-vertical {
   animation: marquee-vertical 20s linear infinite;
 }
-

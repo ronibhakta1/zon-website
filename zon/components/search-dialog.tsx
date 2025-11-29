@@ -11,23 +11,15 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command"
-import { getDocsNav } from "@/lib/docs-config"
+import { type SearchItem, getDocsNav } from "@/lib/docs-config"
 
-// Flatten navigation for search
-function getSearchItems() {
-  const sections = getDocsNav()
-  return sections.flatMap(section => 
-    section.items.map(item => ({
-      ...item,
-      keywords: [] // Add keywords if needed in the future
-    }))
-  )
-}
+import { useDebouncedCallback } from "use-debounce"
 
 export function SearchDialog() {
   const [open, setOpen] = React.useState(false)
+  const [results, setResults] = React.useState<SearchItem[]>([])
+  const [loading, setLoading] = React.useState(false)
   const router = useRouter()
-  const searchItems = getSearchItems()
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -41,10 +33,43 @@ export function SearchDialog() {
     return () => document.removeEventListener("keydown", down)
   }, [])
 
+  const handleSearch = useDebouncedCallback((term: string) => {
+    if (!term) {
+      setResults([])
+      return
+    }
+
+    setLoading(true)
+    fetch(`/api/search?q=${encodeURIComponent(term)}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setResults(data)
+        setLoading(false)
+      })
+      .catch((err) => {
+        console.error("Search failed", err)
+        setLoading(false)
+      })
+  }, 300)
+
   const runCommand = React.useCallback((command: () => unknown) => {
     setOpen(false)
     command()
   }, [])
+
+  // Group items by section
+  const groupedItems = React.useMemo(() => {
+    const groups: Record<string, SearchItem[]> = {}
+    
+    results.forEach(item => {
+      const section = item.section || "Documentation"
+      if (!groups[section]) {
+        groups[section] = []
+      }
+      groups[section].push(item)
+    })
+    return groups
+  }, [results])
 
   return (
     <>
@@ -60,23 +85,38 @@ export function SearchDialog() {
         </kbd>
       </button>
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Search documentation..." />
+        <CommandInput 
+          placeholder="Search documentation..." 
+          onValueChange={handleSearch}
+        />
         <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup heading="Documentation">
-            {searchItems.map((item) => (
-              <CommandItem
-                key={item.href}
-                value={`${item.title} ${item.keywords.join(" ")}`}
-                onSelect={() => {
-                  runCommand(() => router.push(item.href))
-                }}
-              >
-                <FileText className="h-4 w-4" />
-                <span>{item.title}</span>
-              </CommandItem>
-            ))}
-          </CommandGroup>
+          <CommandEmpty>
+            {loading ? "Searching..." : "No results found."}
+          </CommandEmpty>
+          {Object.entries(groupedItems).map(([section, items]) => (
+            <CommandGroup key={section} heading={section}>
+              {items.map((item) => (
+                <CommandItem
+                  key={item.href}
+                  value={`${item.title} ${item.content}`}
+                  onSelect={() => {
+                    runCommand(() => router.push(item.href))
+                  }}
+                  className="flex flex-col items-start gap-1 py-3"
+                >
+                  <div className="flex items-center gap-2 w-full">
+                    <FileText className="h-4 w-4 shrink-0 opacity-50" />
+                    <span className="font-medium">{item.title}</span>
+                  </div>
+                  {item.content && item.content.includes(">") && (
+                    <div className="flex items-center gap-1 text-xs text-muted-foreground ml-6">
+                      <span className="truncate">{item.content}</span>
+                    </div>
+                  )}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          ))}
         </CommandList>
       </CommandDialog>
     </>

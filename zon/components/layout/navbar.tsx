@@ -1,13 +1,20 @@
 "use client"
 
 import Link from "next/link"
-import { Github, Menu, X } from "lucide-react"
+import { Github, Menu, X, ChevronDown } from "lucide-react"
 import { useState } from "react"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 import { cn } from "@/lib/utils"
 import { Wordmark } from "@/components/ui/logo"
 import { SearchDialog } from "@/components/search-dialog"
 import { Button } from "@/components/ui/button"
+import { type SearchItem } from "@/lib/docs-config"
 
 import { ThemeToggle } from "@/components/theme-toggle"
 
@@ -15,41 +22,94 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto flex h-14 max-w-screen-xl items-center px-4">
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/60">
+      <div className="container mx-auto flex h-14 max-w-screen-2xl items-center">
         {/* Desktop Navigation */}
         <div className="mr-4 hidden md:flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
             <Wordmark />
           </Link>
-          <nav className="flex items-center gap-6 text-sm font-medium">
+          <nav className="flex items-center gap-4 text-sm font-medium">
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center gap-1 transition-colors hover:text-foreground/80 text-foreground/60 outline-none">
+                Guide <ChevronDown className="h-3 w-3" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start">
+                <DropdownMenuItem asChild>
+                  <Link href="/docs/getting-started">Getting Started</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/docs/format-overview">Format Overview</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/docs/using-zon-with-llms">Using ZON with LLMs</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/docs/benchmarks">Benchmarks</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/docs/cli-reference">CLI Reference</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/docs/tools-playgrounds">Tools & Playgrounds</Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center gap-1 transition-colors hover:text-foreground/80 text-foreground/60 outline-none">
+                Reference <ChevronDown className="h-3 w-3" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start">
+                <DropdownMenuItem asChild>
+                  <Link href="/docs/api-typescript">API (TypeScript)</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/docs/syntax-cheatsheet">Syntax Cheatsheet</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/docs/specification">Specification</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/docs/efficiency-formalization">Efficiency Formalization</Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center gap-1 transition-colors hover:text-foreground/80 text-foreground/60 outline-none">
+                Ecosystem <ChevronDown className="h-3 w-3" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start">
+                <DropdownMenuItem asChild>
+                  <Link href="/docs/implementations">Implementations</Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
             <Link
-              href="/docs"
+              href="/docs/vs-toon"
               className={cn(
-                "transition-colors hover:text-zinc-900 dark:hover:text-zinc-50",
-                "text-zinc-600 dark:text-zinc-400"
-              )}
-            >
-              Docs
-            </Link>
-            <Link
-              href="/#benchmarks"
-              className={cn(
-                "transition-colors hover:text-zinc-900 dark:hover:text-zinc-50",
-                "text-zinc-600 dark:text-zinc-400"
-              )}
-            >
-              Benchmarks
-            </Link>
-            <Link
-              href="docs/vs-toon"
-              className={cn(
-                "transition-colors hover:text-zinc-900 dark:hover:text-zinc-50",
-                "text-zinc-600 dark:text-zinc-400"
+                "transition-colors hover:text-foreground/80",
+                "text-foreground/60"
               )}
             >
               ZON vs TOON
             </Link>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center gap-1 transition-colors hover:text-foreground/80 text-foreground/60 outline-none ml-2">
+                v1.0.4 <ChevronDown className="h-3 w-3" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem>
+                  v1.0.4 (Latest)
+                </DropdownMenuItem>
+                <DropdownMenuItem disabled>
+                  v1.0.3
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </nav>
         </div>
 

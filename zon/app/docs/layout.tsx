@@ -9,6 +9,7 @@ import { SearchDialog } from "@/components/search-dialog"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { getDocsNav } from "@/lib/docs-config"
+import { Wordmark } from "@/components/ui/logo"
 
 interface DocsLayoutProps {
   children: React.ReactNode
@@ -36,9 +37,9 @@ export default function DocsLayout({ children }: DocsLayoutProps) {
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="pr-0">
-            <div className="px-7">
-              <Link href="/" className="font-bold">
-                ZON
+            <div className="px-7 mt-8">
+              <Link href="/" className="flex items-center space-x-2">
+                <Wordmark />
               </Link>
             </div>
             <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
@@ -48,14 +49,16 @@ export default function DocsLayout({ children }: DocsLayoutProps) {
                     {section.title && (
                       <h4 className="font-semibold text-sm">{section.title}</h4>
                     )}
-                    <div className="flex flex-col space-y-2">
+                    <div className="flex flex-col space-y-1">
                       {section.items.map((link) => (
                         <Link
                           key={link.href}
                           href={link.href}
                           className={cn(
-                            "text-muted-foreground hover:text-foreground transition-colors text-sm",
-                            pathname === link.href && "text-foreground font-medium"
+                            "block rounded-md px-2 py-1.5 text-sm font-medium transition-colors",
+                            pathname === link.href 
+                              ? "bg-secondary text-foreground" 
+                              : "text-muted-foreground hover:bg-muted hover:text-foreground"
                           )}
                         >
                           {link.title}
@@ -71,7 +74,7 @@ export default function DocsLayout({ children }: DocsLayoutProps) {
         <div className="font-medium">Documentation</div>
       </div>
 
-      <div className="container flex-1 items-start md:grid md:grid-cols-[240px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-10 mx-auto">
+      <div className="container flex-1 items-start md:grid md:grid-cols-[240px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-10 mx-auto px-4 md:px-8">
         {/* Desktop Sidebar */}
         <aside className="fixed top-14 z-30 hidden h-[calc(100vh-3.5rem)] w-full shrink-0 md:sticky md:block border-r border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <div className="h-full py-6 pr-6 lg:py-8">

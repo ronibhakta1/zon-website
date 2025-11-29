@@ -26,6 +26,13 @@ export interface NavSection {
   items: NavItem[]
 }
 
+export interface SearchItem {
+  title: string
+  href: string
+  content: string
+  section: string
+}
+
 export function getDocsNav(): NavSection[] {
   return [
     {
