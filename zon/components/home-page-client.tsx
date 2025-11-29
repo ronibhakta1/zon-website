@@ -9,7 +9,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { RetroGrid } from "@/components/ui/retro-grid"
 import { Marquee } from "@/components/ui/marquee"
 import { cn } from "@/lib/utils"
-import { Zap, Shield, Layers, DollarSign, FileCode, Globe, Database, ArrowUpRight, Cpu, Network, Server, Archive } from "lucide-react"
+import { Zap, Shield, Layers, Database, FileCode, Globe, ArrowUpRight } from "lucide-react"
+import { 
+  LangChainLogo, 
+  OpenAILogo, 
+  DSPyLogo, 
+  LlamaIndexLogo, 
+  AutoGenLogo, 
+  VercelLogo, 
+  MistralLogo, 
+  AnthropicLogo 
+} from "@/components/ui/brand-logos"
 
 
 
@@ -131,18 +141,18 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
             className="max-w-4xl"
             style={{ willChange: 'opacity, transform' }}
           >
-            <motion.div variants={fadeInUp} className="mb-6 sm:mb-8 flex flex-col items-center gap-3">
-              <Badge variant="secondary" className="px-4 py-2 text-xs sm:text-sm font-medium rounded-full border border-border/40 bg-secondary/60 backdrop-blur-sm shadow-sm hover:shadow-md hover:bg-secondary/80 transition-all duration-200">
+            <motion.div variants={fadeInUp} className="mb-6 sm:mb-8 flex flex-col items-center gap-4">
+              <Badge variant="secondary" className="px-4 py-1.5 text-xs sm:text-sm font-medium rounded-full border border-border/40 bg-secondary/60 backdrop-blur-sm shadow-sm hover:shadow-md hover:bg-secondary/80 transition-all duration-300 hover:scale-[1.02] cursor-default">
                 <span className="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"></span>
                 v1.0 Entropy Engine
               </Badge>
               <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground font-medium animate-in fade-in slide-in-from-bottom-2 duration-700 delay-200 fill-mode-backwards">
                 <span className="opacity-80">Supported in:</span>
                 <div className="flex items-center gap-2">
-                  <span className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[#3776AB]/10 text-[#3776AB] dark:text-[#3776AB] border border-[#3776AB]/20 shadow-sm">
+                  <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#3776AB]/10 text-[#3776AB] dark:text-[#3776AB] border border-[#3776AB]/20 shadow-sm transition-transform hover:scale-105 cursor-default">
                     Python
                   </span>
-                  <span className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[#3178C6]/10 text-[#3178C6] dark:text-[#3178C6] border border-[#3178C6]/20 shadow-sm">
+                  <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#3178C6]/10 text-[#3178C6] dark:text-[#3178C6] border border-[#3178C6]/20 shadow-sm transition-transform hover:scale-105 cursor-default">
                     TypeScript
                   </span>
                 </div>
@@ -164,12 +174,12 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
             style={{ willChange: 'opacity, transform' }}
           >
             <Link href="/docs" className="w-full sm:w-auto">
-              <Button size="lg" className="w-full sm:w-auto h-12 px-8 text-base font-semibold shadow-md hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
+              <Button size="lg" className="w-full sm:w-auto h-12 px-8 text-base font-semibold shadow-md hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 active:scale-95 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
                 Get Started Free →
               </Button>
             </Link>
             <Link href="https://github.com/ZON-Format" target="_blank" className="w-full sm:w-auto">
-              <Button variant="outline" size="lg" className="w-full sm:w-auto h-12 px-6 text-base font-medium bg-background/50 backdrop-blur-sm hover:bg-secondary/90 border-border/60 hover:border-border transition-all duration-200 flex items-center justify-center gap-2 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
+              <Button variant="outline" size="lg" className="w-full sm:w-auto h-12 px-6 text-base font-medium bg-background/50 backdrop-blur-sm hover:bg-secondary/90 border-border/60 hover:border-border transition-all duration-200 hover:-translate-y-0.5 active:scale-95 flex items-center justify-center gap-2 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
                 <svg className="h-4 w-4 sm:h-5 sm:w-5" fill="currentColor" viewBox="0 0 24 24">
                   <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
                 </svg>
@@ -190,17 +200,27 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
             transition={{ duration: 0.6, delay: 0.5 }}
             className="mt-10 sm:mt-16 flex flex-col items-center gap-3"
           >
-            <p className="text-xs text-muted-foreground font-medium mb-4">Works with</p>
+            <p className="text-xs text-muted-foreground font-medium mb-4">Works with leading AI frameworks & platfroms</p>
             <div className="relative flex w-full max-w-lg flex-col items-center justify-center overflow-hidden rounded-lg">
               <Marquee pauseOnHover className="py-2">
-                {["LangChain", "OpenAI", "DSPy", "LlamaIndex", "AutoGen", "Vercel AI", "Mistral", "Anthropic"].map((item) => (
-                  <div key={item} className="mx-6 flex items-center gap-2 opacity-60 hover:opacity-100 transition-opacity whitespace-nowrap">
-                    <span className="text-sm font-medium">{item}</span>
+                {[
+                  { name: "OpenAI", Icon: OpenAILogo },
+                  { name: "Vercel", Icon: VercelLogo },
+                  { name: "Anthropic", Icon: AnthropicLogo },
+                  { name: "LangChain", Icon: LangChainLogo },
+                  { name: "Mistral", Icon: MistralLogo },
+                  { name: "LlamaIndex", Icon: LlamaIndexLogo },
+                  { name: "DSPy", Icon: DSPyLogo },
+                  { name: "AutoGen", Icon: AutoGenLogo },
+                ].map((item) => (
+                  <div key={item.name} className="mx-6 flex items-center gap-2 opacity-60 hover:opacity-100 transition-opacity whitespace-nowrap group">
+                    <item.Icon className="w-5 h-5 sm:w-6 sm:h-6 text-zinc-600 dark:text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-zinc-100 transition-colors" />
+                    <span className="text-sm sm:text-base font-semibold text-zinc-600 dark:text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-zinc-100 transition-colors">{item.name}</span>
                   </div>
                 ))}
               </Marquee>
-              <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-background to-background/0"></div>
-              <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-background to-background/0"></div>
+              <div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-background via-background/80 to-background/0"></div>
+              <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-background via-background/80 to-background/0"></div>
             </div>
           </motion.div>
         </div>
@@ -251,7 +271,7 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 auto-rows-[minmax(280px,auto)]">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 auto-rows-[minmax(280px,auto)]">
             {[
               {
                 title: "Token-Efficient Architecture",
