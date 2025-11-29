@@ -1,123 +1,182 @@
 @import "tailwindcss";
 
-@plugin "@tailwindcss/typography";
+@plugin "tailwindcss-animate";
 
 @theme {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --radius: 0.5rem;
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
 }
 
-:root {
-  /* Cal.com-style Neutral Palette - Updated to Zinc */
-  --background: #fafafa; /* Zinc-50 */
-  --foreground: #111111; /* Near black */
-  
-  --card: #ffffff; /* Pure white cards */
-  --card-foreground: #111111;
-  
-  --popover: #ffffff;
-  --popover-foreground: #111111;
-  
-  --primary: #111111; /* Black primary */
-  --primary-foreground: #ffffff;
-  
-  --secondary: #f4f4f5; /* Zinc-100 */
-  --secondary-foreground: #18181b; /* Zinc-900 */
-  
-  --muted: #f4f4f5; /* Zinc-100 */
-  --muted-foreground: #6b7280; /* Gray 500 - Neutral */
-  
-  --accent: #f3f4f6; /* Gray 100 - Neutral */
-  --accent-foreground: #111111;
-  
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  
-  --border: #e4e4e7; /* Zinc-200 */
-  --input: #e5e7eb;
-  --ring: #111111;
-  
-  --radius: 0.5rem;
-  /* Retro grid color */
-  --grid-color: #f4f4f5; /* Zinc-100 - extremely faint for light mode */
-  /* Feature Card Variables */
-  --feature-card-bg: rgba(255, 255, 255, 0.5);
-  --feature-card-border: rgba(228, 228, 231, 0.6);
-  --feature-card-hover-bg: #ffffff;
-  --feature-card-text: #18181b;
-  --feature-icon-bg: #ffffff;
-  --feature-icon-border: #f4f4f5;
-  --feature-icon-text: #52525b;
-  
-  /* Code color variables */
-  --code-color: #0f172a; /* deep slate for code text in light mode */
-  --code-bg-tint: color-mix(in srgb, var(--muted) 8%, transparent);
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
 }
 
-.dark {
-  --background: #000000;
-  --foreground: #ffffff;
-  
-  /* Feature Card Variables Dark */
-  --feature-card-bg: rgba(24, 24, 27, 0.5);
-  --feature-card-border: rgba(39, 39, 42, 0.6);
-  --feature-card-hover-bg: #18181b;
-  --feature-card-text: #f4f4f5;
-  --feature-icon-bg: #09090b;
-  --feature-icon-border: #27272a;
-  --feature-icon-text: #a1a1aa;
-  
-  --card: #111111;
-  --card-foreground: #ffffff;
-  
-  --popover: #111111;
-  --popover-foreground: #ffffff;
-  
-  --primary: #ffffff;
-  --primary-foreground: #000000;
-  
-  --secondary: #1f2937; /* Gray 800 */
-  --secondary-foreground: #ffffff;
-  
-  --muted: #1f2937;
-  --muted-foreground: #9ca3af; /* Gray 400 */
-  
-  --accent: #1f2937;
-  --accent-foreground: #ffffff;
-  
-  --destructive: #7f1d1d;
-  --destructive-foreground: #ffffff;
-  
-  --border: #374151; /* Gray 700 */
-  --input: #374151;
-  --ring: #d1d5db; /* Gray 300 */
-  /* Retro grid color */
-  --grid-color: #27272a; /* Zinc-800 - subtle for dark mode */
-  --code-color: #93c5fd; /* soft sky blue for code in dark mode */
-  --code-bg-tint: color-mix(in srgb, var(--muted) 6%, transparent);
+@layer utilities {
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 98%; /* Zinc-50 */
+    --foreground: 240 10% 3.9%; /* Zinc-950 */
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%; /* Zinc-900 */
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%; /* Zinc-100 */
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%; /* Zinc-500 */
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%; /* Zinc-200 */
+    --input: 240 5.9% 90%;
+    --ring: 240 10% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+
+    /* Retro grid color */
+    --grid-color: hsl(240 5.9% 90%); /* Zinc-200 */
+    
+    /* Feature Card Variables */
+    --feature-card-bg: hsl(0 0% 100% / 0.5);
+    --feature-card-border: hsl(240 5.9% 90% / 0.6);
+    --feature-card-hover-bg: hsl(0 0% 100%);
+    --feature-card-text: hsl(240 10% 3.9%);
+    --feature-icon-bg: hsl(0 0% 100%);
+    --feature-icon-border: hsl(240 4.8% 95.9%);
+    --feature-icon-text: hsl(240 3.8% 46.1%);
+    
+    /* Code color variables */
+    --code-color: #0f172a; 
+    --code-bg-tint: color-mix(in srgb, var(--muted) 8%, transparent);
+  }
+
+  .dark {
+    --background: 0 0% 0%; /* Black */
+    --foreground: 0 0% 98%; /* Zinc-50 */
+    --card: 240 10% 3.9%; /* Zinc-950 */
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%; /* Zinc-800 */
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%; /* Zinc-400 */
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+
+    /* Retro grid color */
+    --grid-color: hsl(240 3.7% 15.9%); /* Zinc-800 */
+    
+    /* Feature Card Variables Dark */
+    --feature-card-bg: hsl(240 10% 3.9% / 0.5); /* Zinc-950/50 */
+    --feature-card-border: hsl(240 3.7% 15.9% / 0.6); /* Zinc-800/60 */
+    --feature-card-hover-bg: hsl(240 5.9% 10%); /* Zinc-900 */
+    --feature-card-text: hsl(0 0% 98%);
+    --feature-icon-bg: hsl(240 5.9% 10%); /* Zinc-900 */
+    --feature-icon-border: hsl(240 3.7% 15.9%); /* Zinc-800 */
+    --feature-icon-text: hsl(240 5% 64.9%); /* Zinc-400 */
+
+    --code-color: #93c5fd; /* soft sky blue for code in dark mode */
+    --code-bg-tint: color-mix(in srgb, var(--muted) 6%, transparent);
+  }
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
   }
   body {
     @apply bg-background text-foreground;
