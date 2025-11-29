@@ -13,6 +13,7 @@ export const docsMap: Record<string, string> = {
   "specification": "content/docs/specification.mdx",
   "changelog": "content/docs/changelog.mdx",
   "syntax-cheatsheet": "content/docs/syntax-cheatsheet.mdx",
+  "vs-toon": "content/docs/vs-toon.mdx",
   "contributing": "CONTRIBUTING.md",
 }
 
@@ -42,6 +43,7 @@ export function getDocsNav(): NavSection[] {
         { title: "Format Overview", href: "/docs/format-overview" },
         { title: "Using ZON with LLMs", href: "/docs/using-zon-with-llms" },
         { title: "Benchmarks", href: "/docs/benchmarks" },
+        { title: "ZON vs TOON", href: "/docs/vs-toon" },
       ]
     },
     {
