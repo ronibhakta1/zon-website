@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { RetroGrid } from "@/components/ui/retro-grid"
 import { Marquee } from "@/components/ui/marquee"
 import { cn } from "@/lib/utils"
-import { Zap, Shield, Layers, Database, FileCode, Globe, ArrowUpRight } from "lucide-react"
+import { Zap, Shield, Layers, Database, FileCode, Globe, ArrowUpRight, Star } from "lucide-react"
 import { 
   LangChainLogo, 
   OpenAILogo, 
@@ -112,16 +112,17 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
   useEffect(() => {
     const fetchStars = async () => {
       try {
-        const res = await fetch('https://api.github.com/repos/ZON-Format/ZON')
+        const res = await fetch('/api/github-stars')
         if (res.ok) {
           const data = await res.json()
-          setStars(data.stargazers_count)
+          setStars(data.starsTs) // Use TypeScript stars for homepage
         }
       } catch (e) {
         console.error("Failed to fetch stars", e)
       }
     }
 
+    fetchStars()
     const interval = setInterval(fetchStars, 3600000) // 1 hour
     return () => clearInterval(interval)
   }, [])
@@ -178,18 +179,17 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
                 Get Started Free →
               </Button>
             </Link>
-            <Link href="https://github.com/ZON-Format" target="_blank" className="w-full sm:w-auto">
-              <Button variant="outline" size="lg" className="w-full sm:w-auto h-12 px-6 text-base font-medium bg-background/50 backdrop-blur-sm hover:bg-secondary/90 border-border/60 hover:border-border transition-all duration-200 hover:-translate-y-0.5 active:scale-95 flex items-center justify-center gap-2 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
-                <svg className="h-4 w-4 sm:h-5 sm:w-5" fill="currentColor" viewBox="0 0 24 24">
+            <Link href="https://github.com/ZON-Format" target="_blank" className="w-full sm:w-auto text-zinc-900 dark:text-zinc-100" style={{ color: 'inherit' }}>
+              <div className="w-full sm:w-auto h-12 pl-6 pr-2 text-base font-medium bg-transparent border border-zinc-200 dark:border-zinc-800 transition-all duration-200 hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-2 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 group shadow-lg hover:shadow-xl rounded-full cursor-pointer">
+                <svg className="h-5 w-5 transition-colors" fill="currentColor" viewBox="0 0 24 24">
                   <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
                 </svg>
-                <span className="flex items-center gap-1.5">
-                  <span>GitHub</span>
-                  <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/10 text-primary text-xs font-bold">
-                    ★ {stars}
-                  </span>
-                </span>
-              </Button>
+                <span className="transition-colors mr-1">GitHub</span>
+                <div className="flex items-center gap-1 bg-zinc-900 dark:bg-zinc-800 px-2.5 py-1 rounded-full text-zinc-50 dark:text-zinc-100 transition-colors">
+                  <Star className="h-3.5 w-3.5 fill-current" />
+                  <span className="text-sm font-semibold font-mono">{stars >= 1000 ? (stars / 1000).toFixed(1) + 'k' : stars}</span>
+                </div>
+              </div>
             </Link>
           </motion.div>
 
@@ -200,7 +200,7 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
             transition={{ duration: 0.6, delay: 0.5 }}
             className="mt-10 sm:mt-16 flex flex-col items-center gap-3"
           >
-            <p className="text-xs text-muted-foreground font-medium mb-4">Works with leading AI frameworks & platfroms</p>
+            <p className="text-xs text-muted-foreground font-medium mb-4">Works with leading AI frameworks & platforms</p>
             <div className="relative flex w-full max-w-lg flex-col items-center justify-center overflow-hidden rounded-lg">
               <Marquee pauseOnHover className="py-2">
                 {[
@@ -213,9 +213,9 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
                   { name: "DSPy", Icon: DSPyLogo },
                   { name: "AutoGen", Icon: AutoGenLogo },
                 ].map((item) => (
-                  <div key={item.name} className="mx-6 flex items-center gap-2 opacity-60 hover:opacity-100 transition-opacity whitespace-nowrap group">
-                    <item.Icon className="w-5 h-5 sm:w-6 sm:h-6 text-zinc-600 dark:text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-zinc-100 transition-colors" />
-                    <span className="text-sm sm:text-base font-semibold text-zinc-600 dark:text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-zinc-100 transition-colors">{item.name}</span>
+                  <div key={item.name} className="mx-6 flex items-center gap-2 whitespace-nowrap group cursor-default">
+                    <item.Icon className="w-5 h-5 sm:w-6 sm:h-6 text-muted-foreground group-hover:text-foreground transition-colors" />
+                    <span className="text-sm sm:text-base font-semibold text-muted-foreground group-hover:text-foreground transition-colors">{item.name}</span>
                   </div>
                 ))}
               </Marquee>

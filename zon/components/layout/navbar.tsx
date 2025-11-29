@@ -1,8 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import { Github, Menu, X, ChevronDown } from "lucide-react"
-import { useState } from "react"
+import { Github, Menu, X, ChevronDown, Star } from "lucide-react"
+import { useState, useEffect } from "react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,6 +20,31 @@ import { ThemeToggle } from "@/components/theme-toggle"
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [starsPy, setStarsPy] = useState(0)
+  const [starsTs, setStarsTs] = useState(0)
+
+  useEffect(() => {
+    const fetchStars = async () => {
+      try {
+        const res = await fetch('/api/github-stars', {
+          cache: 'force-cache',
+          next: { revalidate: 3600 }
+        })
+
+        if (res.ok) {
+          const data = await res.json()
+          setStarsPy(data.starsPy)
+          setStarsTs(data.starsTs)
+        }
+      } catch (e) {
+        console.error("Failed to fetch stars", e)
+      }
+    }
+
+    fetchStars()
+    const interval = setInterval(fetchStars, 3600000) // 1 hour
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/60">
@@ -119,6 +144,39 @@ export function Navbar() {
             <Wordmark />
           </Link>
           <div className="flex items-center gap-2">
+            <div className="flex items-center h-9 border border-input bg-background shadow-sm rounded-md overflow-hidden">
+              <Link
+                href="https://github.com/ZON-Format/ZON"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex h-full w-9 items-center justify-center transition-colors hover:bg-accent hover:text-accent-foreground border-r border-input"
+              >
+                <Github className="h-4 w-4" />
+                <span className="sr-only">GitHub Organization</span>
+              </Link>
+              
+              <Link
+                href="https://github.com/ZON-Format/zon"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-1.5 px-2 h-full text-xs font-medium transition-colors hover:bg-accent hover:text-accent-foreground border-r border-input"
+              >
+                <Star className="w-2.5 h-2.5 fill-[#3776AB] text-[#3776AB]" />
+                <span className="text-muted-foreground">PY</span>
+                <span className="text-foreground font-semibold">{starsPy >= 1000 ? (starsPy / 1000).toFixed(1) + 'k' : starsPy || 0}</span>
+              </Link>
+
+              <Link
+                href="https://github.com/ZON-Format/zon-ts"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-1.5 px-2 h-full text-xs font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
+              >
+                <Star className="w-2.5 h-2.5 fill-[#3178C6] text-[#3178C6]" />
+                <span className="text-muted-foreground">TS</span>
+                <span className="text-foreground font-semibold">{starsTs >= 1000 ? (starsTs / 1000).toFixed(1) + 'k' : starsTs || 0}</span>
+              </Link>
+            </div>
             <ThemeToggle />
             <Button
               variant="ghost"
@@ -142,20 +200,39 @@ export function Navbar() {
             <SearchDialog />
           </div>
           <nav className="flex items-center gap-2">
-            <Link
-              href="https://github.com/ZON-Format/ZON"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <div
-                className={cn(
-                  "inline-flex h-9 w-9 items-center justify-center whitespace-nowrap rounded-md px-0 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-                )}
+            <div className="flex items-center h-9 border border-input bg-background shadow-sm rounded-md overflow-hidden">
+              <Link
+                href="https://github.com/ZON-Format/ZON"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex h-full w-9 items-center justify-center transition-colors hover:bg-accent hover:text-accent-foreground border-r border-input"
               >
                 <Github className="h-4 w-4" />
-                <span className="sr-only">GitHub</span>
-              </div>
-            </Link>
+                <span className="sr-only">GitHub Organization</span>
+              </Link>
+              
+              <Link
+                href="https://github.com/ZON-Format/zon"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-2 px-3 h-full text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground border-r border-input"
+              >
+                <Star className="w-3 h-3 fill-[#3776AB] text-[#3776AB]" />
+                <span className="text-muted-foreground">PY</span>
+                <span className="text-foreground font-semibold">{starsPy >= 1000 ? (starsPy / 1000).toFixed(1) + 'k' : starsPy || 0}</span>
+              </Link>
+
+              <Link
+                href="https://github.com/ZON-Format/zon-ts"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-2 px-3 h-full text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
+              >
+                <Star className="w-3 h-3 fill-[#3178C6] text-[#3178C6]" />
+                <span className="text-muted-foreground">TS</span>
+                <span className="text-foreground font-semibold">{starsTs >= 1000 ? (starsTs / 1000).toFixed(1) + 'k' : starsTs || 0}</span>
+              </Link>
+            </div>
             <ThemeToggle />
           </nav>
         </div>
