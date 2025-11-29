@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { RetroGrid } from "@/components/ui/retro-grid"
 import { Marquee } from "@/components/ui/marquee"
 import { cn } from "@/lib/utils"
-import { Zap, Shield, Layers, DollarSign } from "lucide-react"
+import { Zap, Shield, Layers, DollarSign, FileCode, Globe, Database } from "lucide-react"
 
 
 
@@ -170,67 +170,78 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
         </div>
       </section>
 
-      {/* Meaningful Cards Section */}
-      <section className="py-12 sm:py-20 border-b border-border/40 bg-secondary/20">
+      {/* Feature Grid Section */}
+      <section className="py-16 sm:py-24 border-b border-border/40 bg-secondary/20">
         <div className="container mx-auto max-w-6xl px-4">
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
+            viewport={{ once: true, amount: 0.2 }}
             variants={staggerContainer}
-            className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
+            className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
           >
             {[
               {
-                title: "Token Efficiency",
-                value: "35-50%",
-                desc: "Reduction vs JSON",
+                title: "Token-Efficient Architecture",
+                desc: "Achieves 35-50% token reduction compared to JSON by utilizing tabular encoding for arrays and minimizing syntax overhead.",
                 icon: Zap,
                 color: "text-amber-500",
                 bg: "bg-amber-500/10",
                 border: "border-amber-500/20"
               },
               {
-                title: "LLM Accuracy",
-                value: "100%",
-                desc: "Retrieval Accuracy",
+                title: "100% Retrieval Accuracy",
+                desc: "Self-explanatory structure with explicit headers eliminates ambiguity, ensuring LLMs retrieve data with perfect accuracy.",
                 icon: Shield,
                 color: "text-emerald-500",
                 bg: "bg-emerald-500/10",
                 border: "border-emerald-500/20"
               },
               {
-                title: "Deep Nesting",
-                value: "91%",
-                desc: "Compression on deep objects",
-                icon: Layers,
+                title: "JSON Data Model",
+                desc: "Maps 1:1 to JSON types including objects, arrays, strings, numbers, booleans, and nulls. Lossless round-tripping guaranteed.",
+                icon: Database,
                 color: "text-blue-500",
                 bg: "bg-blue-500/10",
                 border: "border-blue-500/20"
               },
               {
-                title: "Cost Reduction",
-                value: "30%",
-                desc: "Lower API costs",
-                icon: DollarSign,
+                title: "Streaming Ready",
+                desc: "Designed for byte-level parsing, allowing large datasets to be processed incrementally with minimal memory footprint.",
+                icon: Layers,
                 color: "text-purple-500",
                 bg: "bg-purple-500/10",
                 border: "border-purple-500/20"
+              },
+              {
+                title: "Human-Centric Syntax",
+                desc: "Minimal noise, no strict quoting rules, and a clean layout make ZON as readable as Markdown for developers.",
+                icon: FileCode,
+                color: "text-pink-500",
+                bg: "bg-pink-500/10",
+                border: "border-pink-500/20"
+              },
+              {
+                title: "Multi-Language Support",
+                desc: "Production-ready libraries available for Python and TypeScript, ensuring seamless integration into your stack.",
+                icon: Globe,
+                color: "text-cyan-500",
+                bg: "bg-cyan-500/10",
+                border: "border-cyan-500/20"
               }
             ].map((item, i) => (
-              <motion.div key={i} variants={fadeInUp}>
-                <Card className={cn("h-full border transition-all duration-200 hover:shadow-lg", item.border, item.bg)}>
-                  <CardHeader className="pb-2">
-                    <div className="flex items-center justify-between">
-                      <CardTitle className="text-sm font-medium text-muted-foreground">
-                        {item.title}
-                      </CardTitle>
-                      <item.icon className={cn("h-4 w-4", item.color)} />
+              <motion.div key={i} variants={fadeInUp} className="h-full">
+                <Card className={cn("h-full border bg-card/50 backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1", item.border)}>
+                  <CardHeader className="pb-4">
+                    <div className={cn("w-12 h-12 rounded-lg flex items-center justify-center mb-4", item.bg)}>
+                      <item.icon className={cn("h-6 w-6", item.color)} />
                     </div>
+                    <CardTitle className="text-xl font-bold">
+                      {item.title}
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="text-2xl font-bold">{item.value}</div>
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-muted-foreground leading-relaxed">
                       {item.desc}
                     </p>
                   </CardContent>
