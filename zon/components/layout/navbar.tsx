@@ -9,11 +9,13 @@ import { Wordmark } from "@/components/ui/logo"
 import { SearchDialog } from "@/components/search-dialog"
 import { Button } from "@/components/ui/button"
 
+import { ThemeToggle } from "@/components/theme-toggle"
+
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-zinc-200 bg-zinc-50/80 backdrop-blur-md supports-[backdrop-filter]:bg-zinc-50/60">
+    <header className="sticky top-0 z-50 w-full border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50/80 dark:bg-zinc-950/80 backdrop-blur-md supports-[backdrop-filter]:bg-zinc-50/60 dark:supports-[backdrop-filter]:bg-zinc-950/60">
       <div className="container mx-auto flex h-14 max-w-screen-xl items-center px-4">
         {/* Desktop Navigation */}
         <div className="mr-4 hidden md:flex">
@@ -24,8 +26,8 @@ export function Navbar() {
             <Link
               href="/docs"
               className={cn(
-                "transition-colors hover:text-zinc-900",
-                "text-zinc-600"
+                "transition-colors hover:text-zinc-900 dark:hover:text-zinc-50",
+                "text-zinc-600 dark:text-zinc-400"
               )}
             >
               Docs
@@ -33,8 +35,8 @@ export function Navbar() {
             <Link
               href="/#benchmarks"
               className={cn(
-                "transition-colors hover:text-zinc-900",
-                "text-zinc-600"
+                "transition-colors hover:text-zinc-900 dark:hover:text-zinc-50",
+                "text-zinc-600 dark:text-zinc-400"
               )}
             >
               Benchmarks
@@ -42,8 +44,8 @@ export function Navbar() {
             <Link
               href="docs/vs-toon"
               className={cn(
-                "transition-colors hover:text-zinc-900",
-                "text-zinc-600"
+                "transition-colors hover:text-zinc-900 dark:hover:text-zinc-50",
+                "text-zinc-600 dark:text-zinc-400"
               )}
             >
               ZON vs TOON
@@ -56,19 +58,22 @@ export function Navbar() {
           <Link href="/" className="flex items-center space-x-2">
             <Wordmark />
           </Link>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-9 w-9"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? (
-              <X className="h-5 w-5" />
-            ) : (
-              <Menu className="h-5 w-5" />
-            )}
-            <span className="sr-only">Toggle menu</span>
-          </Button>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-9 w-9"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
+              <span className="sr-only">Toggle menu</span>
+            </Button>
+          </div>
         </div>
 
         {/* Desktop Right Side */}
@@ -76,7 +81,7 @@ export function Navbar() {
           <div className="w-full flex-1 md:w-auto md:flex-none">
             <SearchDialog />
           </div>
-          <nav className="flex items-center">
+          <nav className="flex items-center gap-2">
             <Link
               href="https://github.com/ZON-Format/ZON"
               target="_blank"
@@ -91,6 +96,7 @@ export function Navbar() {
                 <span className="sr-only">GitHub</span>
               </div>
             </Link>
+            <ThemeToggle />
           </nav>
         </div>
       </div>
