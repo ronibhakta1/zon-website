@@ -206,7 +206,7 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
         </div>
 
         {/* Decorative Background Elements - Cal.com Style */}
-        <div className="absolute inset-0 -z-10 h-full w-full pointer-events-none select-none">
+        <div className="hidden md:block absolute inset-0 -z-10 h-full w-full pointer-events-none select-none">
           {/* Crosshair Markers at Grid Intersections */}
           <div className="absolute left-[5%] top-[15%] text-slate-500 dark:text-slate-500 text-lg font-light">+</div>
           <div className="absolute left-[15%] top-[25%] text-slate-500 dark:text-slate-400 text-lg font-light">+</div>
@@ -238,7 +238,7 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
 
 
       {/* Features Section (Why ZON?) */}
-      <section className="py-20 sm:py-32 bg-white dark:bg-black text-zinc-900 dark:text-white border-b border-zinc-200 dark:border-white/5 relative overflow-hidden">
+      <section className="py-20 sm:py-32 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white border-b border-zinc-200 dark:border-white/5 relative overflow-hidden">
         {/* Background Gradient */}
         <div className="hidden dark:block absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-primary/20 blur-[120px] rounded-full opacity-20 pointer-events-none" />
         <div className="container mx-auto max-w-6xl px-4 relative z-10">

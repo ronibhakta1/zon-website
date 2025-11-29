@@ -144,8 +144,8 @@
   }
 
   .dark {
-    --background: 0 0% 0%;
-    /* Black */
+    --background: 240 10% 3.9%;
+    /* Zinc-950 */
     --foreground: 0 0% 98%;
     /* Zinc-50 */
     --card: 240 10% 3.9%;
