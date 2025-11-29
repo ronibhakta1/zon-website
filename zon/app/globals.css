@@ -3,6 +3,8 @@
 @plugin "tailwindcss-animate";
 @plugin "@tailwindcss/typography";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
@@ -93,6 +95,7 @@
 
 @layer base {
   :root {
+    color-scheme: light;
     --background: 0 0% 98%;
     /* Zinc-50 */
     --foreground: 240 10% 3.9%;
@@ -144,6 +147,7 @@
   }
 
   .dark {
+    color-scheme: dark;
     --background: 240 10% 3.9%;
     /* Zinc-950 */
     --foreground: 0 0% 98%;

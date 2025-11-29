@@ -260,10 +260,10 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
       {/* Features Section (Why ZON?) */}
       <section className="py-20 sm:py-32 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white border-b border-zinc-200 dark:border-white/5 relative overflow-hidden">
         {/* Background Gradient */}
-        <div className="hidden dark:block absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-primary/20 blur-[120px] rounded-full opacity-20 pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-primary/5 dark:bg-primary/20 blur-[120px] rounded-full opacity-30 dark:opacity-20 pointer-events-none" />
         <div className="container mx-auto max-w-6xl px-4 relative z-10">
           <div className="mb-16 text-center md:text-left">
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter mb-6">
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter mb-6 text-zinc-900 dark:text-white">
               Why Choose ZON?
             </h2>
             <p className="text-zinc-600 dark:text-zinc-400 text-lg md:text-xl max-w-2xl leading-relaxed">
