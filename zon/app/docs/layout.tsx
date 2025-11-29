@@ -25,7 +25,7 @@ export default function DocsLayout({ children }: DocsLayoutProps) {
   const navSections = getDocsNav()
 
   return (
-    <div className="flex min-h-screen flex-col md:flex-row bg-background">
+    <div className="flex min-h-screen flex-col bg-background">
       {/* Mobile Header */}
       <div className="md:hidden sticky top-14 z-30 flex items-center border-b bg-background/95 backdrop-blur px-4 h-12">
         <Sheet>
@@ -71,74 +71,53 @@ export default function DocsLayout({ children }: DocsLayoutProps) {
         <div className="font-medium">Documentation</div>
       </div>
 
-      {/* Desktop Sidebar */}
-      <aside className="fixed top-14 z-30 hidden h-[calc(100vh-3.5rem)] w-full shrink-0 md:sticky md:block md:w-64 border-r border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="h-full py-6 pl-8 pr-6 lg:py-8">
-          <div className="mb-6">
-            <SearchDialog />
-          </div>
-          <ScrollArea className="h-full pr-6">
-            <div className="flex flex-col space-y-4">
-              {navSections.map((section, idx) => (
-                <div key={idx}>
-                  {section.title && (
-                    <h4 className="mb-2 rounded-md px-2 py-1 text-sm font-semibold text-foreground">{section.title}</h4>
-                  )}
-                  <div className="flex flex-col space-y-1">
-                    {section.items.map((link) => (
-                      <Link
-                        key={link.href}
-                        href={link.href}
-                        className={cn(
-                          "block rounded-md px-2 py-1.5 text-sm font-medium transition-colors",
-                          pathname === link.href 
-                            ? "bg-secondary text-foreground" 
-                            : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                        )}
-                      >
-                        {link.title}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              ))}
+      <div className="container flex-1 items-start md:grid md:grid-cols-[240px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-10 mx-auto">
+        {/* Desktop Sidebar */}
+        <aside className="fixed top-14 z-30 hidden h-[calc(100vh-3.5rem)] w-full shrink-0 md:sticky md:block border-r border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+          <div className="h-full py-6 pr-6 lg:py-8">
+            <div className="mb-6">
+              <SearchDialog />
             </div>
-          </ScrollArea>
-        </div>
-      </aside>
-
-      {/* Main Content */}
-      <main className="relative py-6 lg:gap-10 lg:py-8 xl:grid xl:grid-cols-[1fr_300px] w-full">
-        {/* Dotted Background */}
-        <div className="absolute inset-0 -z-10 h-full w-full bg-background bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"></div>
-        
-        <div className="mx-auto w-full min-w-0 max-w-3xl px-4 md:px-6 lg:px-8">
-          {children}
-        </div>
-        
-        {/* Table of Contents (Placeholder for now) */}
-        <div className="hidden text-sm xl:block">
-          <div className="sticky top-16 -mt-10 h-[calc(100vh-3.5rem)] overflow-hidden pt-6">
-            <ScrollArea className="pb-10">
-              <div className="space-y-2">
-                <p className="font-medium">On This Page</p>
-                <ul className="m-0 list-none">
-                  <li className="mt-0 pt-2">
-                    <a href="#" className="inline-block no-underline transition-colors hover:text-foreground text-muted-foreground">
-                      Overview
-                    </a>
-                  </li>
-                  <li className="mt-0 pt-2">
-                    <a href="#" className="inline-block no-underline transition-colors hover:text-foreground text-muted-foreground">
-                      Features
-                    </a>
-                  </li>
-                </ul>
+            <ScrollArea className="h-full pr-6">
+              <div className="flex flex-col space-y-4">
+                {navSections.map((section, idx) => (
+                  <div key={idx}>
+                    {section.title && (
+                      <h4 className="mb-2 rounded-md px-2 py-1 text-sm font-semibold text-foreground">{section.title}</h4>
+                    )}
+                    <div className="flex flex-col space-y-1">
+                      {section.items.map((link) => (
+                        <Link
+                          key={link.href}
+                          href={link.href}
+                          className={cn(
+                            "block rounded-md px-2 py-1.5 text-sm font-medium transition-colors",
+                            pathname === link.href 
+                              ? "bg-secondary text-foreground" 
+                              : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                          )}
+                        >
+                          {link.title}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                ))}
               </div>
             </ScrollArea>
           </div>
-        </div>
-      </main>
+        </aside>
+
+        {/* Main Content */}
+        <main className="relative py-6 lg:gap-10 lg:py-8 w-full min-w-0">
+          {/* Dotted Background */}
+          <div className="absolute inset-0 -z-10 h-full w-full bg-background bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"></div>
+          
+          <div className="mx-auto w-full min-w-0">
+            {children}
+          </div>
+        </main>
+      </div>
     </div>
   )
 }

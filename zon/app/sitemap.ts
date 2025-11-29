@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 import { docsMap } from '@/lib/docs-config'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://zon.ronibhakta.in'
+  const baseUrl = 'https://zonformat.org'
 
   const urls: MetadataRoute.Sitemap = [
     {

@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://zon.ronibhakta.in/sitemap.xml',
+    sitemap: 'https://zonformat.org/sitemap.xml',
   }
 }

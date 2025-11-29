@@ -80,5 +80,18 @@ export async function getDocContent(slug: string) {
 
   const cleanTitle = (frontmatter as any).title || path.basename(fileName).replace(/\.mdx?$/, "")
   
-  return { content, frontmatter, title: cleanTitle }
+  // Extract headings for Table of Contents
+  const headings = Array.from(cleanedSource.matchAll(/(#{2,3})\s+(.+)/g)).map(
+    (match) => {
+      const flag = match[1]
+      const content = match[2]
+      return {
+        level: flag?.length === 2 ? 2 : 3,
+        text: content || "",
+        slug: content ? content.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]/g, "") : "",
+      }
+    }
+  )
+
+  return { content, frontmatter, title: cleanTitle, headings }
 }
