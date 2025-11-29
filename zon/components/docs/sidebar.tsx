@@ -28,7 +28,7 @@ export function DocsSidebar() {
                   className={cn(
                     "group flex w-full items-center rounded-md border border-transparent px-2 py-1.5 hover:underline transition-colors",
                     pathname === item.href || (item.href.includes("#") && pathname === "/docs")
-                      ? "font-medium text-foreground bg-secondary/50"
+                      ? "font-medium text-primary bg-primary/5 border-l-2 border-l-primary rounded-l-none"
                       : "text-muted-foreground hover:text-foreground"
                   )}
                 >
