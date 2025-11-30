@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { RetroGrid } from "@/components/ui/retro-grid"
 import { Marquee } from "@/components/ui/marquee"
 import { cn } from "@/lib/utils"
-import { Zap, Shield, Layers, Database, FileCode, Globe, ArrowUpRight, Star, ShieldCheck } from "lucide-react"
+import { Zap, Shield, Layers, Database, FileCode, Globe, ArrowUpRight, Star, ShieldCheck, ArrowDown } from "lucide-react"
 import { 
   LangChainLogo, 
   OpenAILogo, 
@@ -225,6 +225,21 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
               <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-background via-background/80 to-background/0"></div>
             </div>
           </motion.div>
+          
+          {/* Bouncing Benchmark Button */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 1 }}
+            className="mt-8 sm:mt-12 flex justify-center"
+          >
+            <Link href="#benchmarks" className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors group cursor-pointer">
+              <span className="text-xs sm:text-sm font-medium tracking-wide">See Benchmarks</span>
+              <div className="p-2 rounded-full border border-border/40 bg-background/50 backdrop-blur-sm shadow-sm group-hover:shadow-md group-hover:border-primary/30 transition-all duration-300 animate-bounce-slow">
+                <ArrowDown className="w-4 h-4 sm:w-5 sm:h-5" />
+              </div>
+            </Link>
+          </motion.div>
         </div>
 
         {/* Decorative Background Elements - Cal.com Style */}
@@ -260,7 +275,7 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
 
 
       {/* Features Section (Why ZON?) */}
-      <section className="py-20 sm:py-32 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white border-b border-zinc-200 dark:border-white/5 relative overflow-hidden">
+      <section id="benchmarks" className="py-20 sm:py-32 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white border-b border-zinc-200 dark:border-white/5 relative overflow-hidden">
         {/* Background Gradient */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-primary/5 dark:bg-primary/20 blur-[120px] rounded-full opacity-30 dark:opacity-20 pointer-events-none" />
         <div className="container mx-auto max-w-6xl px-4 relative z-10">
