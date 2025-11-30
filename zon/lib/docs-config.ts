@@ -14,6 +14,7 @@ export const docsMap: Record<string, string> = {
   "changelog": "content/docs/changelog.mdx",
   "syntax-cheatsheet": "content/docs/syntax-cheatsheet.mdx",
   "vs-toon": "content/docs/vs-toon.mdx",
+  "eval-llms": "content/docs/eval-llms.mdx",
   "contributing": "CONTRIBUTING.md",
 }
 
@@ -43,6 +44,7 @@ export function getDocsNav(): NavSection[] {
         { title: "Format Overview", href: "/docs/format-overview" },
         { title: "Using ZON with LLMs", href: "/docs/using-zon-with-llms" },
         { title: "Benchmarks", href: "/docs/benchmarks" },
+        { title: "Eval LLMs (Guardrails)", href: "/docs/eval-llms" },
         { title: "ZON vs TOON", href: "/docs/vs-toon" },
       ]
     },
@@ -65,7 +67,9 @@ export function getDocsNav(): NavSection[] {
         { title: "API (TypeScript)", href: "/docs/api-typescript" },
         { title: "Syntax Cheatsheet", href: "/docs/syntax-cheatsheet" },
         { title: "Specification", href: "/docs/specification" },
+
         { title: "Efficiency Formalization", href: "/docs/efficiency-formalization" },
+        { title: "Changelog", href: "/docs/changelog" },
       ]
     }
   ]

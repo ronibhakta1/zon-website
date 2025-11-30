@@ -1,0 +1,124 @@
+---
+title: Eval LLMs (Schema Validation)
+description: Use ZON's built-in validation layer for LLM Guardrails and self-correction.
+---
+
+ZON includes a built-in validation layer designed for **LLM Guardrails**.
+Instead of just parsing data, you can enforce a schema to ensure the LLM output matches your expectations.
+
+## Why use this?
+
+1.  **Self-Correction:** Feed error messages back to the LLM so it can fix its own mistakes.
+2.  **Type Safety:** Guarantee that `age` is a number, not a string like `"25"`.
+3.  **Hallucination Check:** Ensure the LLM didn't invent fields you didn't ask for.
+
+## Usage
+
+```typescript
+import { zon, validate } from 'zon-format';
+
+// 1. Define the Schema (The "Source of Truth")
+const UserSchema = zon.object({
+  name: zon.string().describe("The user's full name"),
+  age: zon.number().describe("Age in years"),
+  role: zon.enum(['admin', 'user']).describe("Access level"),
+  tags: zon.array(zon.string()).optional()
+});
+
+// 2. Generate the System Prompt (The "Input")
+const systemPrompt = `
+You are an API. Respond in ZON format with this structure:
+${UserSchema.toPrompt()}
+`;
+
+console.log(systemPrompt);
+// Output:
+// object:
+//   - name: string - The user's full name
+//   - age: number - Age in years
+//   - role: enum(admin, user) - Access level
+//   - tags: array of [string] (optional)
+
+// 3. Validate the Output (The "Guardrail")
+const result = validate(llmOutput, UserSchema);
+```
+
+## 💡 The "Input Optimization" Workflow (Best Practice)
+
+The most practical way to use ZON is to **save money on Input Tokens** while keeping your backend compatible with JSON.
+
+**1. Input (ZON):** Feed the LLM massive datasets in ZON (saving ~50% tokens).
+**2. Output (JSON):** Ask the LLM to reply in standard JSON.
+
+```typescript
+import { encode } from 'zon-format';
+
+// 1. Encode your massive context (Save 50% tokens!)
+const context = encode(largeDataset);
+
+// 2. Send to LLM
+const prompt = `
+Here is the data in ZON format:
+${context}
+
+Analyze this data and respond in standard JSON format with the following structure:
+{ "summary": string, "count": number }
+`;
+
+// 3. LLM Output (Standard JSON)
+// { "summary": "Found 50 users", "count": 50 }
+```
+
+This gives you the **best of both worlds**:
+- **Cheaper API Calls** (ZON Input)
+- **Zero Code Changes** (JSON Output)
+
+## 🚀 The "Unified" Workflow (Full Power)
+
+Combine everything to build a **Self-Correcting, Token-Efficient Agent**:
+
+1.  **Encode** context to save tokens.
+2.  **Prompt** with a Schema to define expectations.
+3.  **Validate** the output (JSON or ZON) to ensure safety.
+
+```typescript
+import { encode, zon, validate } from 'zon-format';
+
+// 1. INPUT: Compress your context (Save 50%)
+const context = encode(userHistory);
+
+// 2. SCHEMA: Define what you want back
+const ResponseSchema = zon.object({
+  analysis: zon.string(),
+  riskScore: zon.number().describe("0-100 score"),
+  actions: zon.array(zon.string())
+});
+
+// 3. PROMPT: Generate instructions automatically
+const prompt = `
+Context (ZON):
+${context}
+
+Analyze the user history.
+Respond in JSON format matching this structure:
+${ResponseSchema.toPrompt()}
+`;
+
+// 4. GUARD: Validate the LLM's JSON output
+// (validate() works on both ZON strings AND JSON objects!)
+const result = validate(llmJsonOutput, ResponseSchema);
+
+if (!result.success) {
+  console.error("Hallucination detected:", result.error);
+}
+```
+
+## Supported Types
+
+- `zon.string()`
+- `zon.number()`
+- `zon.boolean()`
+- `zon.enum(['a', 'b'])`
+- `zon.array(schema)`
+- `zon.object({ key: schema })`
+- `.optional()` modifier

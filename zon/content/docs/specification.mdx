@@ -10,7 +10,7 @@ Zero Overhead Notation (ZON) is a compact, line-oriented text format that encode
 
 ## Status of This Document
 
-This document is a **Stable Release v1.0.4** and defines normative behavior for ZON encoders, decoders, and validators. Implementation feedback should be reported at https://github.com/ZON-Format/zon-TS.
+This document is a **Stable Release v1.0.5** and defines normative behavior for ZON encoders, decoders, and validators. Implementation feedback should be reported at https://github.com/ZON-Format/zon-TS.
 
 Backward compatibility is maintained across v1.0.x releases. Major versions (v2.x) may introduce breaking changes.
 
@@ -425,15 +425,25 @@ Decodes to:
 
 ### 8.2 Nested Objects
 
-Quoted compound notation:
+**Colon-less Syntax (v1.0.5+):**
+Objects and arrays in nested positions use `key{...}` and `key[...]` syntax, removing redundant colons.
+
+```zon
+config{database{host:localhost,port:5432}}
+```
+
+**Smart Flattening:**
+Top-level nested objects are automatically flattened to dot notation.
+
+```zon
+config.db{host:localhost}
+```
+
+**Legacy Quoted (v1.x):**
+Quoted compound notation is supported for backward compatibility.
 
 ```zon
 config:"{database:{host:localhost,port:5432},cache:{ttl:3600}}"
-```
-
-Alternatively using JSON string:
-```zon
-config:"{"database":{"host":"localhost","port":5432}}"
 ```
 
 ### 8.3 Empty Objects
@@ -457,10 +467,10 @@ metadata:"{}"
 
 **Primitive arrays:**
 ```zon
-tags:"[nodejs,typescript,llm]"
-numbers:"[1,2,3,4,5]"
-flags:"[T,F,T]"
-mixed:"[hello,123,T,null]"
+tags[nodejs,typescript,llm]
+numbers[1,2,3,4,5]
+flags[T,F,T]
+mixed[hello,123,T,null]
 ```
 
 **Empty:**
@@ -671,9 +681,51 @@ Enforces:
 
 ---
 
-## 14. Strict Mode Errors
+## 14. Schema Validation (LLM Evals)
 
-### 14.1 Table Errors
+ZON includes a built-in validation layer designed for **LLM Guardrails**.
+
+### 14.1 Schema Definition
+
+Schemas are defined using a fluent API:
+
+```typescript
+const UserSchema = zon.object({
+  name: zon.string(),
+  age: zon.number(),
+  role: zon.enum(['admin', 'user'])
+});
+```
+
+### 14.2 Prompt Generation
+
+Schemas can generate ZON-formatted system prompts to guide LLMs:
+
+```typescript
+const prompt = UserSchema.toPrompt();
+// Output:
+// object:
+//   - name: string
+//   - age: number
+//   - role: enum(admin, user)
+```
+
+### 14.3 Validation
+
+The `validate()` function checks data against the schema:
+
+```typescript
+const result = validate(data, UserSchema);
+if (!result.success) {
+  console.error(result.error);
+}
+```
+
+---
+
+## 15. Strict Mode Errors
+
+### 15.1 Table Errors
 
 | Code | Error | Example |
 |------|-------|---------|
@@ -682,7 +734,7 @@ Enforces:
 | **E003** | Malformed header | Missing `@`, `(N)`, or `:` |
 | **E004** | Invalid column name | Unescaped special chars |
 
-### 14.2 Syntax Errors
+### 15.2 Syntax Errors
 
 | Code | Error | Example |
 |------|-------|---------|
@@ -691,7 +743,7 @@ Enforces:
 | **E103** | Missing colon | `name Alice` → `name:Alice` |
 | **E104** | Empty key | `:value` |
 
-### 14.3 Format Errors
+### 15.3 Format Errors
 
 | Code | Error | Example |
 |------|-------|---------|
@@ -702,9 +754,9 @@ Enforces:
 
 ---
 
-## 15. Security Considerations
+## 16. Security Considerations
 
-### 15.1 Resource Limits
+### 16.1 Resource Limits
 
 Implementations SHOULD limit:
 - Document size: 100 MB
@@ -715,14 +767,14 @@ Implementations SHOULD limit:
 
 Prevents denial-of-service attacks.
 
-### 15.2 Validation
+### 16.2 Validation
 
 - Validate UTF-8 strictly
 - Error on invalid escapes
 - Reject malformed numbers
 - Limit recursion depth
 
-### 15.3 Injection Prevention
+### 16.3 Injection Prevention
 
 ZON does not execute code. Applications MUST sanitize before:
 - SQL queries
@@ -731,9 +783,9 @@ ZON does not execute code. Applications MUST sanitize before:
 
 ---
 
-## 16. Internationalization
+## 17. Internationalization
 
-### 16.1 Character Encoding
+### 17.1 Character Encoding
 
 **REQUIRED:** UTF-8 without BOM
 
@@ -741,14 +793,14 @@ Decoders MUST:
 - Reject invalid UTF-8
 - Reject BOM (U+FEFF) at start
 
-### 16.2 Unicode
+### 17.2 Unicode
 
 Full Unicode support:
 - Emoji: `✅`, `🚀`
 - CJK: `王小明`, `日本語`
 - RTL: `مرحبا`, `שלום`
 
-### 16.3 Locale Independence
+### 17.3 Locale Independence
 
 - Decimal separator: `.` (period)
 - No thousands separators
@@ -756,9 +808,9 @@ Full Unicode support:
 
 ---
 
-## 17. Interoperability
+## 18. Interoperability
 
-### 17.1 JSON
+### 18.1 JSON
 
 **ZON → JSON:** Lossless  
 **JSON → ZON:** Lossless, with 35-50% compression for tabular data
@@ -773,7 +825,7 @@ users:@(1):id,name
 1,Alice
 ```
 
-### 17.2 CSV
+### 18.2 CSV
 
 **CSV → ZON:** Add type awareness
 **ZON → CSV:** Table rows export cleanly
@@ -783,7 +835,7 @@ users:@(1):id,name
 - Metadata support
 - Nesting capability
 
-### 17.3 TOON
+### 18.3 TOON
 
 **Comparison:**
 - ZON: Flat, `@(N)`, `T/F/null` → Better compression
@@ -792,9 +844,9 @@ Both are LLM-optimized; choose based on data shape.
 
 ---
 
-## 18. Media Type & File Extension
+## 19. Media Type & File Extension
 
-### 18.1 File Extension
+### 19.1 File Extension
 
 **Extension:** `.zonf`
 

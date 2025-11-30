@@ -77,8 +77,8 @@ hikes[3]{id,name,distanceKm,elevationGain,companion,wasSunny}:
 ZON conveys the same information with **even fewer tokens** than TOON - using compact table format with explicit headers:
 
 ```zon
-context:"{task:Our favorite hikes together,location:Boulder,season:spring_2025}"
-friends:"[ana,luis,sam]"
+context{task:Our favorite hikes together,location:Boulder,season:spring_2025}
+friends[ana,luis,sam]
 hikes:@(3):companion,distanceKm,elevationGain,id,name,wasSunny
 ana,7.5,320,1,Blue Lake Trail,T
 luis,9.2,540,2,Ridge Overlook,F

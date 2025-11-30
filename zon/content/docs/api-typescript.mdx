@@ -1,62 +1,140 @@
 ---
 title: API (TypeScript)
-description: Complete API documentation for zon-format v1.0.4.
+description: Complete API documentation for zon-format v1.0.5.
 ---
 
-## `encode(data: any): string`
+## Encoding Functions
+
+### `encode(input: any): string`
 
 Encodes JavaScript data to ZON format.
 
+**Parameters:**
+- `input` (`any`) - JavaScript data to encode (objects, arrays, primitives)
+
+**Returns:** `string` - ZON-formatted string
+
+**Example:**
 ```typescript
 import { encode } from 'zon-format';
 
-const zon = encode({
+const data = {
   users: [
-    { id: 1, name: "Alice" },
-    { id: 2, name: "Bob" }
+    { id: 1, name: "Alice", active: true },
+    { id: 2, name: "Bob", active: false }
   ]
-});
+};
+
+const encoded = encode(data);
+console.log(encoded);
 ```
 
-**Returns:** ZON-formatted string
+**Output:**
+```zon
+users:@(2):active,id,name
+T,1,Alice
+F,2,Bob
+```
 
-## `decode(zonString: string, options?: DecodeOptions): any`
+**Supported Types:**
+- ✅ Objects (nested or flat)
+- ✅ Arrays (uniform, mixed, primitives)
+- ✅ Strings
+- ✅ Numbers (integers, floats)
+- ✅ Booleans (`T`/`F`)
+- ✅ Null (`null`)
 
-Decodes ZON format back to JavaScript data.
+---
+
+## Decoding Functions
+
+### `decode(zonString: string, options?: DecodeOptions): any`
+
+Decodes a ZON format string back to the original JavaScript data structure.
+
+### Parameters
+- **`zonString`** (`string`): The ZON-formatted string to decode
+- **`options`** (`DecodeOptions`, optional): Decoding options
+  - **`strict`** (`boolean`, default: `true`): Enable strict validation
+
+### Strict Mode
+**Enabled by default** - Validates table structure during decoding.
+
+**Error Codes:**
+- `E001`: Row count mismatch (expected vs actual rows)
+- `E002`: Field count mismatch (expected vs actual fields)
+
+**Examples:**
 
 ```typescript
 import { decode } from 'zon-format';
 
-const data = decode(`
+// Strict mode (default) - throws on validation errors
+const zonData = `
 users:@(2):id,name
 1,Alice
-2,Bob
-`);
-```
-
-**Options:**
-
-```typescript
-// Strict mode (default) - validates table structure
-const data = decode(zonString);
-
-// Non-strict mode - allows row/field count mismatches  
-const data = decode(zonString, { strict: false });
-```
-
-**Error Handling:**
-
-```typescript
-import { decode, ZonDecodeError } from 'zon-format';
+`;
 
 try {
-  const data = decode(invalidZon);
+  const data = decode(zonData);
 } catch (e) {
-  if (e instanceof ZonDecodeError) {
-    console.log(e.code);    // "E001" or "E002"
-    console.log(e.message); // Detailed error message
-  }
+  console.log(e.code);    // "E001"
+  console.log(e.message); // "[E001] Row count mismatch..."
+  console.log(e.context); // "Table: users"
 }
+
+// Non-strict mode - allows mismatches
+const data = decode(zonData, { strict: false });
+// Successfully decodes with 1 row instead of declared 2
 ```
 
-**Returns:** Original JavaScript data structure
+---
+
+## Schema Validation API
+
+ZON provides a runtime schema validation library for LLM guardrails.
+
+### `zon` Builder
+Fluent API for defining schemas.
+
+```typescript
+import { zon } from 'zon-format';
+```
+
+#### Methods
+
+- **`zon.string()`**: Matches any string.
+- **`zon.number()`**: Matches any number (no NaN/Infinity).
+- **`zon.boolean()`**: Matches `true` or `false`.
+- **`zon.enum(values: string[])`**: Matches one of the provided string values.
+- **`zon.array(schema: ZonSchema)`**: Matches an array where every element matches `schema`.
+- **`zon.object(shape: Record<string, ZonSchema>)`**: Matches an object with the specified shape.
+
+#### Modifiers
+
+- **`.optional()`**: Marks a field as optional (can be `undefined` or missing).
+- **`.describe(text: string)`**: Adds a description for prompt generation.
+
+### `validate<T>(input: string | any, schema: ZonSchema<T>): ZonResult<T>`
+Validates input against a schema. Accepts either a raw ZON string (which it decodes) or a pre-decoded JavaScript object.
+
+**Returns:** `ZonResult<T>`
+```typescript
+type ZonResult<T> = 
+  | { success: true; data: T }
+  | { success: false; error: string; issues: ZonIssue[] };
+```
+
+**Example:**
+
+```typescript
+const UserSchema = zon.object({
+  name: zon.string(),
+  role: zon.enum(['admin', 'user'])
+});
+
+const result = validate(llmOutput, UserSchema);
+if (result.success) {
+  // result.data is typed as { name: string, role: 'admin' | 'user' }
+}
+```

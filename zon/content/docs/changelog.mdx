@@ -4,6 +4,29 @@ description: All notable changes to the ZON project.
 ---
 
 
+## [1.0.5] - 2025-11-30
+
+### Added
+- **Colon-less Syntax:** Objects and arrays in nested positions now use `key{...}` and `key[...]` syntax, removing redundant colons.
+- **Smart Flattening:** Top-level nested objects are automatically flattened to dot notation (e.g., `config.db{...}`).
+- **Control Character Escaping:** All control characters (ASCII 0-31) are now properly escaped to prevent binary file creation.
+- **Algorithmic Benchmark Generation**: Replaced LLM-based question generation with a deterministic algorithm for consistent, reproducible benchmarks.
+- **Expanded Dataset**: Added "products" and "feed" data to the unified dataset to simulate real-world e-commerce scenarios.
+- **Tricky Questions**: Introduced edge cases (non-existent fields, logic traps, case sensitivity) to stress-test LLM reasoning.
+- **Robust Benchmark Runner**: Added exponential backoff and rate limiting to handle Azure OpenAI S0 tier constraints.
+
+### Improved
+- **Token Efficiency:** Achieved up to 23.8% reduction vs JSON (GPT-4o) thanks to syntax optimizations.
+- **Readability:** Cleaner, block-like structure for nested data.
+
+### Changed
+- **Benchmark Formats**: Refined tested formats to ZON, TOON, JSON, JSON (Minified), and CSV for focused analysis.
+- **Documentation**: Updated README and API references with the latest benchmark results (GPT-5 Nano) and accurate token counts.
+- **Token Efficiency**: Recalculated efficiency scores based on the expanded dataset, confirming ZON's leadership (1430.6 score).
+
+### Fixed
+- **Rate Limiting**: Resolved 429 errors during benchmarking by implementing robust retry logic and concurrency control.
+
 ## [1.0.4] - 2025-11-29
 
 ### Fixed

@@ -24,9 +24,9 @@ Benchmarks across multiple datasets and tokenizers (GPT-4o, Claude 3.5, Llama 3)
 
 | Tokenizer | ZON Tokens | TOON Tokens | Difference |
 | :--- | :--- | :--- | :--- |
-| **GPT-4o** | **522** | 614 | ZON is **15%** more efficient |
-| **Claude 3.5** | **545** | 570 | ZON is **4.4%** more efficient |
-| **Llama 3** | **701** | 784 | ZON is **10.6%** more efficient |
+| **GPT-4o** | **513** | 614 | ZON is **16.4%** more efficient |
+| **Claude 3.5** | **548** | 570 | ZON is **3.9%** more efficient |
+| **Llama 3** | **696** | 784 | ZON is **11.2%** more efficient |
 
 ### Large Complex Nested Dataset
 
@@ -34,9 +34,9 @@ For complex, real-world data structures, the gap widens significantly:
 
 | Tokenizer | ZON Tokens | TOON Tokens | Difference |
 | :--- | :--- | :--- | :--- |
-| **GPT-4o** | **147,267** | 225,510 | ZON is **34.7%** more efficient |
-| **Claude 3.5** | **149,281** | 197,463 | ZON is **24.4%** more efficient |
-| **Llama 3** | **234,623** | 315,608 | ZON is **25.7%** more efficient |
+| **GPT-4o** | **143,661** | 224,940 | ZON is **36.1%** more efficient |
+| **Claude 3.5** | **145,652** | 196,893 | ZON is **26.0%** more efficient |
+| **Llama 3** | **230,838** | 314,824 | ZON is **26.7%** more efficient |
 
 > [!IMPORTANT]
 > On large datasets, **ZON saves ~25-35% more tokens than TOON**. This directly translates to lower API costs and faster latency.
@@ -65,10 +65,9 @@ users: [
 
 **ZON:**
 ```zon
-users:
-  | id | name | role |
-  | 1 | Alice | admin |
-  | 2 | Bob | user |
+users:@(2):id,name,role
+1,Alice,admin
+2,Bob,user
 ```
 
 ### 2. Minimal Syntax Overhead
