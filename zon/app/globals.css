@@ -66,6 +66,9 @@
       height: 0;
     }
   }
+
+  --font-family-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-family-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
 }
 
 /*
@@ -87,11 +90,7 @@
   }
 }
 
-@layer utilities {
-  body {
-    font-family: Arial, Helvetica, sans-serif;
-  }
-}
+
 
 @layer base {
   :root {
@@ -143,7 +142,17 @@
 
     /* Code color variables */
     --code-color: #0f172a;
-    --code-bg-tint: color-mix(in srgb, var(--muted) 8%, transparent);
+    --code-bg: hsl(240 4.8% 95.9%); /* zinc-100 */
+    --code-border: hsl(240 5.9% 90%); /* zinc-200 */
+    
+    /* Syntax Highlighting (Light) */
+    --sh-comment: #64748b; /* slate-500 */
+    --sh-keyword: #db2777; /* pink-600 */
+    --sh-string: #16a34a; /* green-600 */
+    --sh-function: #2563eb; /* blue-600 */
+    --sh-number: #d97706; /* amber-600 */
+    --sh-property: #0891b2; /* cyan-600 */
+    --sh-punctuation: #475569; /* slate-600 */
   }
 
   .dark {
@@ -197,9 +206,18 @@
     --feature-icon-text: hsl(240 5% 64.9%);
     /* Zinc-400 */
 
-    --code-color: #93c5fd;
-    /* soft sky blue for code in dark mode */
-    --code-bg-tint: color-mix(in srgb, var(--muted) 6%, transparent);
+    --code-color: #e2e8f0;
+    --code-bg: hsl(240 10% 3.9%); /* zinc-950 */
+    --code-border: hsl(240 3.7% 15.9%); /* zinc-800 */
+
+    /* Syntax Highlighting (Dark) */
+    --sh-comment: #94a3b8; /* slate-400 */
+    --sh-keyword: #f472b6; /* pink-400 */
+    --sh-string: #4ade80; /* green-400 */
+    --sh-function: #60a5fa; /* blue-400 */
+    --sh-number: #fbbf24; /* amber-400 */
+    --sh-property: #22d3ee; /* cyan-400 */
+    --sh-punctuation: #94a3b8; /* slate-400 */
   }
 }
 
@@ -318,15 +336,15 @@ h6 {
 
 /* Make pre/code in prose more distinct and readable */
 .prose pre {
-  background: color-mix(in srgb, hsl(var(--muted)) 40%, hsl(var(--card)));
-  border: 1px solid hsl(var(--border));
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
   padding: 1.25rem;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   overflow: auto;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono", "Courier New", monospace;
+  font-family: var(--font-mono);
   font-size: 0.875rem;
   line-height: 1.7;
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
   margin: 1.5rem 0;
 }
 
@@ -344,7 +362,8 @@ h6 {
   border-radius: 0.3rem;
   font-size: 0.875em;
   border: 1px solid color-mix(in srgb, hsl(var(--border)) 50%, transparent);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono", "Courier New", monospace;
+  border: 1px solid color-mix(in srgb, hsl(var(--border)) 50%, transparent);
+  font-family: var(--font-mono);
   font-weight: 500;
 }
 
@@ -352,34 +371,61 @@ h6 {
 .hljs {
   background: transparent;
   color: inherit;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono", "Courier New", monospace;
+  background: transparent;
+  color: inherit;
+  font-family: var(--font-mono);
   font-size: 0.9rem;
   line-height: 1.6;
 }
 
+/* Improved Syntax Highlighting */
 .hljs-comment,
 .hljs-quote {
-  color: hsl(var(--muted-foreground));
+  color: var(--sh-comment);
   font-style: italic;
 }
 
 .hljs-keyword,
 .hljs-selector-tag,
-.hljs-subst {
-  color: #7c3aed;
+.hljs-built_in,
+.hljs-name,
+.hljs-tag {
+  color: var(--sh-keyword);
   font-weight: 600;
 }
 
 .hljs-string,
 .hljs-title,
-.hljs-name,
-.hljs-type {
-  color: #059669;
+.hljs-section,
+.hljs-attribute,
+.hljs-literal,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-type,
+.hljs-addition {
+  color: var(--sh-string);
 }
 
 .hljs-number,
-.hljs-meta {
-  color: #d97706;
+.hljs-meta,
+.hljs-link {
+  color: var(--sh-number);
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-params,
+.hljs-property {
+  color: var(--sh-property);
+}
+
+.hljs-function {
+  color: var(--sh-function);
+}
+
+.hljs-punctuation,
+.hljs-operator {
+  color: var(--sh-punctuation);
 }
 
 @keyframes border-beam {

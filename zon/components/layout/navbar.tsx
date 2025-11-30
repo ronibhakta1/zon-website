@@ -73,6 +73,9 @@ export function Navbar() {
                   <Link href="/docs/benchmarks">Benchmarks</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
+                  <Link href="/docs/eval-llms">Eval LLMs (Guardrails)</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
                   <Link href="/docs/cli-reference">CLI Reference</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
@@ -97,6 +100,9 @@ export function Navbar() {
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/docs/efficiency-formalization">Efficiency Formalization</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/docs/changelog">Changelog</Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -124,14 +130,14 @@ export function Navbar() {
 
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center gap-1 transition-colors hover:text-foreground/80 text-foreground/60 outline-none ml-2">
-                v1.0.4 <ChevronDown className="h-3 w-3" />
+                v1.0.5 <ChevronDown className="h-3 w-3" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem>
-                  v1.0.4 (Latest)
+                  v1.0.5 (Latest)
                 </DropdownMenuItem>
                 <DropdownMenuItem disabled>
-                  v1.0.3
+                  v1.0.4
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

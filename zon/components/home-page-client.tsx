@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { RetroGrid } from "@/components/ui/retro-grid"
 import { Marquee } from "@/components/ui/marquee"
 import { cn } from "@/lib/utils"
-import { Zap, Shield, Layers, Database, FileCode, Globe, ArrowUpRight, Star } from "lucide-react"
+import { Zap, Shield, Layers, Database, FileCode, Globe, ArrowUpRight, Star, ShieldCheck } from "lucide-react"
 import { 
   LangChainLogo, 
   OpenAILogo, 
@@ -20,6 +20,7 @@ import {
   MistralLogo, 
   AnthropicLogo 
 } from "@/components/ui/brand-logos"
+import { BenchmarkChart } from "@/components/benchmark-chart"
 
 
 
@@ -145,7 +146,7 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
             <motion.div variants={fadeInUp} className="mb-6 sm:mb-8 flex flex-col items-center gap-4">
               <Badge variant="secondary" className="px-4 py-1.5 text-xs sm:text-sm font-medium rounded-full border border-border/40 bg-secondary/60 backdrop-blur-sm shadow-sm hover:shadow-md hover:bg-secondary/80 transition-all duration-300 hover:scale-[1.02] cursor-default">
                 <span className="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"></span>
-                v1.0 Entropy Engine
+                v1.0.5 Entropy Engine
               </Badge>
               <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground font-medium animate-in fade-in slide-in-from-bottom-2 duration-700 delay-200 fill-mode-backwards">
                 <span className="opacity-80">Supported in:</span>
@@ -164,7 +165,7 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
               <span className="text-lg sm:text-xl md:text-5xl font-medium text-muted-foreground">Zero Overhead Notation</span>
             </motion.h1>
             <motion.p variants={fadeInUp} className="max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed font-medium px-4">
-              Smart compression for LLMs: 58% fewer tokens than JSON, 100% human-readable. Save 30-40% on API costs.
+              Smart compression for LLMs: 50% fewer tokens than JSON, 100% human-readable. Save ~50% on API costs.
             </motion.p>
           </motion.div>
           <motion.div
@@ -271,31 +272,35 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
             </p>
           </div>
 
+          <div className="mb-16">
+            <BenchmarkChart />
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 auto-rows-[minmax(280px,auto)]">
             {[
               {
                 title: "Token-Efficient Architecture",
-                desc: "Achieves 35-50% token reduction compared to JSON by utilizing tabular encoding for arrays and minimizing syntax overhead.",
+                desc: "Achieves ~50% token reduction compared to JSON by utilizing tabular encoding for arrays and minimizing syntax overhead.",
                 icon: Zap,
                 link: "/docs/benchmarks#token-efficiency-benchmark",
                 className: "md:col-span-2",
                 gradient: "rgba(245, 158, 11, 0.15)"
               },
               {
-                title: "100% Retrieval Accuracy",
-                desc: "Self-explanatory structure with explicit headers eliminates ambiguity, ensuring LLMs retrieve data with perfect accuracy.",
+                title: "Runtime Guardrails",
+                desc: "Validate LLM outputs against strict schemas with zero overhead. Type-safe, reliable, and built-in.",
+                icon: ShieldCheck,
+                link: "/docs/eval-llms",
+                className: "md:col-span-1",
+                gradient: "rgba(99, 102, 241, 0.15)"
+              },
+              {
+                title: "99%+ Retrieval Accuracy",
+                desc: "Self-explanatory structure with explicit headers eliminates ambiguity, ensuring LLMs retrieve data with near-perfect accuracy.",
                 icon: Shield,
                 link: "/docs/benchmarks",
                 className: "md:col-span-1",
                 gradient: "rgba(16, 185, 129, 0.15)"
-              },
-              {
-                title: "JSON Data Model",
-                desc: "Maps 1:1 to JSON types including objects, arrays, strings, numbers, booleans, and nulls. Lossless round-tripping guaranteed.",
-                icon: Database,
-                link: "/docs/format-overview",
-                className: "md:col-span-1",
-                gradient: "rgba(59, 130, 246, 0.15)"
               },
               {
                 title: "Streaming Ready",
@@ -304,6 +309,14 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
                 link: "/docs/specification",
                 className: "md:col-span-2",
                 gradient: "rgba(168, 85, 247, 0.15)"
+              },
+              {
+                title: "JSON Data Model",
+                desc: "Maps 1:1 to JSON types including objects, arrays, strings, numbers, booleans, and nulls. Lossless round-tripping guaranteed.",
+                icon: Database,
+                link: "/docs/format-overview",
+                className: "md:col-span-1",
+                gradient: "rgba(59, 130, 246, 0.15)"
               },
               {
                 title: "Human-Centric Syntax",
@@ -318,7 +331,7 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
                 desc: "Production-ready libraries available for Python and TypeScript, ensuring seamless integration into your stack.",
                 icon: Globe,
                 link: "/docs/implementations",
-                className: "md:col-span-2 md:col-start-2",
+                className: "md:col-span-1",
                 gradient: "rgba(6, 182, 212, 0.15)"
               }
             ].map((item, i) => (

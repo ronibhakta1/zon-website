@@ -32,7 +32,7 @@ export default async function Home() {
       priceCurrency: 'USD',
     },
     description: 'A human-readable, efficient data format for the modern web. Optimized for LLMs.',
-    softwareVersion: '1.0',
+    softwareVersion: '1.0.5',
     author: {
       '@type': 'Person',
       name: 'Roni Bhakta',
