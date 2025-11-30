@@ -231,6 +231,8 @@
     scroll-padding-top: 5rem;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Force hardware acceleration for smoother scrolling */
+    transform: translate3d(0, 0, 0);
   }
 
   body {
@@ -238,6 +240,10 @@
     font-feature-settings: "rlig" 1, "calt" 1;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-y: none;
+    /* Optimize repaints */
+    backface-visibility: hidden;
+    perspective: 1000px;
+    transform: translate3d(0, 0, 0);
   }
 
   a {

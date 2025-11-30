@@ -9,13 +9,13 @@ interface TokenData {
 }
 
 const data: TokenData[] = [
-  { format: "JSON", tokens: 189193 },
-  { format: "CSV", tokens: 165647, savings: "12%" },
   { format: "ZON", tokens: 147267, savings: "22%" },
+  { format: "CSV", tokens: 165647, savings: "12%" },
+  { format: "JSON", tokens: 189193 },
 ]
 
 export function TokenReductionChart() {
-  const maxTokens = data[0].tokens
+  const maxTokens = Math.max(...data.map(d => d.tokens))
 
   return (
     <div className="w-full max-w-5xl mx-auto p-4 sm:p-6 rounded-xl border border-zinc-800/50 bg-[#09090b] font-mono shadow-2xl">
@@ -24,9 +24,9 @@ export function TokenReductionChart() {
       </div>
 
       <div className="space-y-3">
-        {data.map((item, index) => {
+        {data.map((item) => {
           const percentage = (item.tokens / maxTokens) * 100
-          const isWinner = index === data.length - 1
+          const isWinner = item.format === "ZON"
           
           return (
             <div key={item.format} className="flex items-center gap-3 sm:gap-4">
