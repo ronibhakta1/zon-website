@@ -21,6 +21,7 @@ import {
   AnthropicLogo 
 } from "@/components/ui/brand-logos"
 import { BenchmarkChart } from "@/components/benchmark-chart"
+import { TokenReductionChart } from "@/components/token-reduction-chart"
 
 
 
@@ -272,8 +273,9 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
             </p>
           </div>
 
-          <div className="mb-16">
+          <div className="space-y-8 mb-16">
             <BenchmarkChart />
+            <TokenReductionChart />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 auto-rows-[minmax(280px,auto)]">
