@@ -45,8 +45,8 @@ For complex, real-world data structures, the gap widens significantly:
 
 Both formats are designed to be unambiguous for LLMs. In our benchmarks using `gpt-5-nano` on Azure OpenAI, both achieved perfect scores.
 
-- **ZON**: 100% Accuracy (24/24 questions)
-- **TOON**: 100% Accuracy (24/24 questions)
+- **ZON**: 99% Accuracy (306/309 questions)
+- **TOON**: 99% Accuracy (306/309 questions)
 
 **The Difference:** ZON achieves this accuracy with significantly fewer tokens.
 
@@ -118,7 +118,7 @@ sam,5.1,180,3,Wildflower Loop,T
 ```
 
 ### 2. Minimal Syntax Overhead
-ZON removes unnecessary punctuation like braces `{}`, brackets `[]`, and commas `,` where they aren't strictly needed for parsing, relying on indentation and whitespace similar to YAML but without the ambiguity.
+ZON removes unnecessary punctuation like braces `{}`, brackets `[]`, spaces and commas `,` where they aren't strictly needed for parsing, relying on indentation and whitespace similar to YAML but without the ambiguity.
 
 ### 3. Stream-First Design
 ZON is designed to be parsed byte-by-byte, making it ideal for streaming responses from LLMs. Its structure allows parsers to build objects incrementally without waiting for closing delimiters.
