@@ -84,6 +84,16 @@ export function Navbar() {
               </DropdownMenuContent>
             </DropdownMenu>
 
+            <Link
+              href="/playground"
+              className={cn(
+                "transition-colors hover:text-foreground/80",
+                "text-foreground/60"
+              )}
+            >
+              Playground
+            </Link>
+
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center gap-1 transition-colors hover:text-foreground/80 text-foreground/60 outline-none">
                 Reference <ChevronDown className="h-3 w-3" />
@@ -261,6 +271,13 @@ export function Navbar() {
               onClick={() => setMobileMenuOpen(false)}
             >
               Benchmarks
+            </Link>
+            <Link
+              href="/playground"
+              className="text-sm font-medium transition-colors hover:text-foreground/80 text-foreground/60 py-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Playground
             </Link>
             <Link
               href="docs/vs-toon"
