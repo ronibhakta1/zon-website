@@ -7,12 +7,12 @@ import { Button } from "@/components/ui/button"
 import { RetroGrid } from "@/components/ui/retro-grid"
 import { CodeEditorPanel } from "@/components/playground/code-editor"
 import { PresetSelector } from "@/components/playground/preset-selector"
+import { StatsDashboard } from "@/components/playground/stats-dashboard"
 import { type Preset } from "@/components/playground/example-presets"
 import { countTokens } from "@/lib/tokenizer"
 import { useDebounce } from "use-debounce"
-import { RotateCcw, Sparkles, TrendingDown, Zap, DollarSign, ArrowRight, Info, ExternalLink } from "lucide-react"
+import { RotateCcw, Sparkles, ArrowRight, Info } from "lucide-react"
 import { cn } from "@/lib/utils"
-import Link from "next/link"
 
 // Import ZON encoder
 import { encode } from "zon-format"
@@ -117,46 +117,19 @@ export function PlaygroundClient() {
       {/* Compact Hero */}
       <section className="relative py-8 sm:py-12 border-b border-border/40">
         <div className="container mx-auto max-w-7xl px-4 relative z-10">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-            <div>
-              <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-3xl sm:text-4xl font-bold tracking-tighter text-primary">
-                  ZON Playground
-                </h1>
-                <Badge variant="secondary" className="text-xs font-medium">
-                  <Sparkles className="w-3 h-3 mr-1 inline" />
-                  Live
-                </Badge>
-              </div>
-              <p className="text-sm sm:text-base text-muted-foreground">
-                Convert JSON to ZON and see the efficiency gains instantly
-              </p>
+          <div className="flex flex-col items-start gap-3">
+            <div className="flex items-center gap-3">
+              <h1 className="text-3xl sm:text-4xl font-bold tracking-tighter text-primary">
+                ZON Playground
+              </h1>
+              <Badge variant="secondary" className="text-xs font-medium">
+                <Sparkles className="w-3 h-3 mr-1 inline" />
+                Live
+              </Badge>
             </div>
-
-            {/* Quick Stats */}
-            {zonOutput && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="flex items-center gap-4 px-4 py-2 rounded-lg border border-border bg-card/50 backdrop-blur-sm"
-              >
-                <div className="flex items-center gap-2">
-                  <TrendingDown className="w-4 h-4 text-green-600 dark:text-green-400" />
-                  <span className="text-xl font-bold text-green-600 dark:text-green-400 tabular-nums">
-                    {tokenReduction}%
-                  </span>
-                  <span className="text-xs text-muted-foreground">saved</span>
-                </div>
-                <div className="w-px h-6 bg-border" />
-                <div className="flex items-center gap-2">
-                  <Zap className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-sm font-medium text-foreground tabular-nums">
-                    {zonTokens.toLocaleString()}
-                  </span>
-                  <span className="text-xs text-muted-foreground">tokens</span>
-                </div>
-              </motion.div>
-            )}
+            <p className="text-sm sm:text-base text-muted-foreground">
+              Convert JSON to ZON and see the efficiency gains instantly
+            </p>
           </div>
         </div>
       </section>
@@ -165,6 +138,18 @@ export function PlaygroundClient() {
       <section className="py-8 sm:py-12">
         <div className="container mx-auto max-w-7xl px-4">
           
+          {/* PRIORITY 1: Stats Dashboard - Immediate Impact */}
+          {zonOutput && (
+            <div className="mb-8">
+              <StatsDashboard 
+                jsonTokens={jsonTokens}
+                zonTokens={zonTokens}
+                tokenReduction={tokenReduction}
+                tokensSaved={tokensSaved}
+              />
+            </div>
+          )}
+
           {/* Controls */}
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 mb-6">
             <div className="flex flex-wrap items-center gap-3">
@@ -198,14 +183,19 @@ export function PlaygroundClient() {
             </div>
           </div>
 
-          {/* PRIORITY 1: Editors - The Main Action */}
+          {/* PRIORITY 2: Editors - The Main Action */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
             {/* JSON Input */}
             <div className="relative">
-              <div className="absolute -top-3 left-4 z-10">
+              <div className="absolute -top-3 left-4 z-10 flex items-center gap-2">
                 <Badge variant="secondary" className="text-xs font-medium shadow-sm">
-                  Input
+                  JSON Input
                 </Badge>
+                {jsonTokens > 0 && (
+                  <Badge variant="outline" className="text-xs font-medium tabular-nums">
+                    {jsonTokens.toLocaleString()} tokens
+                  </Badge>
+                )}
               </div>
               <div className="bg-card border border-border rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-200">
                 <CodeEditorPanel
@@ -222,11 +212,16 @@ export function PlaygroundClient() {
             <div className="relative">
               <div className="absolute -top-3 left-4 z-10 flex items-center gap-2">
                 <Badge variant="secondary" className="text-xs font-medium shadow-sm">
-                  Output
+                  ZON Output
                 </Badge>
+                {zonTokens > 0 && (
+                  <Badge variant="outline" className="text-xs font-medium tabular-nums">
+                    {zonTokens.toLocaleString()} tokens
+                  </Badge>
+                )}
                 {tokenReduction > 0 && (
                   <Badge className="text-xs font-medium shadow-sm bg-green-600 text-white">
-                    {tokenReduction}% smaller
+                    -{tokenReduction}%
                   </Badge>
                 )}
               </div>
@@ -241,73 +236,7 @@ export function PlaygroundClient() {
             </div>
           </div>
 
-          {/* PRIORITY 2: Compact Stats */}
-          {zonOutput && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mb-8"
-            >
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="p-4 rounded-lg border border-border bg-card">
-                  <div className="text-xs text-muted-foreground mb-1">Token Reduction</div>
-                  <div className="text-2xl font-bold text-green-600 dark:text-green-400 tabular-nums">
-                    {tokenReduction}%
-                  </div>
-                  <div className="text-xs text-muted-foreground mt-1">
-                    {tokensSaved > 0 ? `${tokensSaved.toLocaleString()} saved` : ''}
-                  </div>
-                </div>
 
-                <div className="p-4 rounded-lg border border-border bg-card">
-                  <div className="text-xs text-muted-foreground mb-1">Cost Saved</div>
-                  <div className="text-2xl font-bold text-foreground tabular-nums">
-                    {costSavings < 0.0001 ? "$0.00" : `$${costSavings.toFixed(4)}`}
-                  </div>
-                  <div className="text-xs text-muted-foreground mt-1">per request</div>
-                </div>
-
-                <div className="p-4 rounded-lg border border-border bg-card">
-                  <div className="text-xs text-muted-foreground mb-1">ZON Tokens</div>
-                  <div className="text-2xl font-bold text-foreground tabular-nums">
-                    {zonTokens.toLocaleString()}
-                  </div>
-                  <div className="text-xs text-muted-foreground mt-1">GPT-4</div>
-                </div>
-
-                <div className="p-4 rounded-lg border border-border bg-card">
-                  <div className="text-xs text-muted-foreground mb-1">JSON Tokens</div>
-                  <div className="text-2xl font-bold text-muted-foreground tabular-nums">
-                    {jsonTokens.toLocaleString()}
-                  </div>
-                  <div className="text-xs text-muted-foreground mt-1">GPT-4</div>
-                </div>
-              </div>
-
-              {/* Link to detailed pricing */}
-              <div className="mt-4 p-4 rounded-lg border border-blue-200 dark:border-blue-900/50 bg-blue-50 dark:bg-blue-950/20">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-start gap-3">
-                    <DollarSign className="w-4 h-4 text-blue-600 dark:text-blue-400 mt-0.5 shrink-0" />
-                    <div className="flex-1 text-sm">
-                      <p className="text-blue-900 dark:text-blue-100 font-medium mb-1">
-                        Want to see cost savings across all LLM providers?
-                      </p>
-                      <p className="text-blue-700 dark:text-blue-300 text-xs">
-                        Compare pricing from GPT-4, Claude, Gemini and more
-                      </p>
-                    </div>
-                  </div>
-                  <Link href="/playground/pricing">
-                    <Button variant="outline" size="sm" className="shrink-0">
-                      View Pricing
-                      <ExternalLink className="w-3 h-3 ml-1.5" />
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </motion.div>
-          )}
 
           {/* How It Works */}
           <div className="p-6 sm:p-8 rounded-xl border border-border bg-muted/30 backdrop-blur-sm">
