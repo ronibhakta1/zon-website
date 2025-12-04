@@ -38,24 +38,39 @@ export function CodeEditorPanel({
   }
 
   return (
-    <div className={cn("flex flex-col h-full", className)}>
-      {/* Header */}
-      <div className="flex items-center justify-between mb-3">
-        <h3 className="text-sm font-semibold text-foreground">{label}</h3>
+    <div className={cn(
+      "flex flex-col h-full rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 shadow-sm transition-all duration-300 hover:shadow-md",
+      "bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl",
+      className
+    )}>
+      {/* Window Header */}
+      <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-200/50 dark:border-zinc-800/50 bg-zinc-50/50 dark:bg-zinc-900/50">
+        <div className="flex items-center gap-2">
+          {/* Traffic Lights */}
+          <div className="flex gap-1.5 mr-3">
+            <div className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
+            <div className="w-2.5 h-2.5 rounded-full bg-amber-400/80" />
+            <div className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
+          </div>
+          <span className="text-xs font-semibold text-zinc-600 dark:text-zinc-400 tracking-wide uppercase">
+            {label}
+          </span>
+        </div>
+        
         <button
           onClick={handleCopy}
           disabled={!value}
           className={cn(
-            "inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-200",
-            "bg-secondary hover:bg-secondary/80 text-secondary-foreground",
-            "disabled:opacity-50 disabled:cursor-not-allowed",
-            "focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            "inline-flex items-center gap-1.5 px-2 py-1 text-[10px] font-medium rounded-md transition-all duration-200",
+            "bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400",
+            "hover:bg-zinc-200 dark:hover:bg-zinc-700 hover:text-zinc-900 dark:hover:text-zinc-100",
+            "disabled:opacity-50 disabled:cursor-not-allowed"
           )}
         >
           {copied ? (
             <>
               <Check className="w-3 h-3" />
-              Copied!
+              Copied
             </>
           ) : (
             <>
@@ -66,42 +81,45 @@ export function CodeEditorPanel({
         </button>
       </div>
 
-      {/* Editor */}
-      <div className="flex-1 relative rounded-lg border border-border overflow-hidden bg-code-bg">
+      {/* Editor Area */}
+      <div className="flex-1 relative bg-transparent">
         <CodeEditor
           value={value}
           language={language === "json" ? "json" : "text"}
           onChange={(e) => onChange?.(e.target.value)}
           readOnly={readOnly}
-          padding={16}
+          padding={20}
           className={cn(
-            "font-mono text-sm leading-relaxed",
-            "focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
-            "min-h-[400px] h-full"
+            "font-mono text-sm leading-relaxed min-h-[400px] h-full bg-transparent",
+            "focus:outline-none"
           )}
           style={{
-            fontSize: 14,
+            fontSize: 13,
             fontFamily: "var(--font-geist-mono), ui-monospace, monospace",
-            backgroundColor: "var(--code-bg)",
-            color: "var(--code-color)",
+            backgroundColor: "transparent",
           }}
         />
       </div>
 
-      {/* Error Message */}
-      {error && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mt-3 p-3 rounded-md bg-destructive/10 border border-destructive/20"
-        >
-          <p className="text-xs text-destructive font-medium">{error}</p>
-        </motion.div>
-      )}
-
-      {/* Character Count */}
-      <div className="mt-2 text-xs text-muted-foreground text-right">
-        {value.length.toLocaleString()} characters
+      {/* Footer Status Bar */}
+      <div className="px-4 py-2 border-t border-zinc-200/50 dark:border-zinc-800/50 bg-zinc-50/30 dark:bg-zinc-900/30 flex justify-between items-center">
+        {error ? (
+          <motion.div
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="flex items-center gap-2 text-xs text-red-500 font-medium"
+          >
+            <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+            {error}
+          </motion.div>
+        ) : (
+          <div className="text-[10px] text-zinc-400 font-mono">
+            {language === "json" ? "JSON" : "ZON"}
+          </div>
+        )}
+        <div className="text-[10px] text-zinc-500 font-mono tabular-nums">
+          {value.length.toLocaleString()} chars
+        </div>
       </div>
     </div>
   )

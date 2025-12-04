@@ -138,49 +138,23 @@ export function PlaygroundClient() {
       <section className="py-8 sm:py-12">
         <div className="container mx-auto max-w-7xl px-4">
           
-          {/* PRIORITY 1: Stats Dashboard - Immediate Impact */}
-          {zonOutput && (
-            <div className="mb-8">
-              <StatsDashboard 
-                jsonTokens={jsonTokens}
-                zonTokens={zonTokens}
-                tokenReduction={tokenReduction}
-                tokensSaved={tokensSaved}
-              />
+          {/* Discovery Rail */}
+          <div className="mb-8">
+            <div className="flex items-center justify-between mb-4 px-1">
+              <h3 className="text-sm font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                Examples
+              </h3>
+              <div className="flex items-center gap-2">
+                <Button variant="outline" size="sm" onClick={handleFormat} className="h-8 text-xs">
+                  Format JSON
+                </Button>
+                <Button variant="ghost" size="sm" onClick={handleReset} className="h-8 text-xs">
+                  <RotateCcw className="w-3 h-3 mr-1.5" />
+                  Reset
+                </Button>
+              </div>
             </div>
-          )}
-
-          {/* Controls */}
-          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 mb-6">
-            <div className="flex flex-wrap items-center gap-3">
-              <PresetSelector onSelect={handlePresetSelect} />
-              <Button variant="outline" size="sm" onClick={handleFormat}>
-                Format JSON
-              </Button>
-              <Button variant="ghost" size="sm" onClick={handleReset}>
-                <RotateCcw className="w-3 h-3 mr-1.5" />
-                Reset
-              </Button>
-            </div>
-            
-            <div className="flex items-center gap-2 text-xs">
-              {isConverting ? (
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
-                  Converting...
-                </div>
-              ) : zonOutput ? (
-                <div className="flex items-center gap-2 text-green-600 dark:text-green-400">
-                  <div className="w-2 h-2 rounded-full bg-green-500" />
-                  Live • Auto-updates
-                </div>
-              ) : (
-                <div className="flex items-center gap-2 text-muted-foreground">
-                  <Info className="w-3 h-3" />
-                  Paste JSON to start
-                </div>
-              )}
-            </div>
+            <PresetSelector onSelect={handlePresetSelect} />
           </div>
 
           {/* PRIORITY 2: Editors - The Main Action */}
@@ -235,6 +209,26 @@ export function PlaygroundClient() {
               </div>
             </div>
           </div>
+
+          {/* PRIORITY 1: Stats Dashboard - Immediate Impact */}
+          {zonOutput && (
+            <div className="mb-8">
+              <StatsDashboard 
+                jsonTokens={jsonTokens}
+                zonTokens={zonTokens}
+                tokenReduction={tokenReduction}
+                tokensSaved={tokensSaved}
+              />
+            </div>
+          )}
+
+          {/* PRIORITY 2: Editors - The Main Action */}
+          
+
+
+
+
+
 
 
 
