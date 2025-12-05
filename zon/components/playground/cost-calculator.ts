@@ -1,22 +1,59 @@
 // LLM Pricing (per 1M tokens)
+// Prices updated: Dec 2024
 export const PRICING = {
-  gpt4: {
-    name: "GPT-4 Turbo",
-    input: 10,
-    output: 30,
+  gpt5: {
+    name: "GPT-5",
+    input: 1.25,
+    output: 10.00,
     color: "text-emerald-600 dark:text-emerald-400"
+  },
+  gpt4o: {
+    name: "GPT-4o",
+    input: 2.50,
+    output: 10.00,
+    color: "text-emerald-600 dark:text-emerald-400"
+  },
+  o3: {
+    name: "OpenAI o3",
+    input: 2.00,
+    output: 8.00,
+    color: "text-rose-600 dark:text-rose-400"
+  },
+  o1preview: {
+    name: "OpenAI o1-preview",
+    input: 15.00,
+    output: 60.00,
+    color: "text-orange-600 dark:text-orange-400"
+  },
+  o1mini: {
+    name: "OpenAI o1-mini",
+    input: 3.00,
+    output: 12.00,
+    color: "text-amber-600 dark:text-amber-400"
+  },
+  claude45: {
+    name: "Claude 4.5 Sonnet",
+    input: 3.00,
+    output: 15.00,
+    color: "text-violet-600 dark:text-violet-400"
   },
   claude: {
     name: "Claude 3.5 Sonnet",
-    input: 3,
-    output: 15,
+    input: 3.00,
+    output: 15.00,
     color: "text-purple-600 dark:text-purple-400"
   },
   gemini: {
     name: "Gemini 1.5 Pro",
     input: 1.25,
-    output: 5,
+    output: 5.00,
     color: "text-blue-600 dark:text-blue-400"
+  },
+  geminiflash: {
+    name: "Gemini 1.5 Flash",
+    input: 0.0375,
+    output: 0.15,
+    color: "text-cyan-600 dark:text-cyan-400"
   }
 } as const
 
