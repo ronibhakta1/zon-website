@@ -147,7 +147,7 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
             <motion.div variants={fadeInUp} className="mb-6 sm:mb-8 flex flex-col items-center gap-4">
               <Badge variant="secondary" className="px-4 py-1.5 text-xs sm:text-sm font-medium rounded-full border border-border/40 bg-secondary/60 backdrop-blur-sm shadow-sm hover:shadow-md hover:bg-secondary/80 transition-all duration-300 hover:scale-[1.02] cursor-default">
                 <span className="flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"></span>
-                v1.0.5 Entropy Engine
+                v1.3.0 Entropy Engine
               </Badge>
               <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground font-medium animate-in fade-in slide-in-from-bottom-2 duration-700 delay-200 fill-mode-backwards">
                 <span className="opacity-80">Supported in:</span>
@@ -323,7 +323,7 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
                 title: "Streaming Ready",
                 desc: "Designed for byte-level parsing, allowing large datasets to be processed incrementally with minimal memory footprint.",
                 icon: Layers,
-                link: "/docs/specification",
+                link: "/docs/streaming-guide",
                 className: "md:col-span-2",
                 gradient: "rgba(168, 85, 247, 0.15)"
               },
