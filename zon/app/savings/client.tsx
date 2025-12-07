@@ -99,7 +99,7 @@ export function SavingsCalculator({ pricing }: SavingsCalculatorProps) {
               <Zap className="w-5 h-5 text-zinc-900 dark:text-zinc-100" />
               <h4 className="font-bold text-zinc-900 dark:text-zinc-100">Total Impact</h4>
             </div>
-            <p className="text-3xl font-bold tracking-tight mb-1 text-zinc-900 dark:text-zinc-100">
+            <p className="text-2xl font-bold tracking-tight mb-1 text-zinc-900 dark:text-zinc-100">
               {formatNumber(savedTokens)}
             </p>
             <p className="text-sm text-zinc-500 dark:text-zinc-400">Tokens saved per month</p>

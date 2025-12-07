@@ -2,9 +2,11 @@ export const docsMap: Record<string, string> = {
   "index": "content/docs/getting-started.mdx",
   "getting-started": "content/docs/getting-started.mdx",
   "format-overview": "content/docs/format-overview.mdx",
-  "using-zon-with-llms": "content/docs/using-zon-with-llms.mdx",
+  "using-zon-with-llms": "content/docs/using-zon-with-llms.mdx", // Keeping for backward compat, but navigation will point to llm-best-practices
+  "llm-best-practices": "content/docs/llm-best-practices.mdx",
   "benchmarks": "content/docs/benchmarks.mdx",
-  "cli-reference": "content/docs/cli-reference.mdx",
+  "cli-reference": "content/docs/cli-guide.mdx", // Alias to new guide
+  "cli-guide": "content/docs/cli-guide.mdx",
   "tools-playgrounds": "content/docs/tools-playgrounds.mdx",
   "implementations": "content/docs/implementations.mdx",
   "api-typescript": "content/docs/api-typescript.mdx",
@@ -16,6 +18,10 @@ export const docsMap: Record<string, string> = {
   "vs-toon": "content/docs/vs-toon.mdx",
   "eval-llms": "content/docs/eval-llms.mdx",
   "contributing": "CONTRIBUTING.md",
+  "advanced-features": "content/docs/advanced-features.mdx",
+  "streaming-guide": "content/docs/streaming-guide.mdx",
+  "schema-validation": "content/docs/schema-validation.mdx",
+  "integrations": "content/docs/integrations.mdx",
 }
 
 export interface NavItem {
@@ -42,23 +48,23 @@ export function getDocsNav(): NavSection[] {
       items: [
         { title: "Getting Started", href: "/docs/getting-started" },
         { title: "Format Overview", href: "/docs/format-overview" },
-        { title: "Using ZON with LLMs", href: "/docs/using-zon-with-llms" },
+        { title: "TypeScript Guide", href: "/docs/typescript" },
+        { title: "Implementations", href: "/docs/implementations" },
+        { title: "LLM Best Practices", href: "/docs/llm-best-practices" },
         { title: "Benchmarks", href: "/docs/benchmarks" },
-        { title: "Eval LLMs (Guardrails)", href: "/docs/eval-llms" },
         { title: "ZON vs TOON", href: "/docs/vs-toon" },
       ]
     },
     {
       title: "Toolkit",
       items: [
-        { title: "CLI Reference", href: "/docs/cli-reference" },
+        { title: "CLI Guide", href: "/docs/cli-guide" },
+        { title: "Schema Validation", href: "/docs/schema-validation" },
+        { title: "Eval LLMs", href: "/docs/eval-llms" },
+        { title: "Streaming Guide", href: "/docs/streaming-guide" },
+        { title: "Integrations", href: "/docs/integrations" },
+        { title: "Advanced Features", href: "/docs/advanced-features" },
         { title: "Tools & Playgrounds", href: "/docs/tools-playgrounds" },
-      ]
-    },
-    {
-      title: "Libraries",
-      items: [
-        { title: "Implementations", href: "/docs/implementations" },
       ]
     },
     {
@@ -67,7 +73,6 @@ export function getDocsNav(): NavSection[] {
         { title: "API (TypeScript)", href: "/docs/api-typescript" },
         { title: "Syntax Cheatsheet", href: "/docs/syntax-cheatsheet" },
         { title: "Specification", href: "/docs/specification" },
-
         { title: "Efficiency Formalization", href: "/docs/efficiency-formalization" },
         { title: "Changelog", href: "/docs/changelog" },
       ]

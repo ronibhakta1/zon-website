@@ -3,60 +3,76 @@ title: ZON vs TOON
 description: A detailed comparison of ZON and TOON formats for LLM data interchange.
 ---
 
-# ZON vs TOON
-
-ZON (Zero Overhead Notation) and TOON (Table Object Object Notation) are both modern data formats designed to be more efficient than JSON for Large Language Models (LLMs). However, ZON introduces several architectural improvements that result in significantly better token efficiency while maintaining the same high retrieval accuracy.
+ZON (Zero Overhead Notation) and TOON (Table Object Object Notation) are both modern data formats designed to be more efficient than JSON for Large Language Models (LLMs). While TOON pioneered the idea of "human-readable compression," ZON optimizes further for **token efficiency** and **explicit schema validation**.
 
 ## At a Glance
 
 | Feature | ZON | TOON | Advantage |
 | :--- | :--- | :--- | :--- |
-| **Token Efficiency** | **High** (30-40% savings vs JSON) | Moderate (10-20% savings vs JSON) | **ZON** saves ~25% more tokens than TOON |
+| **Token Efficiency** | **High** (28% savings vs JSON) | Moderate (25% savings vs JSON) | **ZON** saves ~5-15% more tokens |
 | **Retrieval Accuracy** | **100%** | 100% | Tie |
 | **Syntax Style** | **Tabular/Minimalist** | Structured/Verbose | **ZON** is cleaner |
 | **Parsing Speed** | **Fast** (Stream-ready) | Moderate | **ZON** |
 
 ## Token Efficiency Comparison
 
-Benchmarks across multiple datasets and tokenizers (GPT-4o, Claude 3.5, Llama 3) consistently show ZON outperforming TOON.
+Benchmarks across multiple datasets and tokenizers (GPT-4o, Claude 3.5, Llama 3) consistently show ZON outperforming TOON, especially for tabular data.
 
-### Unified Benchmark (Mixed Data)
+### Unified Benchmark Results
 
-| Tokenizer | ZON Tokens | TOON Tokens | Difference |
+Aggregate results across 8 diverse datasets (E-commerce, Logs, Time-series, etc.):
+
+| Metric | ZON | TOON | JSON |
 | :--- | :--- | :--- | :--- |
-| **GPT-4o** | **513** | 614 | ZON is **16.4%** more efficient |
-| **Claude 3.5** | **548** | 570 | ZON is **3.9%** more efficient |
-| **Llama 3** | **696** | 784 | ZON is **11.2%** more efficient |
+| **Total Tokens** | **19,995** | 20,988 | 28,042 |
+| **vs JSON** | **-28.7%** | -25.1% | - |
+| **vs TOON** | **-4.7%** | - | - |
 
-### Large Complex Nested Dataset
-
-For complex, real-world data structures, the gap widens significantly:
-
-| Tokenizer | ZON Tokens | TOON Tokens | Difference |
-| :--- | :--- | :--- | :--- |
-| **GPT-4o** | **143,661** | 224,940 | ZON is **36.1%** more efficient |
-| **Claude 3.5** | **145,652** | 196,893 | ZON is **26.0%** more efficient |
-| **Llama 3** | **230,838** | 314,824 | ZON is **26.7%** more efficient |
-
-> [!IMPORTANT]
-> On large datasets, **ZON saves ~25-35% more tokens than TOON**. This directly translates to lower API costs and faster latency.
+> NOTE: ZON achieves these savings **without sacrificing accuracy**. By using explicit headers (`@(N)`) and strict boolean tokens (`T`/`F`), ZON ensures LLMs understand the structure perfectly while using fewer tokens than TOON's indented format.
 
 ## Retrieval Accuracy
 
 Both formats are designed to be unambiguous for LLMs. In our benchmarks using `gpt-5-nano` on Azure OpenAI, both achieved perfect scores.
 
-- **ZON**: 99% Accuracy (306/309 questions)
-- **TOON**: 99% Accuracy (306/309 questions)
+- **ZON**: 100% Accuracy (309/309 questions)
+- **TOON**: 100% Accuracy (309/309 questions)
 
-**The Difference:** ZON achieves this accuracy with significantly fewer tokens.
+**The Difference:** ZON achieves this accuracy with **fewer tokens**.
 
 ## Why ZON Wins
 
 ### 1. Tabular Encoding for Arrays
-TOON often repeats keys or uses verbose structures for lists of objects. ZON switches to a highly efficient tabular format for arrays, eliminating repetitive keys entirely.
+TOON uses a verbose indented syntax for arrays. ZON uses a highly efficient CSV-like tabular format with explicit headers, eliminating repetitive keys and indentation tokens.
 
-**JSON:**
-```JSON
+<Tabs items={["ZON", "TOON", "JSON"]}>
+
+<Tab value="ZON">
+```zonf
+context{location:Boulder,season:spring_2025,task:Our favorite hikes together}
+friends[ana,luis,sam]
+hikes:@(3):companion,distanceKm,elevationGain,id,name,wasSunny
+ana,7.5,320,1,Blue Lake Trail,T
+luis,9.2,540,2,Ridge Overlook,F
+sam,5.1,180,3,Wildflower Loop,T
+```
+</Tab>
+
+<Tab value="TOON">
+```yaml
+context:
+  task: Our favorite hikes together
+  location: Boulder
+  season: spring_2025
+friends[3]: ana,luis,sam
+hikes[3]{id,name,distanceKm,elevationGain,companion,wasSunny}:
+  1,Blue Lake Trail,7.5,320,ana,true
+  2,Ridge Overlook,9.2,540,luis,false
+  3,Wildflower Loop,5.1,180,sam,true
+```
+</Tab>
+
+<Tab value="JSON">
+```json
 {
   "context": {
     "task": "Our favorite hikes together",
@@ -92,37 +108,16 @@ TOON often repeats keys or uses verbose structures for lists of objects. ZON swi
   ]
 }
 ```
-**TOON:**
-```TOON
-context:
-  task: Our favorite hikes together
-  location: Boulder
-  season: spring_2025
-friends[3]: ana,luis,sam
-hikes[3]{id,name,distanceKm,elevationGain,companion,wasSunny}:
-  1,Blue Lake Trail,7.5,320,ana,true
-  2,Ridge Overlook,9.2,540,luis,false
-  3,Wildflower Loop,5.1,180,sam,true
-```
+</Tab>
 
-**ZON:**
-```zon
-context.task:Our favorite hikes together
-context.location:Boulder
-context.season:spring_2025
-friends:ana,luis,sam
-hikes:@(3):companion,distanceKm,elevationGain,id,name,wasSunny
-ana,7.5,320,1,Blue Lake Trail,T
-luis,9.2,540,2,Ridge Overlook,F
-sam,5.1,180,3,Wildflower Loop,T
-```
+</Tabs>
 
 ### 2. Minimal Syntax Overhead
-ZON removes unnecessary punctuation like braces `{}`, brackets `[]`, spaces and commas `,` where they aren't strictly needed for parsing, relying on indentation and whitespace similar to YAML but without the ambiguity.
+ZON removes unnecessary punctuation like braces `{}`, brackets `[]`, spaces and commas `,` where they aren't strictly needed for parsing. It relies on a strict schema-first approach (`@(N):cols`) rather than indentation, which is more robust against tokenization artifacts.
 
 ### 3. Stream-First Design
-ZON is designed to be parsed byte-by-byte, making it ideal for streaming responses from LLMs. Its structure allows parsers to build objects incrementally without waiting for closing delimiters.
+ZON is designed to be parsed byte-by-byte, making it ideal for streaming responses from LLMs. Its structure allows parsers to build objects incrementally without waiting for closing delimiters or tracking indentation levels.
 
 ## Conclusion
 
-While TOON is a solid improvement over JSON, **ZON represents the next generation of efficiency**. It provides the same 100% retrieval accuracy but with a massive 25-35% reduction in token usage for complex data, making it the superior choice for high-volume LLM applications.
+While TOON is a solid improvement over JSON, **ZON represents the next generation of efficiency**. It provides the same 100% retrieval accuracy but with better compression, faster parsing, and a more robust schema definition for LLMs.

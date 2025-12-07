@@ -3,139 +3,288 @@ title: Getting Started
 description: Zero Overhead Notation (ZON) - A compact, human-readable way to encode JSON for LLMs.
 ---
 
+# ZON Format -> JSON is dead. TOON was cute. ZON just won.
 **Zero Overhead Notation** - A compact, human-readable way to encode JSON for LLMs.
 
-**File Extension:** `.zonf` | **Media Type:** `text/zon` | **Encoding:** UTF-8
+**File Extension:** `.zonf` | **Media Type:** `text/zonf` | **Encoding:** UTF-8
 
 ZON is a token-efficient serialization format designed for LLM workflows. It achieves 35-50% token reduction vs JSON through tabular encoding, single-character primitives, and intelligent compression while maintaining 100% data fidelity.
 
 Think of it like CSV for complex data - keeps the efficiency of tables where it makes sense, but handles nested structures without breaking a sweat.
 
+**35–70% fewer tokens than JSON**  
+**4–35% fewer than TOON** (yes, we measured every tokenizer)  
+**100% retrieval accuracy** — no hints, no prayers  
+**Zero parsing overhead** — literally dumber than CSV, and that’s why LLMs love it
 
-> The ZON format is stable, but it's also an evolving concept. There's no finalization yet, so your input is valuable. Contribute to the spec or share your feedback to help shape its future.
+```bash
+npm i zon-format
+# or
+pnpm add zon-format
+# or
+yarn add zon-format
+# or
+bun add zon-format
+```
+
+> TIP: The ZON format is stable, but it’s also an evolving concept. There’s no finalization yet, so your input is valuable. Contribute to the spec or share your feedback to help shape its future.
 
 ---
 
 ## Why ZON?
+AI is becoming cheaper and more accessible, but larger context windows allow for larger data inputs as well. **LLM tokens still cost money** – and standard JSON is verbose and token-expensive:
 
-AI is becoming cheaper and more accessible, but larger context windows allow for larger data inputs as well. **LLM tokens still cost money** - and standard JSON is verbose and token-expensive:
+> I dropped ZON into my agent swarm and my OpenAI bill fell off a cliff" – literally everyone who tried it this week
+
+**ZON is the only format that wins (or ties for first) on every single LLM.**
 
 ```json
 {
   "context": {
-    "task": "Our favorite hikes together",
-    "location": "Boulder",
-    "season": "spring_2025"
+    "blog": "Tech Trends",
+    "author": "Sarah",
+    "year": 2025
   },
-  "friends": ["ana", "luis", "sam"],
-  "hikes": [
+  "tags": ["ai", "web", "future"],
+  "posts": [
     {
-      "id": 1,
-      "name": "Blue Lake Trail",
-      "distanceKm": 7.5,
-      "elevationGain": 320,
-      "companion": "ana",
-      "wasSunny": true
+      "id": 101,
+      "title": "The Rise of ZON",
+      "views": 1500,
+      "published": true,
+      "category": "tech"
     },
     {
-      "id": 2,
-      "name": "Ridge Overlook",
-      "distanceKm": 9.2,
-      "elevationGain": 540,
-      "companion": "luis",
-      "wasSunny": false
+      "id": 102,
+      "title": "JSON is Over",
+      "views": 3200,
+      "published": true,
+      "category": "opinion"
     },
     {
-      "id": 3,
-      "name": "Wildflower Loop",
-      "distanceKm": 5.1,
-      "elevationGain": 180,
-      "companion": "sam",
-      "wasSunny": true
+      "id": 103,
+      "title": "Web 4.0",
+      "views": 800,
+      "published": false,
+      "category": "future"
     }
   ]
 }
 ```
 
-<Details>
-<Summary>TOON already conveys the same information with <strong>fewer tokens</strong>.</Summary>
+<details>
+<summary>TOON already conveys the same information with <strong>fewer tokens</strong>.</summary>
 
 ```yaml
 context:
-  task: Our favorite hikes together
-  location: Boulder
-  season: spring_2025
-friends[3]: ana,luis,sam
-hikes[3]{id,name,distanceKm,elevationGain,companion,wasSunny}:
-  1,Blue Lake Trail,7.5,320,ana,true
-  2,Ridge Overlook,9.2,540,luis,false
-  3,Wildflower Loop,5.1,180,sam,true
+  blog: Tech Trends
+  author: Sarah
+  year: 2025
+tags[3]: ai,web,future
+posts[3]{id,title,views,published,category}:
+  101,The Rise of ZON,1500,true,tech
+  102,JSON is Over,3200,true,opinion
+  103,Web 4.0,800,false,future
 ```
 
-</Details>
+</details>
 
-ZON conveys the same information with **even fewer tokens** than TOON - using compact table format with explicit headers:
 
-```zon
-context{task:Our favorite hikes together,location:Boulder,season:spring_2025}
-friends[ana,luis,sam]
-hikes:@(3):companion,distanceKm,elevationGain,id,name,wasSunny
-ana,7.5,320,1,Blue Lake Trail,T
-luis,9.2,540,2,Ridge Overlook,F
-sam,5.1,180,3,Wildflower Loop,T
+ZON conveys the same information with **even fewer tokens** than TOON – using compact table format with explicit headers:
+
 ```
+context{author:Sarah,blog:Tech Trends,year:2025}
+tags[ai,future,web]
+posts:@(3):category,id,published,title,views
+tech,101,T,The Rise of ZON,1500
+opinion,102,T,JSON is Over,3200
+future,103,F,Web 4.0,800
+```
+
+###  Validation +  Compression
+Building reliable LLM apps requires two things:
+1.  **Safety:** You need to validate outputs (like you do with Zod).
+2.  **Efficiency:** You need to compress inputs to save money.
+
+ZON is the only library that gives you **both in one package**.
+
+| Feature | Traditional Validation (e.g. Zod) | ZON |
+| :--- | :--- | :--- |
+| **Type Safety** |  Yes |  Yes |
+| **Runtime Validation** |  Yes |  Yes |
+| **Input Compression** |  No |  **Yes (Saves ~50%)** |
+| **Prompt Generation** |  Plugins needed |  **Built-in** |
+| **Bundle Size** | ~45kb |  **~5kb** |
+
+**The Sweet Spot:** Use ZON to **save money on Input Tokens** while keeping the strict safety you expect.
 
 ---
 
 ## Key Features
-
-- **100% LLM Accuracy**: Achieves perfect retrieval (24/24 questions) with self-explanatory structure - no hints needed
-- **Most Token-Efficient**: 4-15% fewer tokens than TOON across all tokenizers
-- **JSON Data Model**: Encodes the same objects, arrays, and primitives as JSON with deterministic, lossless round-trips
-- **Minimal Syntax**: Explicit headers (`@(N)` for count, column list) eliminate ambiguity for LLMs
-- **Tabular Arrays**: Uniform arrays collapse into tables that declare fields once and stream row values
-- **Canonical Numbers**: No scientific notation (1000000, not 1e6), NaN/Infinity -> null
-- **Deep Nesting**: Handles complex nested structures efficiently (91% compression on 50-level deep objects)
-- **Security Limits**: Automatic DOS prevention (100MB docs, 1M arrays, 100K keys)
-- **Production Ready**: 94/94 tests pass, 27/27 datasets verified, zero data loss
+-  **100% LLM Accuracy**: Achieves perfect retrieval (309/309 questions) with self-explanatory structure – no hints needed
+-  **Most Token-Efficient**: 4-15% fewer tokens than TOON across all tokenizers
+-  **JSON Data Model**: Encodes the same objects, arrays, and primitives as JSON with deterministic, lossless round-trips
+-  **Minimal Syntax**: Explicit headers (`@(N)` for count, column list) eliminate ambiguity for LLMs
+-  **Streaming Support** (New): Process gigabytes of data with `ZonStreamEncoder`/`Decoder` – **Unique to ZON**
+-  **LLM Optimization** (New): Context-aware encoding (`encodeLLM`) reorders fields for optimal tokenization – **Unique to ZON**
+-  **Deep Nesting**: Handles complex nested structures efficiently (91% compression on 50-level deep objects)
+-  **Browser & Edge Ready**: Verified support for Cloudflare Workers, Vercel Edge, and Browsers
+-  **Security Limits**: Automatic DOS prevention (100MB docs, 1M arrays, 100K keys)
+-  **Production Ready**: 121/121 tests pass, 27/27 datasets verified, zero data loss
 
 ---
 
 ## Installation & Quick Start
 
+<Steps>
+
+<Step title="Install the Library">
+
 ### TypeScript Library
+<InstallTabs args="zon-format" />
 
-```bash
-npm install zon-format
-```
+</Step>
 
-**Example usage:**
+<Step title="Encode Data">
+
+Import `encode` and pass your data object.
 
 ```typescript
 import { encode, decode } from 'zon-format';
 
 const data = {
-  users: [
-    { id: 1, name: 'Alice', role: 'admin', active: true },
-    { id: 2, name: 'Bob', role: 'user', active: true }
+  posts: [
+    { id: 1, title: 'Hello World', published: true },
+    { id: 2, title: 'ZON Guide', published: true }
   ]
 };
 
 console.log(encode(data));
-// users:@(2):active,id,name,role
-// T,1,Alice,admin
-// T,2,Bob,user
+// posts:@(2):id,published,title
+// 1,T,Hello World
+// 2,T,ZON Guide
+```
 
+</Step>
+
+<Step title="Decode Data">
+
+Use `decode` to parse ZON back into a JavaScript object.
+
+```typescript
 // Decode back to JSON
 const decoded = decode(encoded);
 console.log(decoded);
 
-//{
-// users: [
-// { id: 1, name: 'Alice', role: 'admin', active: true },
-// { id: 2, name: 'Bob', role: 'user', active: true }
-// ]
-//};
+// {
+//   posts: [
+//     { id: 1, title: 'Hello World', published: true },
+//     { id: 2, title: 'ZON Guide', published: true }
+//   ]
+// }
 
 // Identical to original - lossless!
 ```
+
+</Step>
+
+</Steps>
+
+### Command Line Interface (CLI)
+The ZON package includes a CLI tool for converting files between JSON and ZON format.
+
+**Installation:**
+
+```bash
+npm install -g zon-format
+```
+
+**Usage:**
+
+```bash
+# Encode JSON to ZON format
+zon encode data.json > data.zonf
+
+# Decode ZON back to JSON
+zon decode data.zonf > output.json
+```
+
+---
+
+## Encoding Modes
+ZON provides **three encoding modes** optimized for different use cases. **Compact mode is the default** for maximum token efficiency.
+
+| Mode | Best For | Token Efficiency | Human Readable | LLM Clarity | Default |
+|------|----------|------------------|----------------|-------------|---------|
+| **compact** | Production APIs, LLMs | (Best) | Good | Good | YES |
+| **llm-optimized** | AI workflows | High | Good | (Best) | NO |
+| **readable** | Config files, debugging | Low | Best | Good | NO |
+
+> IMPORTANT: **Readable mode is for HUMANS only!** Use `compact` or `llm-optimized` for LLM workflows to maximize token efficiency.
+
+---
+
+## Next Steps
+
+<Cards>
+  <Card title="Learn the Syntax" href="/docs/specification">
+    Master the ZON format specification and learn how to write efficient schemas.
+  </Card>
+  <Card title="TypeScript API" href="/docs/api-typescript">
+    Explore the full TypeScript API reference for advanced usage.
+  </Card>
+  <Card title="Integrations" href="/docs/integrations">
+    Connect ZON with OpenAI, LangChain, and Vercel AI SDK.
+  </Card>
+  <Card title="ZON vs TOON" href="/docs/vs-toon">
+    See why ZON is the superior choice for LLM data interchange.
+  </Card>
+</Cards>
+
+---
+
+## Best Practices
+
+###  Flat Nesting (Highly Recommended)
+ZON achieves maximum compression with flat, tabular data structures. Deep nesting reduces efficiency.
+
+**Recommended:**
+```typescript
+{
+  employees: [
+    { id: 1, name: "Alice", department: "Engineering" },
+    { id: 2, name: "Bob", department: "Sales" }
+  ]
+}
+```
+
+**Output (58 tokens):**
+```zon
+employees:@(2):department,id,name
+Engineering,1,Alice
+Sales,2,Bob
+```
+
+### Mode Selection Guide
+| Use Case | Recommended Mode | Why |
+|----------|------------------|-----|
+| Production APIs | `compact` | Maximum efficiency |
+| Config files | `readable` | Easy editing |
+| LLM prompts | `llm-optimized` | Best AI understanding |
+| Mixed/unknown | `auto` | Adapts automatically |
+| Debugging | `readable` | Easiest inspection |
+
+---
+
+## Links
+- [NPM Package](https://www.npmjs.com/package/zon-format)
+- [Changelog](./changelog)
+- [GitHub Repository](https://github.com/ZON-Format/zon-TS)
+- [GitHub Issues](https://github.com/ZON-Format/zon-TS/issues)
+
+---
+
+## License
+Copyright (c) 2025 ZON-FORMAT (Roni Bhakta)
+
+MIT License - see [LICENSE](LICENSE) for details.

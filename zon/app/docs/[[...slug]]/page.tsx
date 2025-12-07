@@ -12,7 +12,7 @@ interface DocPageProps {
 
 export default async function DocPage({ params }: DocPageProps) {
   const resolvedParams = await params
-  const slug = resolvedParams.slug ? resolvedParams.slug[0] : "index"
+  const slug = resolvedParams.slug ? resolvedParams.slug.join("/") : "index"
   const doc = await getDocContent(slug)
 
   if (!doc) {

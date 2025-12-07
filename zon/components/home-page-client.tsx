@@ -161,11 +161,11 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
                 </div>
               </div>
             </motion.div>
-            <motion.h1 variants={fadeInUp} className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-primary mb-4 sm:mb-6 leading-[0.95]">
+            <motion.h1 variants={fadeInUp} className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-bold tracking-tighter text-primary mb-4 sm:mb-6 leading-[0.95]">
               <span className="text-primary">ZON</span> <br className="hidden sm:inline" />
-              <span className="text-lg sm:text-xl md:text-5xl font-medium text-muted-foreground">Zero Overhead Notation</span>
+              <span className="text-lg sm:text-xl md:text-3xl font-medium text-muted-foreground">Zero Overhead Notation</span>
             </motion.h1>
-            <motion.p variants={fadeInUp} className="max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed font-medium px-4">
+            <motion.p variants={fadeInUp} className="max-w-2xl mx-auto text-base sm:text-lg text-muted-foreground leading-relaxed font-medium px-4">
               Smart compression for LLMs: 50% fewer tokens than JSON, 100% human-readable. Save ~50% on API costs.
             </motion.p>
           </motion.div>
@@ -280,10 +280,10 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-primary/5 dark:bg-primary/20 blur-[120px] rounded-full opacity-30 dark:opacity-20 pointer-events-none" />
         <div className="container mx-auto max-w-6xl px-4 relative z-10">
           <div className="mb-16 text-center md:text-left">
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tighter mb-6 text-zinc-900 dark:text-white">
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-6 text-zinc-900 dark:text-white">
               Why Choose ZON?
             </h2>
-            <p className="text-zinc-600 dark:text-zinc-400 text-lg md:text-xl max-w-2xl leading-relaxed">
+            <p className="text-zinc-600 dark:text-zinc-400 text-lg max-w-2xl leading-relaxed">
               Engineered for the AI era, combining human readability with machine efficiency.
             </p>
           </div>
@@ -359,8 +359,8 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
                       <item.icon className="w-6 h-6 text-zinc-900 dark:text-zinc-100" strokeWidth={1.5} />
                     </div>
                     
-                    <h3 className="text-xl font-bold mb-3 text-zinc-900 dark:text-zinc-100">{item.title}</h3>
-                    <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed mb-6 flex-grow">
+                    <h3 className="text-lg font-bold mb-3 text-zinc-900 dark:text-zinc-100">{item.title}</h3>
+                    <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-6 flex-grow">
                       {item.desc}
                     </p>
 

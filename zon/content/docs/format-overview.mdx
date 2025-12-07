@@ -10,10 +10,12 @@ ZON auto-selects the optimal representation for your data.
 Best for arrays of objects with consistent structure:
 
 ```
-users:@(3):active,id,name,role
-T,1,Alice,Admin
-T,2,Bob,User
-F,3,Carol,Guest
+```
+products:@(3):id,inStock,name,price
+1,T,Laptop,999.99
+2,T,Mouse,24.50
+3,F,Monitor,199.00
+```
 ```
 
 - `@(3)` = row count
@@ -25,7 +27,9 @@ F,3,Carol,Guest
 Best for configuration and nested structures:
 
 ```
-config:"{database:{host:db.example.com,port:5432},features:{darkMode:T}}"
+```
+app_settings{theme{mode:dark,contrast:high},notifications{email:T,push:F}}
+```
 ```
 
 ## Mixed Structures
@@ -33,7 +37,7 @@ config:"{database:{host:db.example.com,port:5432},features:{darkMode:T}}"
 ZON intelligently combines formats:
 
 ```
-metadata:"{version:1.0.4,env:production}"
+metadata{env:production,version:1.0.4}
 users:@(5):id,name,active
 1,Alice,T
 2,Bob,F

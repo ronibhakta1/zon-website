@@ -39,8 +39,11 @@ export function CodeEditorPanel({
 
   return (
     <div className={cn(
-      "flex flex-col h-full rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 shadow-sm transition-all duration-300 hover:shadow-md",
+      "flex flex-col h-full rounded-xl overflow-hidden border shadow-sm transition-all duration-300 hover:shadow-md",
       "bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl",
+      error 
+        ? "border-red-500 dark:border-red-500/50 ring-4 ring-red-500/10" 
+        : "border-zinc-200 dark:border-zinc-800",
       className
     )}>
       {/* Window Header */}

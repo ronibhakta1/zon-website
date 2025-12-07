@@ -18,7 +18,7 @@ interface PresetSelectorProps {
 
 export function PresetSelector({ onSelect, className }: PresetSelectorProps) {
   return (
-    <div className={cn("w-full overflow-x-auto pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide", className)}>
+    <div className={cn("w-full overflow-x-auto py-4 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide", className)}>
       <div className="flex gap-3 min-w-max">
         {presets.map((preset) => (
           <button

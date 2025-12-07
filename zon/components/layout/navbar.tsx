@@ -50,7 +50,7 @@ export function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur-md supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-14 max-w-screen-2xl items-center px-4">
         {/* Desktop Navigation */}
-        <div className="mr-4 hidden md:flex">
+        <div className="mr-4 hidden lg:flex">
           <Link href="/" className="mr-6 flex items-center space-x-2">
             <Wordmark />
           </Link>
@@ -155,7 +155,7 @@ export function Navbar() {
         </div>
 
         {/* Mobile Logo & Hamburger */}
-        <div className="flex md:hidden flex-1 items-center justify-between">
+        <div className="flex lg:hidden flex-1 items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
             <Wordmark />
           </Link>
@@ -211,7 +211,7 @@ export function Navbar() {
         </div>
 
         {/* Desktop Right Side */}
-        <div className="hidden md:flex flex-1 items-center justify-between space-x-2 md:justify-end">
+        <div className="hidden lg:flex flex-1 items-center justify-between space-x-2 md:justify-end">
           <div className="w-full flex-1 md:w-auto md:flex-none">
             <SearchDialog />
           </div>
@@ -256,7 +256,7 @@ export function Navbar() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-border/40 bg-background">
+        <div className="lg:hidden border-t border-border/40 bg-background">
           <nav className="container mx-auto px-4 py-4 flex flex-col space-y-3">
             <Link
               href="/docs"

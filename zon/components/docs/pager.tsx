@@ -31,7 +31,18 @@ export function DocsPager({ slug }: DocsPagerProps) {
   }
 
   return (
-    <div className="flex flex-row items-center justify-between mt-10 pt-6 border-t border-border/40">
+    <div className="flex flex-col gap-6 mt-10 pt-6 border-t border-border/40">
+      <div className="flex justify-end">
+        <Link
+          href={`https://github.com/ZON-Format/zon-website/blob/main/zon/content/docs/${slug === "index" ? "index" : slug}.mdx`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sm text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
+        >
+          Edit on GitHub <ChevronRight className="h-3 w-3" />
+        </Link>
+      </div>
+      <div className="flex flex-row items-center justify-between">
       {prev ? (
         <Link
           href={prev.href}
@@ -58,6 +69,7 @@ export function DocsPager({ slug }: DocsPagerProps) {
       ) : (
         <div />
       )}
+      </div>
     </div>
   )
 }

@@ -83,7 +83,7 @@ export function StatsDashboard({
             </div>
 
             <div className="text-right">
-              <div className="text-4xl font-bold tracking-tight tabular-nums text-zinc-900 dark:text-zinc-100">
+              <div className="text-3xl font-bold tracking-tight tabular-nums text-zinc-900 dark:text-zinc-100">
                 {tokenReduction}%
               </div>
               <p className="text-[10px] font-medium text-zinc-400 dark:text-zinc-500 uppercase tracking-wider mt-1">Reduction</p>

@@ -11,11 +11,10 @@ import { StatsDashboard } from "@/components/playground/stats-dashboard"
 import { type Preset } from "@/components/playground/example-presets"
 import { countTokens } from "@/lib/tokenizer"
 import { useDebounce } from "use-debounce"
-import { RotateCcw, Sparkles, ArrowRight, Info } from "lucide-react"
+import LZString from "lz-string"
+import { RotateCcw, Sparkles, ArrowRight, Info, Share2, Check } from "lucide-react"
 import { cn } from "@/lib/utils"
-
-// Import ZON encoder
-import { encode } from "zon-format"
+import { convertAction } from "@/app/actions/convert"
 
 const DEFAULT_JSON = JSON.stringify({
   users: [
@@ -32,29 +31,51 @@ export function PlaygroundClient() {
   const [jsonTokens, setJsonTokens] = useState(0)
   const [zonTokens, setZonTokens] = useState(0)
   const [isConverting, setIsConverting] = useState(false)
+  const [isShared, setIsShared] = useState(false)
 
   // Debounce input to avoid excessive processing
   const [debouncedInput] = useDebounce(jsonInput, 300)
 
+  // Load from URL on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search)
+      const code = params.get('code')
+      if (code) {
+        try {
+          const decompressed = LZString.decompressFromEncodedURIComponent(code)
+          if (decompressed) {
+            setJsonInput(decompressed)
+          }
+        } catch (e) {
+          console.error("Failed to decompress code from URL", e)
+        }
+      }
+    }
+  }, [])
+
   // Convert JSON to ZON
-  const convertToZon = useCallback((jsonString: string) => {
+  const convertToZon = useCallback(async (jsonString: string) => {
     try {
       setIsConverting(true)
       setError("")
       
-      // Parse JSON
-      const parsed = JSON.parse(jsonString)
+      // Count input tokens immediately (client-side)
+      const jTokens = countTokens(jsonString)
+      setJsonTokens(jTokens)
+
+      // Call Server Action
+      const result = await convertAction(jsonString)
       
-      // Encode to ZON
-      const zonEncoded = encode(parsed)
+      if (!result.success) {
+        throw new Error(result.error)
+      }
       
+      const zonEncoded = result.data as string
       setZonOutput(zonEncoded)
       
-      // Count tokens
-      const jTokens = countTokens(jsonString)
+      // Count output tokens
       const zTokens = countTokens(zonEncoded)
-      
-      setJsonTokens(jTokens)
       setZonTokens(zTokens)
       
     } catch (err) {
@@ -64,8 +85,13 @@ export function PlaygroundClient() {
         setError(`Conversion error: ${err instanceof Error ? err.message : 'Unknown error'}`)
       }
       setZonOutput("")
-      setJsonTokens(0)
-      setZonTokens(0)
+      // Keep input tokens if valid
+      if (!(err instanceof SyntaxError)) {
+        setZonTokens(0)
+      } else {
+        setJsonTokens(0)
+        setZonTokens(0)
+      }
     } finally {
       setIsConverting(false)
     }
@@ -82,11 +108,14 @@ export function PlaygroundClient() {
   const handlePresetSelect = (preset: Preset) => {
     const formatted = JSON.stringify(preset.data, null, 2)
     setJsonInput(formatted)
+    // Clear URL param when loading preset
+    window.history.replaceState({}, '', window.location.pathname)
   }
 
   // Reset to default
   const handleReset = () => {
     setJsonInput(DEFAULT_JSON)
+    window.history.replaceState({}, '', window.location.pathname)
   }
 
   // Format JSON
@@ -97,6 +126,23 @@ export function PlaygroundClient() {
       setJsonInput(formatted)
     } catch (err) {
       // Ignore formatting errors
+    }
+  }
+
+  // Share Handler
+  const handleShare = async () => {
+    try {
+      const compressed = LZString.compressToEncodedURIComponent(jsonInput)
+      const url = `${window.location.origin}${window.location.pathname}?code=${compressed}`
+      await navigator.clipboard.writeText(url)
+      
+      // Update URL without reloading
+      window.history.replaceState({}, '', `?code=${compressed}`)
+      
+      setIsShared(true)
+      setTimeout(() => setIsShared(false), 2000)
+    } catch (err) {
+      console.error("Failed to share", err)
     }
   }
 
@@ -119,7 +165,7 @@ export function PlaygroundClient() {
         <div className="container mx-auto max-w-7xl px-4 relative z-10">
           <div className="flex flex-col items-start gap-3">
             <div className="flex items-center gap-3">
-              <h1 className="text-3xl sm:text-4xl font-bold tracking-tighter text-primary">
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tighter text-primary">
                 ZON Playground
               </h1>
               <Badge variant="secondary" className="text-xs font-medium">
@@ -145,6 +191,27 @@ export function PlaygroundClient() {
                 Examples
               </h3>
               <div className="flex items-center gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={handleShare} 
+                  className={cn(
+                    "h-8 text-xs transition-all duration-200",
+                    isShared && "border-green-500 text-green-600 bg-green-50 dark:bg-green-900/20"
+                  )}
+                >
+                  {isShared ? (
+                    <>
+                      <Check className="w-3 h-3 mr-1.5" />
+                      Copied Link
+                    </>
+                  ) : (
+                    <>
+                      <Share2 className="w-3 h-3 mr-1.5" />
+                      Share
+                    </>
+                  )}
+                </Button>
                 <Button variant="outline" size="sm" onClick={handleFormat} className="h-8 text-xs">
                   Format JSON
                 </Button>

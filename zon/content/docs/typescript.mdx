@@ -7,17 +7,7 @@ Zero Overhead Notation - A human-readable data serialization format optimized fo
 
 ## Installation
 
-### From npm
-
-```bash
-npm install zon-format
-```
-
-### From yarn
-
-```bash
-yarn add zon-format
-```
+<InstallTabs args="zon-format" />
 
 ## Quick Start
 
@@ -63,7 +53,7 @@ const products = [
 const encoded = encode(products);
 console.log(encoded);
 // Output:
-// @data(3):id,inStock,name,price
+// @(3):id,inStock,name,price
 // 1,T,Laptop,999
 // 2,T,Mouse,29
 // 3,F,Keyboard,79

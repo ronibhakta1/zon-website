@@ -4,7 +4,13 @@ import remarkGfm from "remark-gfm"
 import rehypeHighlight from "rehype-highlight"
 import { docsMap } from "./docs-config"
 import { Details, Summary } from "@/components/docs/details"
+import { Step, Steps } from "@/components/docs/step"
+import { Card, Cards } from "@/components/docs/card"
+import { FileTree, File, Folder } from "@/components/docs/file-tree"
+import { TypeTable } from "@/components/docs/type-table"
+import { DocsTabs, DocsTab } from "@/components/docs/mdx-tabs"
 import { Callout } from "@/components/docs/callout"
+import { InstallTabs } from "@/components/docs/install-tabs"
 import React from "react"
 
 import fs from 'fs/promises'
@@ -106,7 +112,18 @@ export async function getDocContent(slug: string) {
         summary: Summary,
         Details,
         Summary,
+        Step,
+        Steps,
+        Card,
+        Cards,
+        FileTree,
+        File,
+        Folder,
+        TypeTable,
+        Tabs: DocsTabs,
+        Tab: DocsTab,
         Callout,
+        InstallTabs,
     }
   })
 

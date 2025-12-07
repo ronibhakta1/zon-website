@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     apple: '/apple-touch-icon.png', // Assuming existence or fallback
   },
   alternates: {
-    canonical: '/',
+    canonical: 'https://zonformat.org',
   },
   robots: {
     index: true,
