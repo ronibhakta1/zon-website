@@ -263,9 +263,10 @@
   }
 }
 
-/* Custom Scrollbar */
+/* Custom Scrollbar - subtle and hidden until hover */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -273,14 +274,36 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--muted-foreground));
-  border-radius: 4px;
-  opacity: 0.3;
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--foreground));
-  opacity: 0.5;
+  background: hsl(var(--muted-foreground) / 0.5);
+}
+
+/* Hide scrollbar until hover for code blocks and tables */
+.prose pre,
+.prose table,
+[data-radix-scroll-area-viewport] {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.prose pre:hover,
+.prose table:hover,
+[data-radix-scroll-area-viewport]:hover {
+  scrollbar-color: hsl(var(--muted-foreground) / 0.3) transparent;
+}
+
+.prose pre::-webkit-scrollbar-thumb,
+.prose table::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.prose pre:hover::-webkit-scrollbar-thumb,
+.prose table:hover::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
 }
 
 /* Ergonomic Focus Ring */
@@ -304,7 +327,7 @@ h6 {
 .prose :where(table):not(:where([class~="not-prose"] *)) {
   width: 100%;
   border-collapse: collapse;
-  margin: 1.5rem 0;
+  margin: 1rem 0;
   border-radius: 0.5rem;
   border: 1px solid hsl(var(--border));
   overflow: hidden;
@@ -357,21 +380,20 @@ h6 {
 /* Wrapper for responsive tables */
 .prose :where(div:has(> table)):not(:where([class~="not-prose"] *)) {
   overflow-x: auto;
-  margin: 1.5rem 0;
+  margin: 1rem 0;
 }
 
 /* Make pre/code in prose more distinct and readable */
 .prose pre {
   background: var(--code-bg);
   border: 1px solid var(--code-border);
-  padding: 1.25rem;
-  border-radius: 0.75rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
   overflow: auto;
   font-family: var(--font-mono);
   font-size: 0.875rem;
-  line-height: 1.7;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
-  margin: 1.5rem 0;
+  line-height: 1.6;
+  margin: 1rem 0;
 }
 
 .prose pre code {
@@ -471,29 +493,117 @@ h6 {
 }
 
 @keyframes marquee {
-  from {
-    transform: translateX(0);
+  0% {
+    transform: translate3d(0, 0, 0);
   }
-
-  to {
-    transform: translateX(calc(-100% - var(--gap)));
+  100% {
+    transform: translate3d(calc(-100% - var(--gap)), 0, 0);
   }
 }
 
 @keyframes marquee-vertical {
-  from {
-    transform: translateY(0);
+  0% {
+    transform: translate3d(0, 0, 0);
   }
-
-  to {
-    transform: translateY(calc(-100% - var(--gap)));
+  100% {
+    transform: translate3d(0, calc(-100% - var(--gap)), 0);
   }
 }
 
 .animate-marquee {
-  animation: marquee 20s linear infinite;
+  animation: marquee var(--duration, 20s) linear infinite;
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
 }
 
 .animate-marquee-vertical {
-  animation: marquee-vertical 20s linear infinite;
+  animation: marquee-vertical var(--duration, 20s) linear infinite;
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
+}
+
+/* GPU Acceleration for animated elements */
+.transform-gpu,
+[class*="animate-"],
+[class*="transition-"] {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* @uiw/react-textarea-code-editor light mode overrides */
+/* Improve syntax highlighting visibility in light mode */
+:root {
+  --w-tc-editor-background: transparent;
+  --w-tc-editor-text: #1e293b;
+}
+
+.dark {
+  --w-tc-editor-text: #e2e8f0;
+}
+
+/* Token-level syntax highlighting for code editor (light mode) */
+[data-color-mode="light"] .w-tc-editor-text,
+:not(.dark) .w-tc-editor-text {
+  color: #1e293b !important;
+}
+
+[data-color-mode="light"] .token.string,
+:not(.dark) .token.string {
+  color: #059669 !important;
+}
+
+[data-color-mode="light"] .token.keyword,
+:not(.dark) .token.keyword {
+  color: #c026d3 !important;
+}
+
+[data-color-mode="light"] .token.number,
+:not(.dark) .token.number {
+  color: #d97706 !important;
+}
+
+[data-color-mode="light"] .token.property,
+:not(.dark) .token.property {
+  color: #0891b2 !important;
+}
+
+[data-color-mode="light"] .token.boolean,
+:not(.dark) .token.boolean {
+  color: #7c3aed !important;
+}
+
+[data-color-mode="light"] .token.punctuation,
+:not(.dark) .token.punctuation {
+  color: #334155 !important;
+}
+
+/* Respect user's reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-marquee,
+  .animate-marquee-vertical,
+  .animate-bounce-slow,
+  [class*="animate-"] {
+    animation: none !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
 }

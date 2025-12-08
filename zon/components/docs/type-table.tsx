@@ -12,37 +12,36 @@ interface TypeTableProps {
 
 export function TypeTable({ types, className }: TypeTableProps) {
   return (
-    <div className={cn("my-6 w-full overflow-hidden rounded-lg border", className)}>
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="border-b bg-muted/50">
-              <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Prop</th>
-              <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Type</th>
-              <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Default</th>
-              <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">Description</th>
+    <div className={cn("my-4 w-full overflow-x-auto", className)}>
+      <table className="w-full text-sm">
+        <thead>
+          <tr className="border-b">
+            <th className="py-2 pr-4 text-left font-medium text-foreground">Prop</th>
+            <th className="py-2 px-4 text-left font-medium text-foreground">Type</th>
+            <th className="py-2 px-4 text-left font-medium text-foreground">Default</th>
+            <th className="py-2 pl-4 text-left font-medium text-foreground">Description</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-border">
+          {types.map((item, index) => (
+            <tr key={index}>
+              <td className="py-3 pr-4 align-top font-mono text-sm text-primary">{item.prop}</td>
+              <td className="py-3 px-4 align-top">
+                <code className="rounded bg-muted px-1.5 py-0.5 text-xs font-mono">{item.type}</code>
+              </td>
+              <td className="py-3 px-4 align-top text-muted-foreground">
+                {item.default ? (
+                  <code className="rounded bg-muted px-1.5 py-0.5 text-xs font-mono">{item.default}</code>
+                ) : (
+                  "—"
+                )}
+              </td>
+              <td className="py-3 pl-4 align-top text-muted-foreground">{item.description}</td>
             </tr>
-          </thead>
-          <tbody>
-            {types.map((item, index) => (
-              <tr key={index} className="border-b last:border-0 hover:bg-muted/50">
-                <td className="p-4 align-top font-mono font-semibold text-primary">{item.prop}</td>
-                <td className="p-4 align-top font-mono text-xs text-muted-foreground">
-                  <span className="rounded-md bg-muted px-1.5 py-0.5">{item.type}</span>
-                </td>
-                <td className="p-4 align-top font-mono text-xs text-muted-foreground">
-                  {item.default ? (
-                     <span className="rounded-md bg-muted px-1.5 py-0.5">{item.default}</span>
-                  ) : (
-                    "—"
-                  )}
-                </td>
-                <td className="p-4 align-top text-muted-foreground">{item.description}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
     </div>
   )
 }
+

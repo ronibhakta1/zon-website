@@ -61,7 +61,7 @@ export async function getDocContent(slug: string) {
     },
     components: {
         table: (props: any) => (
-            <div className="my-6 w-full overflow-hidden rounded-lg border border-primary/30 bg-primary/5 shadow-sm">
+            <div className="my-3 w-full overflow-hidden rounded-lg border">
                 <div className="overflow-x-auto">
                     <table {...props} className="w-full text-sm" />
                 </div>
@@ -134,10 +134,12 @@ export async function getDocContent(slug: string) {
     (match) => {
       const flag = match[1]
       const content = match[2]
+      // Strip backticks and other markdown formatting from heading text
+      const cleanText = content ? content.replace(/`/g, "").trim() : ""
       return {
         level: flag?.length === 2 ? 2 : 3,
-        text: content || "",
-        slug: content ? content.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]/g, "") : "",
+        text: cleanText,
+        slug: cleanText ? cleanText.toLowerCase().replace(/\s+/g, "-").replace(/[^\w-]/g, "") : "",
       }
     }
   )

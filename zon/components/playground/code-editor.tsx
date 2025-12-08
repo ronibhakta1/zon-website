@@ -94,12 +94,19 @@ export function CodeEditorPanel({
           padding={20}
           className={cn(
             "font-mono text-sm leading-relaxed min-h-[400px] h-full bg-transparent",
-            "focus:outline-none"
+            "focus:outline-none",
+            "[&_.w-tc-editor-text]:!text-[var(--w-tc-editor-text)]"
           )}
           style={{
             fontSize: 13,
             fontFamily: "var(--font-geist-mono), ui-monospace, monospace",
             backgroundColor: "transparent",
+            // Improve light mode contrast
+            ["--color-fg-default" as never]: "var(--foreground)",
+            ["--color-prettylights-syntax-string" as never]: "#059669",
+            ["--color-prettylights-syntax-keyword" as never]: "#c026d3",
+            ["--color-prettylights-syntax-entity" as never]: "#0891b2",
+            ["--color-prettylights-syntax-constant" as never]: "#d97706",
           }}
         />
       </div>

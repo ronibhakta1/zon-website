@@ -9,13 +9,11 @@ ZON auto-selects the optimal representation for your data.
 
 Best for arrays of objects with consistent structure:
 
-```
-```
+```zonf
 products:@(3):id,inStock,name,price
 1,T,Laptop,999.99
 2,T,Mouse,24.50
 3,F,Monitor,199.00
-```
 ```
 
 - `@(3)` = row count
@@ -26,17 +24,15 @@ products:@(3):id,inStock,name,price
 
 Best for configuration and nested structures:
 
-```
-```
+```zonf
 app_settings{theme{mode:dark,contrast:high},notifications{email:T,push:F}}
-```
 ```
 
 ## Mixed Structures
 
 ZON intelligently combines formats:
 
-```
+```zonf
 metadata{env:production,version:1.0.4}
 users:@(5):id,name,active
 1,Alice,T
@@ -44,3 +40,4 @@ users:@(5):id,name,active
 ...
 logs:"[{id:101,level:INFO},{id:102,level:WARN}]"
 ```
+

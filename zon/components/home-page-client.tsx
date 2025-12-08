@@ -25,9 +25,17 @@ import { TokenReductionChart } from "@/components/token-reduction-chart"
 
 
 
+// Simplified animations for better performance
 const fadeInUp: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } }
+  hidden: { opacity: 0, y: 10 },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { 
+      duration: 0.3, 
+      ease: [0.25, 0.1, 0.25, 1] // cubic-bezier for smoother Safari performance
+    } 
+  }
 }
 
 const staggerContainer: Variants = {
@@ -35,8 +43,8 @@ const staggerContainer: Variants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.07,
-      delayChildren: 0.05
+      staggerChildren: 0.05,
+      delayChildren: 0.02
     }
   }
 }
@@ -47,60 +55,52 @@ interface HomePageClientProps {
 
 function SpotlightCard({ children, className = "", gradientColor = "#262626" }: { children: React.ReactNode; className?: string; gradientColor?: string }) {
   const divRef = useRef<HTMLDivElement>(null)
+  const rafRef = useRef<number | null>(null)
   const [position, setPosition] = useState({ x: 0, y: 0 })
   const [opacity, setOpacity] = useState(0)
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!divRef.current) return
-
-    const div = divRef.current
-    const rect = div.getBoundingClientRect()
-
-    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top })
+    
+    // Throttle with requestAnimationFrame for better performance
+    if (rafRef.current) return
+    
+    rafRef.current = requestAnimationFrame(() => {
+      if (!divRef.current) return
+      const div = divRef.current
+      const rect = div.getBoundingClientRect()
+      setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top })
+      rafRef.current = null
+    })
   }
 
-  const handleFocus = () => {
-    setOpacity(1)
-  }
-
-  const handleBlur = () => {
-    setOpacity(0)
-  }
-
-  const handleMouseEnter = () => {
-    setOpacity(1)
-  }
-
+  const handleMouseEnter = () => setOpacity(1)
   const handleMouseLeave = () => {
     setOpacity(0)
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current)
+      rafRef.current = null
+    }
   }
 
   return (
     <div
       ref={divRef}
       onMouseMove={handleMouseMove}
-      onFocus={handleFocus}
-      onBlur={handleBlur}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={cn(
-        "relative overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 text-zinc-900 dark:text-zinc-200 shadow-sm transition-all duration-300 hover:shadow-md hover:border-zinc-300 dark:hover:border-zinc-700",
+        "relative overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 text-zinc-900 dark:text-zinc-200 shadow-sm transition-shadow duration-200 hover:shadow-md hover:border-zinc-300 dark:hover:border-zinc-700 transform-gpu",
         className
       )}
     >
-      {/* Noise Texture */}
-      <div 
-        className="absolute inset-0 opacity-[0.02] dark:opacity-[0.03] pointer-events-none z-0 mix-blend-overlay"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-        }}
-      />
-      
+      {/* Spotlight gradient - GPU accelerated */}
       <div
-        className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 z-10"
+        className="pointer-events-none absolute -inset-px transition-opacity duration-200 z-10 transform-gpu"
         style={{
           opacity,
-          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, ${gradientColor}, transparent 40%)`,
+          background: `radial-gradient(400px circle at ${position.x}px ${position.y}px, ${gradientColor}, transparent 40%)`,
+          willChange: opacity > 0 ? 'opacity' : 'auto',
         }}
       />
       <div className="relative h-full z-20">{children}</div>
@@ -199,12 +199,12 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
+            transition={{ duration: 0.4, delay: 0.3 }}
             className="mt-10 sm:mt-16 flex flex-col items-center gap-3"
           >
             <p className="text-xs text-muted-foreground font-medium mb-4">Works with leading AI frameworks & platforms</p>
             <div className="relative flex w-full max-w-lg flex-col items-center justify-center overflow-hidden rounded-lg">
-              <Marquee pauseOnHover className="py-2">
+              <Marquee pauseOnHover repeat={2} className="py-2 [--duration:30s]">
                 {[
                   { name: "OpenAI", Icon: OpenAILogo },
                   { name: "Vercel", Icon: VercelLogo },
@@ -216,13 +216,13 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
                   { name: "AutoGen", Icon: AutoGenLogo },
                 ].map((item) => (
                   <div key={item.name} className="mx-6 flex items-center gap-2 whitespace-nowrap group cursor-default">
-                    <item.Icon className="w-5 h-5 sm:w-6 sm:h-6 text-muted-foreground group-hover:text-foreground transition-colors" />
-                    <span className="text-sm sm:text-base font-semibold text-muted-foreground group-hover:text-foreground transition-colors">{item.name}</span>
+                    <item.Icon className="w-5 h-5 sm:w-6 sm:h-6 text-muted-foreground group-hover:text-foreground transition-colors duration-200" />
+                    <span className="text-sm sm:text-base font-semibold text-muted-foreground group-hover:text-foreground transition-colors duration-200">{item.name}</span>
                   </div>
                 ))}
               </Marquee>
-              <div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-background via-background/80 to-background/0"></div>
-              <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-background via-background/80 to-background/0"></div>
+              <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-background to-transparent"></div>
+              <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-background to-transparent"></div>
             </div>
           </motion.div>
           

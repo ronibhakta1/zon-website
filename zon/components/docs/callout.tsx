@@ -1,7 +1,7 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import { AlertTriangle, Info, Lightbulb, OctagonX, AlertCircle } from "lucide-react"
+import { AlertTriangle, Info, Lightbulb, AlertCircle, Ban } from "lucide-react"
 
 interface CalloutProps {
   icon?: string
@@ -10,46 +10,63 @@ interface CalloutProps {
   type?: "note" | "tip" | "important" | "warning" | "caution"
 }
 
+const calloutConfig = {
+  note: {
+    icon: Info,
+    borderColor: "border-l-blue-500",
+    iconColor: "text-blue-500 dark:text-blue-400",
+    bg: "bg-blue-500/5 dark:bg-blue-500/10",
+  },
+  tip: {
+    icon: Lightbulb,
+    borderColor: "border-l-green-500",
+    iconColor: "text-green-600 dark:text-green-400",
+    bg: "bg-green-500/5 dark:bg-green-500/10",
+  },
+  important: {
+    icon: AlertCircle,
+    borderColor: "border-l-purple-500",
+    iconColor: "text-purple-600 dark:text-purple-400",
+    bg: "bg-purple-500/5 dark:bg-purple-500/10",
+  },
+  warning: {
+    icon: AlertTriangle,
+    borderColor: "border-l-yellow-500",
+    iconColor: "text-yellow-600 dark:text-yellow-400",
+    bg: "bg-yellow-500/5 dark:bg-yellow-500/10",
+  },
+  caution: {
+    icon: Ban,
+    borderColor: "border-l-red-500",
+    iconColor: "text-red-600 dark:text-red-400",
+    bg: "bg-red-500/5 dark:bg-red-500/10",
+  },
+}
+
 export function Callout({
   children,
   type = "note",
   title,
   ...props
 }: CalloutProps) {
-  const icons = {
-    note: Info,
-    tip: Lightbulb,
-    important: AlertCircle,
-    warning: AlertTriangle,
-    caution: OctagonX,
-  }
-
-  const Icon = icons[type] || icons.note
+  const config = calloutConfig[type] || calloutConfig.note
+  const Icon = config.icon
 
   return (
     <div
       className={cn(
-        "my-6 flex w-full flex-col gap-2 rounded-lg border p-4 text-sm shadow-sm",
-        {
-          "border-blue-200 bg-blue-50 text-blue-900 dark:border-blue-200/30 dark:bg-blue-900/30 dark:text-blue-200":
-            type === "note",
-          "border-green-200 bg-green-50 text-green-900 dark:border-green-200/30 dark:bg-green-900/30 dark:text-green-200":
-            type === "tip",
-          "border-purple-200 bg-purple-50 text-purple-900 dark:border-purple-200/30 dark:bg-purple-900/30 dark:text-purple-200":
-            type === "important",
-          "border-yellow-200 bg-yellow-50 text-yellow-900 dark:border-yellow-200/30 dark:bg-yellow-900/30 dark:text-yellow-200":
-            type === "warning",
-          "border-red-200 bg-red-50 text-red-900 dark:border-red-200/30 dark:bg-red-900/30 dark:text-red-200":
-            type === "caution",
-        }
+        "my-4 border-l-4 pl-4 py-3",
+        config.borderColor,
+        config.bg
       )}
       {...props}
     >
-      <div className="flex items-center gap-2 font-semibold">
+      <div className={cn("flex items-center gap-2 font-medium mb-1", config.iconColor)}>
         <Icon className="h-4 w-4" />
-        <span className="capitalize">{title || type}</span>
+        <span className="capitalize text-sm">{title || type}</span>
       </div>
-      <div className="[&>p]:last:mb-0 [&>p]:first:mt-0">{children}</div>
+      <div className="text-sm text-muted-foreground [&>p]:last:mb-0 [&>p]:first:mt-0">{children}</div>
     </div>
   )
 }
+
