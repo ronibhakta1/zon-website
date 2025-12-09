@@ -48,7 +48,7 @@ This release transforms ZON into an enterprise-grade data format with versioning
 - **Test Coverage**: 18 tests for binary format
 
 ##### Phase 5: Developer Experience Tools
-- **Format Converters**: JSON <-> ZON <-> Binary with `BatchConverter`
+- **Format Converters**: JSON ↔ ZON ↔ Binary with `BatchConverter`
 - **Helper Utilities**: `size()`, `compareFormats()`, `analyze()`, `inferSchema()`, `compare()`, `isSafe()`
 - **Pretty Printer**: Syntax highlighting with colors, `diffPrint()` for visual diffs
 - **Enhanced Validator**: Linting rules for depth, fields, performance with best practice suggestions
@@ -68,7 +68,7 @@ This release transforms ZON into an enterprise-grade data format with versioning
 
 ##### Phase 7: CI/CD Integration
 - **GitHub Actions Workflow**: Automated evaluations on PRs and main branch
-- **Smoke Tests**: Fast <1min tests on every PR
+- **Smoke Tests**: Fast (under 1 min) tests on every PR
 - **Regression Detection**: Automatic baseline comparison with severity levels (critical/major/minor)
 - **PR Comments**: Auto-post eval results with metrics tables
 - **Baseline Management**: Auto-save successful builds as new baselines
@@ -171,7 +171,7 @@ This release transforms ZON into a production-ready format with first-class supp
 - **Decoder Logic**: Fixed `_splitByDelimiter` to correctly handle nested arrays and objects within table cells (e.g., `[10, 20]`).
 - **Encoder Logic**: Added mandatory quoting for empty strings and strings with newlines to prevent data loss.
 
-#### Documentation[]
+#### Documentation
 - Updated `SPEC.md` and `syntax-cheatsheet.md` to explicitly require quoting for empty strings and escape sequences.
 
 ### [1.0.3] - 2025-11-28
@@ -211,26 +211,26 @@ This release transforms ZON into a production-ready format with first-class supp
 
 #### Performance
 - **Total Tokens**: 1,945 (down from 2,081 in v1.0.2)
-- **-136 tokens saved** (-6.5% improvement)
+- **`-136` tokens saved** (-6.5% improvement)
 - **8/8 wins** vs CSV (previously 4/8 tied)
 - **8/8 wins** vs TOON (-24.4% better)
-- **-57.2%** better than JSON formatted
-- **-27.0%** better than JSON compact
+- **`-57.2%`** better than JSON formatted
+- **`-27.0%`** better than JSON compact
 
 #### Benchmark Results (8 datasets)
-- Employees: 132 tokens (CSV: 138) - **ZON WINS** -4.3%
-- Time-Series: 245 tokens (CSV: 247) - **ZON WINS** -0.8%
-- GitHub Repos: 148 tokens (CSV: 164) - **ZON WINS** -9.8%
-- **Event Logs: 220 tokens (CSV: 231) - ZON WINS -4.8%** ← Sparse tables!
-- E-commerce: 193 tokens (CSV: 313) - **ZON WINS** -38.3%
-- Hike Data: 62 tokens (CSV: 85) - **ZON WINS** -27.1%
-- Deep Config: 111 tokens (CSV: 182) - **ZON WINS** -39.0%
-- Heavily Nested: 764 tokens (CSV: 1,044) - **ZON WINS** -26.8%
+- Employees: 132 tokens (CSV: 138) - **ZON WINS** `-4.3%`
+- Time-Series: 245 tokens (CSV: 247) - **ZON WINS** `-0.8%`
+- GitHub Repos: 148 tokens (CSV: 164) - **ZON WINS** `-9.8%`
+- **Event Logs**: 220 tokens (CSV: 231) - **ZON WINS** `-4.8%` ← Sparse tables!
+- E-commerce: 193 tokens (CSV: 313) - **ZON WINS** `-38.3%`
+- Hike Data: 62 tokens (CSV: 85) - **ZON WINS** `-27.1%`
+- Deep Config: 111 tokens (CSV: 182) - **ZON WINS** `-39.0%`
+- Heavily Nested: 764 tokens (CSV: 1,044) - **ZON WINS** `-26.8%`
 
 #### Competitive Analysis
-- **vs CSV**: -20.1% tokens overall
-- **vs TOON**: -24.4% tokens overall (beats on ALL datasets)
-- **vs JSON**: -57.2% formatted, -27.0% compact
+- **vs CSV**: `-20.1%` tokens overall
+- **vs TOON**: `-24.4%` tokens overall (beats on ALL datasets)
+- **vs JSON**: `-57.2%` formatted, `-27.0%` compact
 - **Real Cost Savings**: $4,890/month vs CSV at 1M API calls (GPT-4)
 
 #### Fixed

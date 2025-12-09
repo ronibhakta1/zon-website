@@ -1,0 +1,240 @@
+---
+title: Python API
+description: Complete Python API documentation for zon-format.
+---
+
+**Version:** 1.2.0
+
+Complete API documentation for the Python `zon-format` package.
+
+## Installation
+
+### Using pip
+```bash
+pip install zon-format
+```
+
+### Using UV (faster alternative)
+```bash
+# Install with UV (5-10x faster than pip)
+uv pip install zon-format
+
+# Or for UV-based projects
+uv add zon-format
+```
+
+> **What is UV?** [UV](https://github.com/astral-sh/uv) is a blazing-fast Python package installer written in Rust. It's 10-100x faster than pip.
+
+---
+
+## Quick Start
+
+```python
+import zon
+
+# Your data
+data = {
+    "users": [
+        {"id": 1, "name": "Alice", "role": "admin", "active": True},
+        {"id": 2, "name": "Bob", "role": "user", "active": True}
+    ]
+}
+
+# Encode to ZON
+encoded = zon.encode(data)
+print(encoded)
+# users:@(2):active,id,name,role
+# T,1,Alice,admin
+# T,2,Bob,user
+
+# Decode back
+decoded = zon.decode(encoded)
+assert decoded == data  # ✓ Lossless!
+```
+
+---
+
+## Encoding Functions
+
+### `zon.encode(data: Any) -> str`
+
+Encodes Python data to ZON format.
+
+**Parameters:**
+- `data` (`Any`) - Python data to encode (dicts, lists, primitives)
+
+**Returns:** `str` - ZON-formatted string
+
+**Example:**
+```python
+import zon
+
+zon_str = zon.encode({
+    "users": [
+        {"id": 1, "name": "Alice"},
+        {"id": 2, "name": "Bob"}
+    ]
+})
+```
+
+**Output:**
+```zonf
+users:@(2):id,name
+1,Alice
+2,Bob
+```
+
+---
+
+### `zon.encode_adaptive(data: Any, options: AdaptiveEncodeOptions = None) -> str`
+
+Encodes Python data using adaptive mode selection.
+
+**Parameters:**
+- `data` (`Any`) - Data to encode
+- `options` (`AdaptiveEncodeOptions`, optional) - Encoding options
+
+**Options:**
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `mode` | `str` | `'compact'` | Encoding mode: `'compact'`, `'readable'`, `'llm-optimized'` |
+| `indent` | `int` | `2` | Indentation for readable mode |
+| `debug` | `bool` | `False` | Return detailed encoding decisions |
+
+**Returns:** `str` or `AdaptiveEncodeResult` if `debug=True`
+
+**Example:**
+```python
+from zon import encode_adaptive, AdaptiveEncodeOptions
+
+# Compact mode (default)
+output = encode_adaptive(data)
+
+# Readable mode with custom indentation
+output = encode_adaptive(
+    data,
+    AdaptiveEncodeOptions(mode='readable', indent=4)
+)
+
+# With debug information
+result = encode_adaptive(
+    data,
+    AdaptiveEncodeOptions(mode='compact', debug=True)
+)
+print(result.decisions)  # See encoding decisions
+```
+
+---
+
+### `zon.recommend_mode(data: Any) -> dict`
+
+Analyzes data and recommends optimal encoding mode.
+
+**Parameters:**
+- `data` (`Any`) - Data to analyze
+
+**Returns:** `dict` with keys: `mode`, `confidence`, `reason`, `metrics`
+
+**Example:**
+```python
+from zon import recommend_mode
+
+recommendation = recommend_mode(my_data)
+print(f"Use {recommendation['mode']} mode")
+print(f"Confidence: {recommendation['confidence']}")
+print(f"Reason: {recommendation['reason']}")
+```
+
+---
+
+## Decoding Functions
+
+### `zon.decode(zon_string: str, strict: bool = True) -> Any`
+
+Decodes ZON format back to Python data.
+
+**Parameters:**
+- `zon_string` (`str`) - ZON-formatted string
+- `strict` (`bool`, default `True`) - Enable strict validation
+
+**Returns:** Original Python data structure
+
+**Example:**
+```python
+import zon
+
+data = zon.decode("""
+users:@(2):id,name
+1,Alice
+2,Bob
+""")
+# {'users': [{'id': 1, 'name': 'Alice'}, {'id': 2, 'name': 'Bob'}]}
+```
+
+**Strict Mode:**
+```python
+# Strict mode (default) - validates table structure
+data = zon.decode(zon_string)
+
+# Non-strict mode - allows row/field count mismatches
+data = zon.decode(zon_string, strict=False)
+```
+
+**Error Handling:**
+```python
+from zon import decode, ZonDecodeError
+
+try:
+    data = decode(invalid_zon)
+except ZonDecodeError as e:
+    print(e.code)     # "E001" or "E002"
+    print(e.message)  # Detailed error message
+```
+
+---
+
+## Binary Format
+
+### `zon.encode_binary(data: Any) -> bytes`
+
+Encodes data to Binary ZON format (ZON-B).
+
+**Returns:** `bytes` - Compact binary buffer
+
+### `zon.decode_binary(buffer: bytes) -> Any`
+
+Decodes Binary ZON back to Python data.
+
+**Example:**
+```python
+from zon import encode_binary, decode_binary
+
+data = {"id": 1, "name": "Alice"}
+
+# Encode to bytes
+binary = encode_binary(data)
+
+# Decode back
+decoded = decode_binary(binary)
+```
+
+---
+
+## Command Line Interface
+
+The ZON package includes a CLI for file conversion:
+
+```bash
+# Encode JSON to ZON
+zon encode data.json > data.zonf
+
+# Decode ZON to JSON
+zon decode data.zonf > output.json
+```
+
+---
+
+## See Also
+- [TypeScript API](./api-typescript) - TypeScript/JavaScript API
+- [CLI Guide](./cli-guide) - Command-line interface
+- [Specification](./specification) - Format specification

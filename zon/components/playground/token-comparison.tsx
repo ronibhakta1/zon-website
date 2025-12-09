@@ -153,7 +153,7 @@ export function TokenComparison({
           </div>
 
           <div className="pt-2">
-            <p className="text-[10px] text-muted-foreground leading-tight">
+            <p className="text-xs text-muted-foreground leading-tight">
               Based on GPT-4 pricing: $0.03/1K input tokens
             </p>
           </div>

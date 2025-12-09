@@ -490,7 +490,7 @@ Irregularity = 1 - avg_similarity
 
 **Threshold:**
 - If irregularity > 0.6 -> Use inline format
-- If irregularity <= 0.6 -> Use table format
+- If irregularity `<= 0.6` -> Use table format
 
 ---
 
@@ -965,9 +965,9 @@ users:@(1):id,name
 
 ### Appendix B: Test Suite
 **Coverage:**
--  28/28 unit tests
--  27/27 roundtrip tests
--  100% data integrity
+- Full unit test suite
+- Complete roundtrip verification
+- 100% data integrity
 
 **Test categories:**
 - Primitives (T, F, null, numbers, strings)

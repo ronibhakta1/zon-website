@@ -18,20 +18,20 @@ interface PresetSelectorProps {
 
 export function PresetSelector({ onSelect, className }: PresetSelectorProps) {
   return (
-    <div className={cn("w-full overflow-x-auto py-4 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide", className)}>
-      <div className="flex gap-3 min-w-max">
+    <div className={cn("w-full overflow-x-auto py-2 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide", className)}>
+      <div className="flex gap-2 sm:gap-3 min-w-max">
         {presets.map((preset) => (
           <button
             key={preset.name}
             onClick={() => onSelect(preset)}
             className={cn(
-              "group relative flex flex-col items-start p-4 w-[240px] h-[100px] rounded-xl text-left transition-all duration-300",
+              "group relative flex flex-col items-start p-3 sm:p-4 w-[160px] sm:w-[200px] h-[80px] sm:h-[90px] rounded-lg sm:rounded-xl text-left transition-all duration-300",
               "bg-white/50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800",
-              "hover:border-zinc-300 dark:hover:border-zinc-700 hover:shadow-md hover:-translate-y-0.5",
+              "hover:border-zinc-300 dark:hover:border-zinc-700 hover:shadow-md active:scale-[0.98]",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             )}
           >
-            <div className="font-semibold text-sm text-zinc-900 dark:text-zinc-100 mb-1 group-hover:text-primary transition-colors">
+            <div className="font-semibold text-xs sm:text-sm text-zinc-900 dark:text-zinc-100 mb-1 group-hover:text-primary transition-colors truncate w-full">
               {preset.name}
             </div>
             <div className="text-xs text-zinc-500 dark:text-zinc-400 line-clamp-2 leading-relaxed">
@@ -39,7 +39,7 @@ export function PresetSelector({ onSelect, className }: PresetSelectorProps) {
             </div>
             
             {/* Hover Gradient */}
-            <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+            <div className="absolute inset-0 rounded-lg sm:rounded-xl bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
           </button>
         ))}
       </div>

@@ -11,6 +11,7 @@ import { TypeTable } from "@/components/docs/type-table"
 import { DocsTabs, DocsTab } from "@/components/docs/mdx-tabs"
 import { Callout } from "@/components/docs/callout"
 import { InstallTabs } from "@/components/docs/install-tabs"
+import { LanguageInstallTabs } from "@/components/docs/language-install-tabs"
 import React from "react"
 
 import fs from 'fs/promises'
@@ -124,6 +125,7 @@ export async function getDocContent(slug: string) {
         Tab: DocsTab,
         Callout,
         InstallTabs,
+        LanguageInstallTabs,
     }
   })
 

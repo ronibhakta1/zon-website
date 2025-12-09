@@ -6,18 +6,83 @@ export interface Preset {
 
 export const presets: Preset[] = [
   {
-    name: "Simple Object",
-    description: "Basic key-value pairs",
+    name: "Roni Bhakta",
+    description: "GSoC Fellow & Software Developer",
     data: {
-      name: "Alice Johnson",
-      age: 28,
-      city: "San Francisco",
-      active: true,
-      balance: 1250.50
+      name: "Roni Bhakta",
+      role: "Software Developer",
+      organization: "Internet Archive",
+      gsoc2025: true,
+      projects: [
+        {
+          name: "ZON Format",
+          description: "Token-efficient data format for LLMs",
+          active: true,
+          stack: ["TypeScript", "Python", "Next.js"]
+        },
+        {
+          name: "Lenny",
+          description: "Open source lending system for libraries",
+          active: true,
+          stack: ["Python", "FastAPI", "React", "TypeScript", "Docker"]
+        },
+        {
+          name: "PRS",
+          description: "Public Readium Service",
+          active: true,
+          stack: ["Readium", "OPDS", "Thorium"]
+        }
+      ],
+      expertise: {
+        backend: ["Python", "FastAPI", "Node.js"],
+        frontend: ["React", "Next.js", "TypeScript"],
+        cloud: ["Docker", "Kubernetes", "AWS"],
+        ai: ["LLMs", "LangChain", "RAG"]
+      },
+      openSource: true
     }
   },
   {
-    name: "Tabular Data (ZON's Sweet Spot)",
+    name: "LLM Tools",
+    description: "Function calling schema for AI agents",
+    data: {
+      tools: [
+        {
+          name: "search_web",
+          description: "Search the web for information",
+          parameters: {
+            query: { type: "string", required: true },
+            maxResults: { type: "number", default: 5 }
+          }
+        },
+        {
+          name: "send_email",
+          description: "Send an email to a recipient",
+          parameters: {
+            to: { type: "string", required: true },
+            subject: { type: "string", required: true },
+            body: { type: "string", required: true }
+          }
+        },
+        {
+          name: "create_task",
+          description: "Create a new task in the project",
+          parameters: {
+            title: { type: "string", required: true },
+            priority: { type: "string", enum: ["low", "medium", "high"] },
+            assignee: { type: "string" }
+          }
+        }
+      ],
+      context: {
+        user: "developer",
+        session: "abc123",
+        timestamp: "2024-12-09T08:30:00Z"
+      }
+    }
+  },
+  {
+    name: "Tabular Data",
     description: "Array of objects - where ZON shines",
     data: {
       users: [
@@ -29,27 +94,14 @@ export const presets: Preset[] = [
     }
   },
   {
-    name: "Nested Structure",
-    description: "Complex nested objects and arrays",
+    name: "Simple Object",
+    description: "Basic key-value pairs",
     data: {
-      company: "TechCorp",
-      founded: 2015,
-      departments: [
-        {
-          name: "Engineering",
-          headCount: 45,
-          teams: ["Backend", "Frontend", "DevOps"]
-        },
-        {
-          name: "Sales",
-          headCount: 23,
-          teams: ["Enterprise", "SMB"]
-        }
-      ],
-      metadata: {
-        lastUpdated: "2024-12-01",
-        version: "1.0.5"
-      }
+      name: "Alice Johnson",
+      age: 28,
+      city: "San Francisco",
+      active: true,
+      balance: 1250.50
     }
   },
   {
@@ -57,7 +109,7 @@ export const presets: Preset[] = [
     description: "Realistic API response structure",
     data: {
       status: "success",
-      timestamp: "2024-12-01T07:45:00Z",
+      timestamp: "2024-12-09T08:30:00Z",
       data: {
         products: [
           { id: "p1", name: "Laptop", price: 999.99, inStock: true, tags: ["electronics", "computers"] },
@@ -73,7 +125,7 @@ export const presets: Preset[] = [
     }
   },
   {
-    name: "Hikes Example (from TOON)",
+    name: "Hikes (TOON Example)",
     description: "The classic hikes example",
     data: {
       context: {

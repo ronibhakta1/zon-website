@@ -10,6 +10,7 @@ export const docsMap: Record<string, string> = {
   "tools-playgrounds": "content/docs/tools-playgrounds.mdx",
   "implementations": "content/docs/implementations.mdx",
   "api-typescript": "content/docs/api-typescript.mdx",
+  "api-python": "content/docs/api-python.mdx",
   "efficiency-formalization": "content/docs/efficiency-formalization.mdx",
   "typescript": "content/docs/typescript.mdx",
   "specification": "content/docs/specification.mdx",
@@ -71,6 +72,7 @@ export function getDocsNav(): NavSection[] {
       title: "Technical Reference",
       items: [
         { title: "API (TypeScript)", href: "/docs/api-typescript" },
+        { title: "API (Python)", href: "/docs/api-python" },
         { title: "Syntax Cheatsheet", href: "/docs/syntax-cheatsheet" },
         { title: "Specification", href: "/docs/specification" },
         { title: "Efficiency Formalization", href: "/docs/efficiency-formalization" },

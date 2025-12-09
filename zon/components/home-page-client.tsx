@@ -10,15 +10,15 @@ import { RetroGrid } from "@/components/ui/retro-grid"
 import { Marquee } from "@/components/ui/marquee"
 import { cn } from "@/lib/utils"
 import { Zap, Shield, Layers, Database, FileCode, Globe, ArrowUpRight, Star, ShieldCheck, ArrowDown } from "lucide-react"
-import { 
-  LangChainLogo, 
-  OpenAILogo, 
-  DSPyLogo, 
-  LlamaIndexLogo, 
-  AutoGenLogo, 
-  VercelLogo, 
-  MistralLogo, 
-  AnthropicLogo 
+import {
+  LangChainLogo,
+  OpenAILogo,
+  DSPyLogo,
+  LlamaIndexLogo,
+  AutoGenLogo,
+  VercelLogo,
+  MistralLogo,
+  AnthropicLogo
 } from "@/components/ui/brand-logos"
 import { BenchmarkChart } from "@/components/benchmark-chart"
 import { TokenReductionChart } from "@/components/token-reduction-chart"
@@ -28,13 +28,13 @@ import { TokenReductionChart } from "@/components/token-reduction-chart"
 // Simplified animations for better performance
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 10 },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { 
-      duration: 0.3, 
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.3,
       ease: [0.25, 0.1, 0.25, 1] // cubic-bezier for smoother Safari performance
-    } 
+    }
   }
 }
 
@@ -61,10 +61,10 @@ function SpotlightCard({ children, className = "", gradientColor = "#262626" }: 
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!divRef.current) return
-    
+
     // Throttle with requestAnimationFrame for better performance
     if (rafRef.current) return
-    
+
     rafRef.current = requestAnimationFrame(() => {
       if (!divRef.current) return
       const div = divRef.current
@@ -109,7 +109,8 @@ function SpotlightCard({ children, className = "", gradientColor = "#262626" }: 
 }
 
 export function HomePageClient({ initialStars }: HomePageClientProps) {
-  const [stars, setStars] = useState(initialStars)
+  const [starsTs, setStarsTs] = useState(initialStars)
+  const [starsPy, setStarsPy] = useState(0)
 
   useEffect(() => {
     const fetchStars = async () => {
@@ -117,7 +118,8 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
         const res = await fetch('/api/github-stars')
         if (res.ok) {
           const data = await res.json()
-          setStars(data.starsTs) // Use TypeScript stars for homepage
+          setStarsTs(data.starsTs)
+          setStarsPy(data.starsPy)
         }
       } catch (e) {
         console.error("Failed to fetch stars", e)
@@ -173,26 +175,56 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.3, ease: "easeOut" }}
-            className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto"
+            className="mt-8 sm:mt-10 flex flex-col items-center gap-4 sm:gap-5 w-full"
             style={{ willChange: 'opacity, transform' }}
           >
-            <Link href="/docs" className="w-full sm:w-auto">
-              <Button size="lg" className="w-full sm:w-auto h-12 px-8 text-base font-semibold shadow-md hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 active:scale-95 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2">
-                Get Started Free →
+            {/* Primary CTA - Playground */}
+            <Link href="/playground">
+              <Button size="lg" className="h-11 px-6 text-sm font-semibold shadow-md hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 active:scale-95 rounded-full">
+                Try Playground →
               </Button>
             </Link>
-            <Link href="https://github.com/ZON-Format" target="_blank" className="w-full sm:w-auto text-zinc-900 dark:text-zinc-100" style={{ color: 'inherit' }}>
-              <div className="w-full sm:w-auto h-12 pl-6 pr-2 text-base font-medium bg-transparent border border-zinc-200 dark:border-zinc-800 transition-all duration-200 hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-2 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 group shadow-lg hover:shadow-xl rounded-full cursor-pointer">
-                <svg className="h-5 w-5 transition-colors" fill="currentColor" viewBox="0 0 24 24">
-                  <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
-                </svg>
-                <span className="transition-colors mr-1">GitHub</span>
-                <div className="flex items-center gap-1 bg-zinc-900 dark:bg-zinc-800 px-2.5 py-1 rounded-full text-zinc-50 dark:text-zinc-100 transition-colors">
-                  <Star className="h-3.5 w-3.5 fill-current" />
-                  <span className="text-sm font-semibold font-mono">{stars >= 1000 ? (stars / 1000).toFixed(1) + 'k' : stars}</span>
+            
+            {/* Secondary links - compact outline buttons */}
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
+              <Link href="/docs/benchmarks">
+                <Button variant="outline" size="sm" className="h-9 px-4 text-sm font-medium rounded-full border-zinc-200 dark:border-zinc-700 hover:bg-muted transition-all hover:-translate-y-0.5">
+                  Benchmarks
+                </Button>
+              </Link>
+              <Link href="/docs/cli-guide">
+                <Button variant="outline" size="sm" className="h-9 px-4 text-sm font-medium rounded-full border-zinc-200 dark:border-zinc-700 hover:bg-muted transition-all hover:-translate-y-0.5">
+                  CLI
+                </Button>
+              </Link>
+              <Link href="/docs">
+                <Button variant="outline" size="sm" className="h-9 px-4 text-sm font-medium rounded-full border-zinc-200 dark:border-zinc-700 hover:bg-muted transition-all hover:-translate-y-0.5">
+                  Why ZON?
+                </Button>
+              </Link>
+            </div>
+            
+            {/* GitHub stars - Python and TypeScript */}
+            <div className="flex items-center justify-center gap-3">
+              <Link href="https://github.com/ZON-Format/zon" target="_blank" className="text-zinc-900 dark:text-zinc-100" style={{ color: 'inherit' }}>
+                <div className="h-10 pl-3 pr-2 text-sm font-medium bg-[#3776AB]/10 border border-[#3776AB]/30 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md active:scale-95 flex items-center justify-center gap-2 rounded-full cursor-pointer">
+                  <span className="text-[#3776AB] font-semibold">Python</span>
+                  <div className="flex items-center gap-1 bg-[#3776AB] px-2 py-0.5 rounded-full text-white text-xs font-semibold font-mono">
+                    <Star className="h-3 w-3 fill-current" />
+                    {starsPy >= 1000 ? (starsPy / 1000).toFixed(1) + 'k' : starsPy}
+                  </div>
                 </div>
-              </div>
-            </Link>
+              </Link>
+              <Link href="https://github.com/ZON-Format/zon-ts" target="_blank" className="text-zinc-900 dark:text-zinc-100" style={{ color: 'inherit' }}>
+                <div className="h-10 pl-3 pr-2 text-sm font-medium bg-[#3178C6]/10 border border-[#3178C6]/30 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md active:scale-95 flex items-center justify-center gap-2 rounded-full cursor-pointer">
+                  <span className="text-[#3178C6] font-semibold">TypeScript</span>
+                  <div className="flex items-center gap-1 bg-[#3178C6] px-2 py-0.5 rounded-full text-white text-xs font-semibold font-mono">
+                    <Star className="h-3 w-3 fill-current" />
+                    {starsTs >= 1000 ? (starsTs / 1000).toFixed(1) + 'k' : starsTs}
+                  </div>
+                </div>
+              </Link>
+            </div>
           </motion.div>
 
           {/* Trust Signal: Framework logos */}
@@ -225,7 +257,7 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
               <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-background to-transparent"></div>
             </div>
           </motion.div>
-          
+
           {/* Bouncing Benchmark Button */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -255,7 +287,7 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
           <div className="absolute left-[75%] top-[25%] text-slate-500 dark:text-slate-300 text-lg font-light">+</div>
           <div className="absolute left-[85%] top-[35%] text-slate-500 dark:text-slate-300 text-lg font-light">+</div>
           <div className="absolute left-[95%] top-[15%] text-slate-500 dark:text-slate-400 text-lg font-light">+</div>
-          
+
           <div className="absolute left-[5%] top-[45%] text-slate-500 dark:text-slate-400 text-lg font-light">+</div>
           <div className="absolute left-[15%] top-[55%] text-slate-500 dark:text-slate-600 text-lg font-light">+</div>
           <div className="absolute left-[25%] top-[65%] text-slate-500 dark:text-slate-400 text-lg font-light">+</div>
@@ -358,7 +390,7 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
                     <div className="mb-6 inline-flex p-3 rounded-lg bg-zinc-100 dark:bg-white/5 w-fit">
                       <item.icon className="w-6 h-6 text-zinc-900 dark:text-zinc-100" strokeWidth={1.5} />
                     </div>
-                    
+
                     <h3 className="text-lg font-bold mb-3 text-zinc-900 dark:text-zinc-100">{item.title}</h3>
                     <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed mb-6 flex-grow">
                       {item.desc}

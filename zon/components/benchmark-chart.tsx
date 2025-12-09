@@ -63,7 +63,7 @@ export function BenchmarkChart() {
                 </div>
 
                 {/* Stats */}
-                <div className="flex items-center gap-2 md:gap-4 shrink-0 text-[11px] md:text-[13px]">
+                <div className="flex items-center gap-2 md:gap-4 shrink-0 text-xs">
                   <span className={cn(
                     "w-24 md:w-32 text-right tabular-nums font-medium tracking-tight",
                     item.isWinner ? "text-zinc-200" : "text-zinc-500"
@@ -124,7 +124,7 @@ export function BenchmarkChart() {
                 </div>
 
                 {/* Stats Row */}
-                <div className="flex items-center justify-between text-[11px] text-zinc-500 tabular-nums">
+                <div className="flex items-center justify-between text-xs text-zinc-500 tabular-nums">
                   <span>{item.accuracy} accuracy</span>
                   <span>{item.tokens} tokens</span>
                 </div>
@@ -136,7 +136,7 @@ export function BenchmarkChart() {
       
       {/* Footer */}
       <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-zinc-800/50 flex justify-center">
-        <div className="text-[10px] sm:text-xs text-zinc-600 font-medium tracking-wide text-center">
+        <div className="text-xs text-zinc-600 font-medium tracking-wide text-center">
           <span className="hidden sm:inline">Efficiency Ranking · GPT-5-nano (Azure OpenAI) · 309 Questions</span>
           <span className="sm:hidden">GPT-5-nano · 309 Questions</span>
         </div>

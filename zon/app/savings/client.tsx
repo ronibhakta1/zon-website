@@ -130,7 +130,7 @@ export function SavingsCalculator({ pricing }: SavingsCalculatorProps) {
                     <div className="flex items-center justify-between mb-6">
                       <div className="flex items-center gap-3">
                         <h3 className={cn("font-bold text-lg", model.color)}>{model.name}</h3>
-                        <Badge variant="outline" className="font-mono text-[10px] border-zinc-200 dark:border-zinc-800 text-zinc-500 dark:text-zinc-400">
+                        <Badge variant="outline" className="font-mono text-xs border-zinc-200 dark:border-zinc-800 text-zinc-500 dark:text-zinc-400">
                           ${model.input}/1M
                         </Badge>
                       </div>
@@ -162,7 +162,7 @@ export function SavingsCalculator({ pricing }: SavingsCalculatorProps) {
                             className="h-full bg-green-500 dark:bg-green-500"
                           />
                         </div>
-                        <div className="flex justify-between text-[10px] text-zinc-400">
+                        <div className="flex justify-between text-xs text-zinc-400">
                           <span>With ZON</span>
                           <span>Savings</span>
                         </div>

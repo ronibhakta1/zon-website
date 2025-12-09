@@ -8,20 +8,47 @@ import { RetroGrid } from "@/components/ui/retro-grid"
 import { CodeEditorPanel } from "@/components/playground/code-editor"
 import { PresetSelector } from "@/components/playground/preset-selector"
 import { StatsDashboard } from "@/components/playground/stats-dashboard"
+import { ModeSelector, type EncodingMode, type AdvancedOptions } from "@/components/playground/mode-selector"
 import { type Preset } from "@/components/playground/example-presets"
 import { countTokens } from "@/lib/tokenizer"
 import { useDebounce } from "use-debounce"
 import LZString from "lz-string"
 import { RotateCcw, Sparkles, ArrowRight, Info, Share2, Check } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { convertAction } from "@/app/actions/convert"
+import { encodeAdaptive } from "zon-format"
 
 const DEFAULT_JSON = JSON.stringify({
-  users: [
-    { id: 1, name: "Alice", email: "alice@example.com", role: "admin", active: true },
-    { id: 2, name: "Bob", email: "bob@example.com", role: "user", active: true },
-    { id: 3, name: "Charlie", email: "charlie@example.com", role: "user", active: false }
-  ]
+  name: "Roni Bhakta",
+  role: "Software Developer",
+  organization: "Internet Archive",
+  gsoc2025: true,
+  projects: [
+    {
+      name: "ZON Format",
+      description: "Token-efficient data format for LLMs",
+      active: true,
+      stack: ["TypeScript", "Python", "Next.js"]
+    },
+    {
+      name: "Lenny",
+      description: "Open source lending system for libraries",
+      active: true,
+      stack: ["Python", "FastAPI", "React", "TypeScript", "Docker"]
+    },
+    {
+      name: "PRS",
+      description: "Public Readium Service",
+      active: true,
+      stack: ["Readium", "OPDS", "Thorium"]
+    }
+  ],
+  expertise: {
+    backend: ["Python", "FastAPI", "Node.js"],
+    frontend: ["React", "Next.js", "TypeScript"],
+    cloud: ["Docker", "Kubernetes", "AWS"],
+    ai: ["LLMs", "LangChain", "RAG"]
+  },
+  openSource: true
 }, null, 2)
 
 export function PlaygroundClient() {
@@ -32,9 +59,17 @@ export function PlaygroundClient() {
   const [zonTokens, setZonTokens] = useState(0)
   const [isConverting, setIsConverting] = useState(false)
   const [isShared, setIsShared] = useState(false)
+  
+  // Encoding mode and options
+  const [encodingMode, setEncodingMode] = useState<EncodingMode>("compact")
+  const [advancedOptions, setAdvancedOptions] = useState<AdvancedOptions>({
+    enableDictCompression: false,
+    disableTables: false,
+  })
+  const [showAdvanced, setShowAdvanced] = useState(false)
 
   // Debounce input to avoid excessive processing
-  const [debouncedInput] = useDebounce(jsonInput, 300)
+  const [debouncedInput] = useDebounce(jsonInput, 150) // Faster debounce for client-side
 
   // Load from URL on mount
   useEffect(() => {
@@ -54,24 +89,35 @@ export function PlaygroundClient() {
     }
   }, [])
 
-  // Convert JSON to ZON
-  const convertToZon = useCallback(async (jsonString: string) => {
+  // Client-side ZON encoding - instant, no rate limits!
+  const convertToZon = useCallback((jsonString: string, mode: EncodingMode, advanced?: AdvancedOptions) => {
     try {
       setIsConverting(true)
       setError("")
       
-      // Count input tokens immediately (client-side)
+      // Parse JSON
+      const parsed = JSON.parse(jsonString)
+      
+      // Count input tokens
       const jTokens = countTokens(jsonString)
       setJsonTokens(jTokens)
 
-      // Call Server Action
-      const result = await convertAction(jsonString)
+      // Build encode options
+      const encodeOptions: Record<string, unknown> = { mode }
       
-      if (!result.success) {
-        throw new Error(result.error)
+      // Add advanced options if provided
+      if (advanced?.enableDictCompression) {
+        encodeOptions.enableDictCompression = true
       }
+      if (advanced?.disableTables) {
+        encodeOptions.disableTables = true
+      }
+
+      // Encode using zon-format directly (client-side)
+      const result = encodeAdaptive(parsed, encodeOptions)
       
-      const zonEncoded = result.data as string
+      // Handle both string and object return types
+      const zonEncoded = typeof result === "string" ? result : (result as { output: string }).output
       setZonOutput(zonEncoded)
       
       // Count output tokens
@@ -82,27 +128,22 @@ export function PlaygroundClient() {
       if (err instanceof SyntaxError) {
         setError(`Invalid JSON: ${err.message}`)
       } else {
-        setError(`Conversion error: ${err instanceof Error ? err.message : 'Unknown error'}`)
+        setError(`Encoding error: ${err instanceof Error ? err.message : 'Unknown error'}`)
       }
       setZonOutput("")
-      // Keep input tokens if valid
-      if (!(err instanceof SyntaxError)) {
-        setZonTokens(0)
-      } else {
-        setJsonTokens(0)
-        setZonTokens(0)
-      }
+      setJsonTokens(0)
+      setZonTokens(0)
     } finally {
       setIsConverting(false)
     }
   }, [])
 
-  // Convert on debounced input change
+  // Convert on debounced input change or mode/options change
   useEffect(() => {
     if (debouncedInput.trim()) {
-      convertToZon(debouncedInput)
+      convertToZon(debouncedInput, encodingMode, showAdvanced ? advancedOptions : undefined)
     }
-  }, [debouncedInput, convertToZon])
+  }, [debouncedInput, encodingMode, advancedOptions, showAdvanced, convertToZon])
 
   // Load preset
   const handlePresetSelect = (preset: Preset) => {
@@ -185,43 +226,56 @@ export function PlaygroundClient() {
         <div className="container mx-auto max-w-7xl px-4">
           
           {/* Discovery Rail */}
-          <div className="mb-8">
-            <div className="flex items-center justify-between mb-4 px-1">
-              <h3 className="text-sm font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+          <div className="mb-6 sm:mb-8">
+            <div className="flex items-center justify-between mb-3 sm:mb-4 px-1">
+              <h3 className="text-xs sm:text-sm font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
                 Examples
               </h3>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1 sm:gap-2">
                 <Button 
                   variant="outline" 
                   size="sm" 
                   onClick={handleShare} 
                   className={cn(
-                    "h-8 text-xs transition-all duration-200",
+                    "h-7 sm:h-8 text-xs px-2 sm:px-3 transition-all duration-200",
                     isShared && "border-green-500 text-green-600 bg-green-50 dark:bg-green-900/20"
                   )}
                 >
                   {isShared ? (
                     <>
-                      <Check className="w-3 h-3 mr-1.5" />
-                      Copied Link
+                      <Check className="w-3 h-3 sm:mr-1.5" />
+                      <span className="hidden sm:inline">Copied</span>
                     </>
                   ) : (
                     <>
-                      <Share2 className="w-3 h-3 mr-1.5" />
-                      Share
+                      <Share2 className="w-3 h-3 sm:mr-1.5" />
+                      <span className="hidden sm:inline">Share</span>
                     </>
                   )}
                 </Button>
-                <Button variant="outline" size="sm" onClick={handleFormat} className="h-8 text-xs">
-                  Format JSON
+                <Button variant="outline" size="sm" onClick={handleFormat} className="h-7 sm:h-8 text-xs px-2 sm:px-3">
+                  <span className="hidden sm:inline">Format</span>
+                  <span className="sm:hidden">JSON</span>
                 </Button>
-                <Button variant="ghost" size="sm" onClick={handleReset} className="h-8 text-xs">
-                  <RotateCcw className="w-3 h-3 mr-1.5" />
-                  Reset
+                <Button variant="ghost" size="sm" onClick={handleReset} className="h-7 sm:h-8 text-xs px-2 sm:px-3">
+                  <RotateCcw className="w-3 h-3 sm:mr-1.5" />
+                  <span className="hidden sm:inline">Reset</span>
                 </Button>
               </div>
             </div>
             <PresetSelector onSelect={handlePresetSelect} />
+          </div>
+
+          {/* Encoding Mode Selector */}
+          <div className="mb-6">
+            <ModeSelector
+              mode={encodingMode}
+              onModeChange={setEncodingMode}
+              advancedOptions={advancedOptions}
+              onAdvancedChange={setAdvancedOptions}
+              showAdvanced={showAdvanced}
+              onShowAdvancedChange={setShowAdvanced}
+            />
           </div>
 
           {/* PRIORITY 2: Editors - The Main Action */}

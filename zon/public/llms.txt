@@ -1,0 +1,52 @@
+# ZON - Zero Overhead Notation
+
+> ZON is a human-readable, token-efficient data format designed for LLMs. A superior alternative to JSON, YAML, and TOON that saves 35-70% on API costs.
+
+## Overview
+
+- [Homepage](https://zonformat.org): Main website with benchmarks and live playground
+- [Documentation](https://zonformat.org/docs): Complete ZON documentation
+- [Playground](https://zonformat.org/playground): Interactive JSON to ZON converter
+
+## Getting Started
+
+- [Getting Started](https://zonformat.org/docs/getting-started): Installation and quick start guide
+- [Format Overview](https://zonformat.org/docs/format-overview): Understanding ZON syntax
+- [TypeScript Guide](https://zonformat.org/docs/typescript): TypeScript/JavaScript implementation
+
+## API Reference
+
+- [API (TypeScript)](https://zonformat.org/docs/api-typescript): TypeScript/JavaScript API documentation
+- [API (Python)](https://zonformat.org/docs/api-python): Python API documentation
+- [CLI Guide](https://zonformat.org/docs/cli-guide): Command-line interface reference
+
+## Technical Specification
+
+- [Specification](https://zonformat.org/docs/specification): Formal ZON specification v1.3.0
+- [Syntax Cheatsheet](https://zonformat.org/docs/syntax-cheatsheet): Quick reference for ZON syntax
+- [Advanced Features](https://zonformat.org/docs/advanced-features): Dictionary compression, delta encoding, type coercion
+
+## Benchmarks & Comparisons
+
+- [Benchmarks](https://zonformat.org/docs/benchmarks): Token efficiency and accuracy benchmarks
+- [ZON vs TOON](https://zonformat.org/docs/vs-toon): Comparison with TOON format
+- [Cost Savings Calculator](https://zonformat.org/savings): Calculate API cost savings
+
+## Integrations
+
+- [LLM Best Practices](https://zonformat.org/docs/llm-best-practices): Using ZON with LLMs effectively
+- [Integrations](https://zonformat.org/docs/integrations): LangChain, Vercel AI SDK, OpenAI
+- [Schema Validation](https://zonformat.org/docs/schema-validation): Runtime validation
+
+## Source Code
+
+- [Python Package](https://github.com/ZON-Format/ZON): Python implementation (pip install zon-format)
+- [TypeScript Package](https://github.com/ZON-Format/ZON-TS): TypeScript implementation (npm install zon-format)
+- [npm Package](https://www.npmjs.com/package/zon-format): npm package page
+- [PyPI Package](https://pypi.org/project/zon-format/): Python package page
+
+## Optional
+
+- [Changelog](https://zonformat.org/docs/changelog): Version history and release notes
+- [Efficiency Formalization](https://zonformat.org/docs/efficiency-formalization): Mathematical proofs
+- [Streaming Guide](https://zonformat.org/docs/streaming-guide): Streaming APIs

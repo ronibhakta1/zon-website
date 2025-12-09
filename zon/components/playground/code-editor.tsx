@@ -64,7 +64,7 @@ export function CodeEditorPanel({
           onClick={handleCopy}
           disabled={!value}
           className={cn(
-            "inline-flex items-center gap-1.5 px-2 py-1 text-[10px] font-medium rounded-md transition-all duration-200",
+            "inline-flex items-center gap-1.5 px-2 py-1 text-xs font-medium rounded-md transition-all duration-200",
             "bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400",
             "hover:bg-zinc-200 dark:hover:bg-zinc-700 hover:text-zinc-900 dark:hover:text-zinc-100",
             "disabled:opacity-50 disabled:cursor-not-allowed"
@@ -123,11 +123,11 @@ export function CodeEditorPanel({
             {error}
           </motion.div>
         ) : (
-          <div className="text-[10px] text-zinc-400 font-mono">
+          <div className="text-xs text-zinc-400 font-mono">
             {language === "json" ? "JSON" : "ZON"}
           </div>
         )}
-        <div className="text-[10px] text-zinc-500 font-mono tabular-nums">
+        <div className="text-xs text-zinc-500 font-mono tabular-nums">
           {value.length.toLocaleString()} chars
         </div>
       </div>

@@ -96,7 +96,7 @@ export function MultiModelCost({ tokensSaved, className }: MultiModelCostProps) 
                   <p className="text-xs text-muted-foreground">{model.provider}</p>
                 </div>
                 <div className={cn(
-                  "px-2 py-0.5 rounded text-[10px] font-medium",
+                  "px-2 py-0.5 rounded text-xs font-medium",
                   model.color === "emerald" && "bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300",
                   model.color === "orange" && "bg-orange-100 dark:bg-orange-950 text-orange-700 dark:text-orange-300",
                   model.color === "blue" && "bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300"
@@ -138,7 +138,7 @@ export function MultiModelCost({ tokensSaved, className }: MultiModelCostProps) 
               {selectedVolume.multiplier >= 100000 && (
                 <div className="mt-3 pt-3 border-t border-border">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] text-muted-foreground">Annual (12M reqs)</span>
+                    <span className="text-xs text-muted-foreground">Annual (12M reqs)</span>
                     <span className="text-xs font-bold text-foreground tabular-nums">
                       ${((totalSavings / selectedVolume.multiplier) * 12_000_000).toFixed(0)}K
                     </span>

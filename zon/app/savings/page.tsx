@@ -6,9 +6,25 @@ import { ArrowLeft, DollarSign } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 
-export const metadata = {
-  title: "Cost Savings Calculator - ZON",
-  description: "Calculate how much you can save on LLM API costs using ZON format.",
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Cost Savings Calculator",
+  description: "Calculate how much you can save on LLM API costs using ZON format. Compare GPT-4o, Claude 3.5 Sonnet, and other AI models.",
+  openGraph: {
+    title: "ZON Cost Savings Calculator",
+    description: "Calculate your LLM API cost savings with ZON format",
+    url: "https://zonformat.org/savings",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "ZON Cost Savings Calculator",
+    description: "Calculate your LLM API cost savings with ZON format",
+  },
+  alternates: {
+    canonical: "https://zonformat.org/savings",
+  },
 }
 
 export default async function SavingsPage() {
@@ -24,7 +40,7 @@ export default async function SavingsPage() {
       <div className="container mx-auto max-w-7xl px-4 py-12 sm:py-20">
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-16 space-y-6">
-          <Link href="/">
+          <Link href="/playground">
             <Button variant="ghost" size="sm" className="mb-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Playground

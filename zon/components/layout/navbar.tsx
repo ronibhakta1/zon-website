@@ -54,112 +54,85 @@ export function Navbar() {
           <Link href="/" className="mr-6 flex items-center space-x-2">
             <Wordmark />
           </Link>
-          <nav className="flex items-center gap-4 text-sm font-medium">
+        <nav className="flex items-center gap-6 text-sm font-medium">
+            <Link
+              href="/docs"
+              className="transition-colors hover:text-foreground text-foreground/60"
+            >
+              Docs
+            </Link>
+
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center gap-1 transition-colors hover:text-foreground/80 text-foreground/60 outline-none">
-                Guide <ChevronDown className="h-3 w-3" />
+              <DropdownMenuTrigger className="flex items-center gap-1 transition-colors hover:text-foreground text-foreground/60 outline-none">
+                Learn <ChevronDown className="h-3 w-3" />
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="start">
+              <DropdownMenuContent align="start" className="w-48">
                 <DropdownMenuItem asChild>
-                  <Link href="/docs/getting-started">Getting Started</Link>
+                  <Link href="/docs/getting-started" className="flex flex-col items-start">
+                    <span className="font-medium">Getting Started</span>
+                    <span className="text-xs text-muted-foreground">Install and quick start</span>
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href="/docs/format-overview">Format Overview</Link>
+                  <Link href="/docs/format-overview" className="flex flex-col items-start">
+                    <span className="font-medium">Format Overview</span>
+                    <span className="text-xs text-muted-foreground">Learn ZON syntax</span>
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href="/docs/llm-best-practices">LLM Best Practices</Link>
+                  <Link href="/docs/benchmarks" className="flex flex-col items-start">
+                    <span className="font-medium">Benchmarks</span>
+                    <span className="text-xs text-muted-foreground">Token efficiency data</span>
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href="/docs/benchmarks">Benchmarks</Link>
+                  <Link href="/docs/vs-toon" className="flex flex-col items-start">
+                    <span className="font-medium">ZON vs TOON</span>
+                    <span className="text-xs text-muted-foreground">Format comparison</span>
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center gap-1 transition-colors hover:text-foreground text-foreground/60 outline-none">
+                API <ChevronDown className="h-3 w-3" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-48">
+                <DropdownMenuItem asChild>
+                  <Link href="/docs/api-typescript" className="flex flex-col items-start">
+                    <span className="font-medium">TypeScript</span>
+                    <span className="text-xs text-muted-foreground">npm install zon-format</span>
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href="/docs/cli-guide">CLI Guide</Link>
+                  <Link href="/docs/api-python" className="flex flex-col items-start">
+                    <span className="font-medium">Python</span>
+                    <span className="text-xs text-muted-foreground">pip install zon-format</span>
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href="/docs/advanced-features">Advanced Features</Link>
+                  <Link href="/docs/specification" className="flex flex-col items-start">
+                    <span className="font-medium">Specification</span>
+                    <span className="text-xs text-muted-foreground">Full format spec v1.3.0</span>
+                  </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
             <Link
               href="/playground"
-              className={cn(
-                "transition-colors hover:text-foreground/80",
-                "text-foreground/60"
-              )}
+              className="transition-colors hover:text-foreground text-foreground/60"
             >
               Playground
             </Link>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center gap-1 transition-colors hover:text-foreground/80 text-foreground/60 outline-none">
-                Reference <ChevronDown className="h-3 w-3" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start">
-                <DropdownMenuItem asChild>
-                  <Link href="/docs/api-typescript">API (TypeScript)</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/docs/syntax-cheatsheet">Syntax Cheatsheet</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/docs/specification">Specification</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/docs/efficiency-formalization">Efficiency Formalization</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/docs/changelog">Changelog</Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center gap-1 transition-colors hover:text-foreground/80 text-foreground/60 outline-none">
-                Ecosystem <ChevronDown className="h-3 w-3" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start">
-                <DropdownMenuItem asChild>
-                  <Link href="/docs/typescript">TypeScript Guide</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/docs/implementations">Implementations</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/docs/integrations">Integrations</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/docs/schema-validation">Schema Validation</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/docs/streaming-guide">Streaming Guide</Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-
             <Link
-              href="/docs/vs-toon"
-              className={cn(
-                "transition-colors hover:text-foreground/80",
-                "text-foreground/60"
-              )}
+              href="/docs/cli-guide"
+              className="transition-colors hover:text-foreground text-foreground/60"
             >
-              ZON vs TOON
+              CLI
             </Link>
-
-            <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center gap-1 transition-colors hover:text-foreground/80 text-foreground/60 outline-none ml-2">
-                v1.3.0 <ChevronDown className="h-3 w-3" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem>
-                  v1.3.0 (Latest)
-                </DropdownMenuItem>
-                <DropdownMenuItem disabled>
-                  v1.2.0
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
           </nav>
         </div>
 

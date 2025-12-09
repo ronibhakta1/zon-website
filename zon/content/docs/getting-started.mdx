@@ -16,15 +16,9 @@ Think of it like CSV for complex data - keeps the efficiency of tables where it 
 **100% retrieval accuracy** — no hints, no prayers  
 **Zero parsing overhead** — literally dumber than CSV, and that’s why LLMs love it
 
-```bash
-npm i zon-format
-# or
-pnpm add zon-format
-# or
-yarn add zon-format
-# or
-bun add zon-format
-```
+## Installation
+
+<LanguageInstallTabs />
 
 > TIP: The ZON format is stable, but it’s also an evolving concept. There’s no finalization yet, so your input is valuable. Contribute to the spec or share your feedback to help shape its future.
 
@@ -129,24 +123,17 @@ ZON is the only library that gives you **both in one package**.
 -  **Deep Nesting**: Handles complex nested structures efficiently (91% compression on 50-level deep objects)
 -  **Browser & Edge Ready**: Verified support for Cloudflare Workers, Vercel Edge, and Browsers
 -  **Security Limits**: Automatic DOS prevention (100MB docs, 1M arrays, 100K keys)
--  **Production Ready**: 121/121 tests pass, 27/27 datasets verified, zero data loss
+-  **Production Ready**: Comprehensive test suite, verified datasets, zero data loss
 
 ---
 
 ## Installation & Quick Start
 
-<Steps>
+<LanguageInstallTabs />
 
-<Step title="Install the Library">
+<Tabs items={["TypeScript", "Python"]}>
 
-### TypeScript Library
-<InstallTabs args="zon-format" />
-
-</Step>
-
-<Step title="Encode Data">
-
-Import `encode` and pass your data object.
+<Tab value="TypeScript">
 
 ```typescript
 import { encode, decode } from 'zon-format';
@@ -158,36 +145,47 @@ const data = {
   ]
 };
 
-console.log(encode(data));
+// Encode to ZON
+const encoded = encode(data);
+console.log(encoded);
 // posts:@(2):id,published,title
 // 1,T,Hello World
 // 2,T,ZON Guide
-```
 
-</Step>
-
-<Step title="Decode Data">
-
-Use `decode` to parse ZON back into a JavaScript object.
-
-```typescript
 // Decode back to JSON
 const decoded = decode(encoded);
-console.log(decoded);
-
-// {
-//   posts: [
-//     { id: 1, title: 'Hello World', published: true },
-//     { id: 2, title: 'ZON Guide', published: true }
-//   ]
-// }
-
 // Identical to original - lossless!
 ```
 
-</Step>
+</Tab>
 
-</Steps>
+<Tab value="Python">
+
+```python
+import zon
+
+data = {
+    "posts": [
+        {"id": 1, "title": "Hello World", "published": True},
+        {"id": 2, "title": "ZON Guide", "published": True}
+    ]
+}
+
+# Encode to ZON
+encoded = zon.encode(data)
+print(encoded)
+# posts:@(2):id,published,title
+# 1,T,Hello World
+# 2,T,ZON Guide
+
+# Decode back to Python
+decoded = zon.decode(encoded)
+# Identical to original - lossless!
+```
+
+</Tab>
+
+</Tabs>
 
 ### Command Line Interface (CLI)
 The ZON package includes a CLI tool for converting files between JSON and ZON format.
