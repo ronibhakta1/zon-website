@@ -15,7 +15,16 @@ export function Footer() {
             >
               GitHub
             </a>
-            .
+            . Join our{" "}
+            <a
+              href="https://discord.gg/hd8kwSWW"
+              target="_blank"
+              rel="noreferrer"
+              className="font-medium underline underline-offset-4 text-zinc-900 dark:text-zinc-50 hover:text-zinc-700 dark:hover:text-zinc-300"
+            >
+              Discord
+            </a>
+            {" "}to share feedback!
           </p>
           <p className="text-center text-sm leading-normal text-muted-foreground">
             Released under the <a href="https://github.com/ZON-Format/ZON/blob/main/LICENSE" target="_blank" rel="noreferrer" className="font-medium underline underline-offset-4 hover:text-foreground">MIT License</a>.

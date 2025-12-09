@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { RetroGrid } from "@/components/ui/retro-grid"
 import { Marquee } from "@/components/ui/marquee"
 import { cn } from "@/lib/utils"
-import { Zap, Shield, Layers, Database, FileCode, Globe, ArrowUpRight, Star, ShieldCheck, ArrowDown } from "lucide-react"
+import { Zap, Shield, Layers, Database, FileCode, Globe, ArrowUpRight, Star, ShieldCheck, ArrowDown, MessageCircle } from "lucide-react"
 import {
   LangChainLogo,
   OpenAILogo,
@@ -202,6 +202,12 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
                   Why ZON?
                 </Button>
               </Link>
+              <a href="https://discord.gg/hd8kwSWW" target="_blank" rel="noopener noreferrer">
+                <Button variant="outline" size="sm" className="h-9 px-4 text-sm font-medium rounded-full border-[#5865F2]/30 bg-[#5865F2]/10 text-[#5865F2] hover:bg-[#5865F2]/20 hover:border-[#5865F2]/50 transition-all hover:-translate-y-0.5">
+                  <MessageCircle className="w-4 h-4 mr-1.5" />
+                  Join Discord
+                </Button>
+              </a>
             </div>
             
             {/* GitHub stars - Python and TypeScript */}
