@@ -172,18 +172,18 @@ export function LlmShowcase() {
   }
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-4">
-      <div className="mb-12 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4 text-zinc-900 dark:text-zinc-100">
+    <div className="w-full max-w-6xl mx-auto px-6 sm:px-8 overflow-x-hidden">
+      <div className="mb-8 md:mb-12 text-center">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tighter mb-3 md:mb-4 text-zinc-900 dark:text-zinc-100">
           Native Fluency in ZON
         </h2>
-        <p className="text-muted-foreground text-sm md:text-lg max-w-2xl mx-auto leading-relaxed">
+        <p className="text-muted-foreground text-sm md:text-lg max-w-2xl mx-auto leading-relaxed px-4">
           ZON connects your data to LLMs natively. No JSON conversion overhead.
         </p>
       </div>
 
       {/* Scenario Selector */}
-      <div className="flex justify-center mb-12">
+      <div className="flex justify-center mb-10 md:mb-12">
         <div className="flex bg-zinc-100 dark:bg-zinc-900/50 p-1 md:p-1.5 rounded-full border border-zinc-200 dark:border-white/10 shadow-sm">
           {SCENARIOS.map((s, idx) => {
             const Icon = s.icon
@@ -225,7 +225,7 @@ export function LlmShowcase() {
           className="w-full lg:flex-1 lg:max-w-[380px] relative z-10"
         >
           <SpotlightCard gradientColor="rgba(59, 130, 246, 0.2)">
-            <div className="p-5 flex flex-col h-full">
+            <div className="p-4 sm:p-5 flex flex-col h-full">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center">
                    <Table2 className="w-4 h-4 text-blue-500" />
