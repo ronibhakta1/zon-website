@@ -138,7 +138,7 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
         <RetroGrid />
       </div>
       {/* Hero Section */}
-      <section className="relative py-12 sm:py-20 md:py-24 lg:py-32 border-b border-border/40">
+      <section className="relative py-4 sm:py-8 md:py-12 lg:py-16 border-b border-border/40">
         <div className="container mx-auto max-w-6xl px-4 relative z-10 flex flex-col items-center text-center">
           <motion.div
             initial="hidden"
