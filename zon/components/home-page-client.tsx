@@ -239,7 +239,7 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4, delay: 0.3 }}
-            className="mt-10 sm:mt-16 flex flex-col items-center gap-3"
+            className="mt-8 sm:mt-12 flex flex-col items-center gap-3"
           >
             <p className="text-xs text-muted-foreground font-medium mb-4">Works with leading AI frameworks & platforms</p>
             <div className="relative flex w-full max-w-lg flex-col items-center justify-center overflow-hidden rounded-lg">
@@ -270,7 +270,7 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 1 }}
-            className="mt-8 sm:mt-12 flex justify-center"
+            className="mt-6 sm:mt-8 flex justify-center"
           >
             <Link href="#benchmarks" className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors group cursor-pointer">
               <span className="text-xs sm:text-sm font-medium tracking-wide">See Benchmarks</span>
