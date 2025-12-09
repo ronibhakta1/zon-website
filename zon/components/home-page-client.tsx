@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/brand-logos"
 import { BenchmarkChart } from "@/components/benchmark-chart"
 import { TokenReductionChart } from "@/components/token-reduction-chart"
+import { LlmShowcase } from "@/components/llm-showcase"
 
 
 
@@ -311,6 +312,11 @@ export function HomePageClient({ initialStars }: HomePageClientProps) {
 
 
 
+
+      {/* NEW: Showcase Section */}
+      <section className="py-16 bg-zinc-50/50 dark:bg-zinc-900/20 border-b border-border/40">
+        <LlmShowcase />
+      </section>
 
       {/* Features Section (Why ZON?) */}
       <section id="benchmarks" className="py-20 sm:py-32 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-white border-b border-zinc-200 dark:border-white/5 relative overflow-hidden">

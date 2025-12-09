@@ -122,3 +122,79 @@ if (!result.success) {
 - `zon.array(schema)`
 - `zon.object({ key: schema })`
 - `.optional()` modifier
+
+## Real-World Benchmark
+See how ZON compares to other formats in high-volume, complex schema scenarios.
+
+<div className="my-6 p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950/50 shadow-sm">
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div>
+      <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-400 mb-4">Complex Validation Success</h3>
+      
+      {/* ZON */}
+      <div className="mb-4">
+        <div className="flex justify-between text-xs mb-2">
+          <span className="font-bold text-zinc-900 dark:text-white">ZON</span>
+          <span className="text-emerald-600 dark:text-emerald-400 font-mono">100% Pass</span>
+        </div>
+        <div className="h-2 w-full bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden">
+          <div className="h-full bg-emerald-500 w-full rounded-full" />
+        </div>
+      </div>
+
+      {/* TOON */}
+      <div>
+        <div className="flex justify-between text-xs mb-2">
+          <span className="font-medium text-zinc-500 dark:text-zinc-500">TOON</span>
+          <span className="text-red-500 dark:text-red-400 font-mono">0% (Fail)</span>
+        </div>
+        <div className="h-2 w-full bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden">
+          <div className="h-full bg-red-500 w-[2%] rounded-full opacity-20" />
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-400 mb-4">Benchmark Token Efficiency</h3>
+       {/* ZON */}
+      <div className="mb-4">
+        <div className="flex justify-between text-xs mb-2">
+          <span className="font-bold text-zinc-900 dark:text-white">ZON</span>
+          <span className="text-emerald-600 dark:text-emerald-400 font-mono">118 tokens</span>
+        </div>
+        <div className="h-2 w-full bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden">
+          <div className="h-full bg-emerald-500 w-full rounded-full" />
+        </div>
+      </div>
+
+      {/* TOON */}
+      <div>
+        <div className="flex justify-between text-xs mb-2">
+          <span className="font-medium text-zinc-500 dark:text-zinc-500">TOON</span>
+          <span className="text-zinc-500 dark:text-zinc-400 font-mono">+53% more (180)</span>
+        </div>
+        <div className="h-2 w-full bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden">
+          <div className="h-full bg-zinc-400 w-[65%] rounded-full opacity-50" />
+        </div>
+      </div>
+      <div className="mt-4 text-[10px] text-zinc-400">
+        *Analysis based on <a href="https://gist.github.com/ronibhakta1/c9c92fa773010170b1dc5d5703be17ab" className="underline hover:text-primary">Benchmark Gist</a>:
+        ZON uses ~34% fewer tokens for the same nested data structure.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div className="flex gap-4 mt-4">
+  <a href="https://gist.github.com/ronibhakta1/2cd2fa09e993f5849781f684b1bc601f" className="text-sm font-medium text-primary hover:underline flex items-center">
+    View Source Code (TypeScript) →
+  </a>
+  <a href="https://gist.github.com/ronibhakta1/c9c92fa773010170b1dc5d5703be17ab" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors hover:underline">
+    View Benchmark Logs
+  </a>
+</div>
+
+**Why ZON Wins:**
+- **Zero Hallucinations**: In the attached benchmark, ZON passes strict schema validation 100% of the time.
+- **Robust Nesting**: As seen in the live demo, ZON correctly handles complex nested arrays (skills inside portfolios) where formatters like TOON can fail due to loose array counting logic.
+- **Type Safety**: The script demonstrates ZON's ability to enforce strict types (Enums, Numbers) at runtime, preventing bad data from entering your application.
