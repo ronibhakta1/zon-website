@@ -3,9 +3,8 @@
 import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils"
-import { SpotlightCard } from "@/components/ui/spotlight-card"
 import { Button } from "@/components/ui/button"
-import { Table2, Settings2, Sparkles, Terminal, MessageSquare, Copy, Check } from "lucide-react"
+import { Table2, Settings2, Sparkles, Terminal, Copy, Check, ArrowRight, Code2 } from "lucide-react"
 
 const SCENARIOS = [
   {
@@ -22,7 +21,14 @@ eve@corp.ai,5,2024-12-09,pro`,
     response: `users:@(3):id,tier
 1,premium
 3,free
-5,pro`
+5,pro`,
+    decoded: `{
+  "users": [
+    { "id": 1, "tier": "premium" },
+    { "id": 3, "tier": "free" },
+    { "id": 5, "tier": "pro" }
+  ]
+}`
   },
   {
     id: "transform",
@@ -42,6 +48,14 @@ eve@corp.ai,5,2024-12-09,pro`,
   email:sarah@skynet.com
   created_at:2023-01-15
   is_admin:true
+}`,
+    decoded: `{
+  "user": {
+    "name": "Sarah Connor",
+    "email": "sarah@skynet.com",
+    "created_at": "2023-01-15",
+    "is_admin": true
+  }
 }`
   },
   {
@@ -53,7 +67,12 @@ eve@corp.ai,5,2024-12-09,pro`,
 102,[{name:Monitor,price:300}],300`,
     prompt: "Extract items cheaper than $50.",
     response: `cheap_items:@(1):id,item,price
-101,Mouse,25`
+101,Mouse,25`,
+    decoded: `{
+  "cheap_items": [
+    { "id": 101, "item": "Mouse", "price": 25 }
+  ]
+}`
   }
 ]
 
@@ -66,21 +85,15 @@ export function LlmShowcase() {
 
   const scenario = SCENARIOS[activeScenario]
 
-  // Typewriter effect
   useEffect(() => {
-    // Reset state
     setDisplayedResponse("")
     setIsTyping(true)
     
-    // Clear any existing timeout
-    if (typingTimeoutRef.current) {
-      clearInterval(typingTimeoutRef.current)
-    }
+    if (typingTimeoutRef.current) clearInterval(typingTimeoutRef.current)
 
     let currentIndex = 0
     const fullText = scenario.response
     
-    // Start typing after a small delay to simulate "thinking"
     const startDelay = setTimeout(() => {
       typingTimeoutRef.current = setInterval(() => {
         if (currentIndex < fullText.length) {
@@ -90,8 +103,8 @@ export function LlmShowcase() {
           setIsTyping(false)
           if (typingTimeoutRef.current) clearInterval(typingTimeoutRef.current)
         }
-      }, 15) // Typing speed
-    }, 400)
+      }, 15)
+    }, 600)
 
     return () => {
       clearTimeout(startDelay)
@@ -106,113 +119,242 @@ export function LlmShowcase() {
   }
 
   return (
-    <div className="w-full max-w-5xl mx-auto px-4">
-      <div className="mb-8 text-center">
-        <h2 className="text-3xl font-bold tracking-tight mb-3 text-zinc-900 dark:text-zinc-100">
+    <div className="w-full max-w-7xl mx-auto px-4 py-6 md:py-8">
+      <div className="mb-8 md:mb-12 text-center">
+        <h2 className="text-2xl md:text-3xl font-bold tracking-tight mb-2 md:mb-3 text-zinc-900 dark:text-zinc-100">
           Native Fluency in ZON
         </h2>
-        <p className="text-muted-foreground text-lg">
-          See how models like GPT-4 and Claude 3.5 produce ZON natively.
+        <p className="text-muted-foreground text-sm md:text-lg max-w-2xl mx-auto">
+          ZON connects your data to LLMs natively. No JSON conversion overhead.
         </p>
       </div>
 
-      <SpotlightCard className="overflow-hidden bg-zinc-950 border-zinc-800" gradientColor="rgba(120, 119, 198, 0.1)">
-        <div className="flex flex-col h-full min-h-[500px] md:min-h-[400px]">
-          {/* Tabs header */}
-          <div className="flex flex-wrap items-center gap-2 p-4 border-b border-white/10 bg-white/5">
-            {SCENARIOS.map((s, idx) => {
-              const Icon = s.icon
-              return (
-                <button
-                  key={s.id}
-                  onClick={() => setActiveScenario(idx)}
-                  className={cn(
-                    "flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
-                    activeScenario === idx 
-                      ? "bg-primary/20 text-primary ring-1 ring-primary/50" 
-                      : "text-muted-foreground hover:text-foreground hover:bg-white/5"
-                  )}
-                >
-                  <Icon className="w-4 h-4" />
-                  {s.label}
-                </button>
-              )
-            })}
-          </div>
+      {/* Scenario Selector */}
+      <div className="flex justify-center mb-8 md:mb-12">
+        <div className="flex bg-zinc-100 dark:bg-zinc-900/50 p-1 md:p-1.5 rounded-full border border-zinc-200 dark:border-white/10 shadow-sm">
+          {SCENARIOS.map((s, idx) => {
+            const Icon = s.icon
+            const isActive = activeScenario === idx
+            return (
+              <button
+                key={s.id}
+                onClick={() => setActiveScenario(idx)}
+                className={cn(
+                  "flex items-center gap-1.5 md:gap-2 px-3 md:px-5 py-2 md:py-2.5 rounded-full text-xs md:text-sm font-medium transition-all duration-300 relative",
+                  isActive ? "text-white" : "text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200"
+                )}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="activeTab"
+                    className="absolute inset-0 bg-zinc-800 dark:bg-zinc-700 rounded-full shadow-md"
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  />
+                )}
+                <span className="relative z-10 flex items-center gap-1.5 md:gap-2">
+                  <Icon className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                  <span className="hidden sm:inline">{s.label}</span>
+                </span>
+              </button>
+            )
+          })}
+        </div>
+      </div>
 
-          <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
-            {/* User Input Section */}
-            <div className="w-full md:w-2/5 p-6 border-b md:border-b-0 md:border-r border-white/10 bg-zinc-900/30 flex flex-col gap-6">
-              
-              {/* Context Block */}
-              <div className="flex flex-col gap-3">
-                <div className="flex items-center gap-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                  <Table2 className="w-3 h-3" /> Input Data (ZON)
-                </div>
-                <div className="bg-zinc-950/50 border border-white/5 rounded-xl p-3 font-mono text-xs text-zinc-400 overflow-x-auto">
-                  <pre>{scenario.context}</pre>
-                </div>
+      {/* Node Flow UI - Stacks vertically on mobile */}
+      <div className="relative flex flex-col lg:flex-row items-stretch lg:items-center justify-center gap-4 lg:gap-0">
+        
+        {/* INPUT NODE */}
+        <motion.div 
+          layout
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="w-full lg:flex-1 lg:max-w-[380px] relative z-10"
+        >
+          <div className="relative h-full bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800/60 rounded-xl shadow-lg dark:shadow-2xl flex flex-col overflow-hidden">
+            {/* Header Glow */}
+            <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-blue-500/50 to-transparent opacity-50" />
+
+            <div className="px-4 py-3 border-b border-zinc-100 dark:border-zinc-800/60 flex items-center justify-between bg-zinc-50 dark:bg-zinc-900/20">
+              <div className="flex items-center gap-2 text-[10px] md:text-xs font-bold text-blue-600 dark:text-blue-400 font-mono tracking-widest uppercase">
+                <div className="w-2 h-2 bg-blue-500 rounded-sm" />
+                Input::Data
               </div>
-
-              {/* Prompt Block */}
-              <div className="flex flex-col gap-3">
-                <div className="flex items-center gap-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                  <MessageSquare className="w-3 h-3" /> User Query
-                </div>
-                <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-3 text-sm text-zinc-200 leading-relaxed relative">
-                  {scenario.prompt}
-                  <div className="absolute top-[-6px] left-4 w-3 h-3 bg-blue-500/10 border-t border-l border-blue-500/20 transform rotate-45" />
-                </div>
-              </div>
-
+              <div className="text-[9px] md:text-[10px] text-zinc-400 dark:text-zinc-600 font-mono">ZON Encoder</div>
             </div>
 
-            {/* Model Response Section */}
-            <div className="w-full md:w-3/5 p-6 bg-zinc-950 relative group">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-2 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                  <Terminal className="w-3 h-3" /> Model Response
-                </div>
-                <div className="text-xs text-emerald-500 font-mono opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:opacity-100">
-                  {isTyping ? (
-                    <span className="flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                      Generating ZON...
-                    </span>
-                  ) : (
-                    <span className="flex items-center gap-1.5 text-zinc-500">
-                      <span className="w-1.5 h-1.5 rounded-full bg-zinc-500" />
-                      Complete
-                    </span>
-                  )}
+            <div className="p-4 flex flex-col gap-4 flex-grow font-mono text-xs md:text-sm">
+              <div>
+                <label className="text-[9px] md:text-[10px] font-bold text-zinc-500 mb-1.5 block uppercase tracking-wider flex justify-between">
+                  <span>Context</span>
+                  <span className="text-zinc-400 dark:text-zinc-600">ZON</span>
+                </label>
+                <div className="bg-zinc-100 dark:bg-[#0a0a0a] rounded-lg p-2.5 md:p-3 text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-800/80 overflow-x-auto text-[10px] md:text-xs">
+                   <pre className="whitespace-pre-wrap">{scenario.context}</pre>
                 </div>
               </div>
-              
-              <div className="relative font-mono text-sm leading-relaxed">
-                <div className="absolute right-0 top-0">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-8 w-8 text-muted-foreground hover:text-white"
-                    onClick={copyToClipboard}
-                  >
-                    {isCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                  </Button>
+
+              <div>
+                 <label className="text-[9px] md:text-[10px] font-bold text-blue-600 dark:text-blue-500 mb-1.5 block uppercase tracking-wider flex items-center gap-1.5">
+                  <ArrowRight className="w-2.5 h-2.5 md:w-3 md:h-3" /> 
+                  Query
+                </label>
+                <div className="text-zinc-700 dark:text-zinc-200 leading-relaxed bg-blue-50 dark:bg-blue-500/5 border border-blue-200 dark:border-blue-500/10 p-2.5 md:p-3 rounded-lg text-[10px] md:text-xs">
+                  {scenario.prompt}
                 </div>
-                
-                <pre className="text-zinc-300 whitespace-pre-wrap">
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* FIRST CONNECTOR - Desktop */}
+        <div className="hidden lg:flex flex-col justify-center items-center w-[80px] h-16 shrink-0 relative">
+           <svg className="w-full h-full overflow-visible" preserveAspectRatio="none">
+             <defs>
+               <linearGradient id="beam-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                 <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.6" />
+                 <stop offset="100%" stopColor="#10b981" stopOpacity="0.6" />
+               </linearGradient>
+               <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                 <feGaussianBlur stdDeviation="2" result="blur" />
+                 <feComposite in="SourceGraphic" in2="blur" operator="over" />
+               </filter>
+             </defs>
+             <motion.path 
+               d="M 0,32 L 80,32" 
+               fill="none" 
+               stroke="url(#beam-grad)" 
+               strokeWidth="2"
+               strokeLinecap="round"
+               filter="url(#glow)"
+               initial={{ pathLength: 0 }}
+               animate={{ pathLength: 1 }}
+               transition={{ duration: 0.8, ease: "easeInOut" }}
+             />
+              <motion.circle r="2" fill="#fff" filter="url(#glow)">
+               <animateMotion dur="1.5s" repeatCount="indefinite" path="M 0,32 L 80,32" />
+             </motion.circle>
+           </svg>
+        </div>
+        {/* Mobile Connector */}
+        <div className="flex lg:hidden justify-center py-2">
+          <div className="w-[2px] h-8 bg-gradient-to-b from-blue-500/50 to-emerald-500/50 rounded-full" />
+        </div>
+
+        {/* OUTPUT NODE */}
+        <motion.div 
+          layout
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="w-full lg:flex-1 lg:max-w-[380px] relative z-10"
+          transition={{ delay: 0.1 }}
+        >
+          <div className="relative h-full bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800/60 rounded-xl shadow-lg dark:shadow-2xl flex flex-col overflow-hidden">
+             <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent opacity-50" />
+
+             <div className="px-4 py-3 border-b border-zinc-100 dark:border-zinc-800/60 flex items-center justify-between bg-zinc-50 dark:bg-zinc-900/20">
+              <div className="flex items-center gap-2 text-[10px] md:text-xs font-bold text-emerald-600 dark:text-emerald-400 font-mono tracking-widest uppercase">
+                <div className="w-2 h-2 bg-emerald-500 rounded-sm" />
+                Output::LLM
+              </div>
+              <div className="flex items-center gap-2">
+                {isTyping && (
+                  <div className="flex gap-0.5">
+                    <motion.div className="w-1 h-1 bg-emerald-500 rounded-full" animate={{ opacity: [0.3, 1, 0.3] }} transition={{ duration: 1, repeat: Infinity, delay: 0 }} />
+                    <motion.div className="w-1 h-1 bg-emerald-500 rounded-full" animate={{ opacity: [0.3, 1, 0.3] }} transition={{ duration: 1, repeat: Infinity, delay: 0.2 }} />
+                    <motion.div className="w-1 h-1 bg-emerald-500 rounded-full" animate={{ opacity: [0.3, 1, 0.3] }} transition={{ duration: 1, repeat: Infinity, delay: 0.4 }} />
+                  </div>
+                )}
+                 <div className="text-[9px] md:text-[10px] text-zinc-400 dark:text-zinc-600 font-mono">{isTyping ? "Streaming..." : "Done"}</div>
+              </div>
+            </div>
+
+            <div className="p-4 flex-grow font-mono text-xs md:text-sm relative flex flex-col min-h-[140px] md:min-h-[180px]">
+              <label className="text-[9px] md:text-[10px] font-bold text-zinc-500 mb-1.5 block uppercase tracking-wider flex justify-between">
+                  <span>Response</span>
+                  <span className="text-zinc-400 dark:text-zinc-600">ZON</span>
+              </label>
+              
+              <div className="bg-zinc-100 dark:bg-[#0a0a0a] rounded-lg p-2.5 md:p-3 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-800/80 flex-grow relative overflow-hidden text-[10px] md:text-xs leading-relaxed">
+                <div className="absolute top-1 right-1">
+                    <Button variant="ghost" size="icon" className="h-5 w-5 md:h-6 md:w-6 text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors" onClick={copyToClipboard}>
+                      {isCopied ? <Check className="w-2.5 h-2.5 md:w-3 md:h-3" /> : <Copy className="w-2.5 h-2.5 md:w-3 md:h-3" />}
+                    </Button>
+                </div>
+                <pre className="whitespace-pre-wrap relative z-10 pr-6">
                   {displayedResponse}
-                  {isTyping && <motion.span 
-                    animate={{ opacity: [0, 1, 0] }}
-                    transition={{ repeat: Infinity, duration: 0.8 }}
-                    className="inline-block w-2 h-4 align-middle bg-primary ml-0.5"
-                  />}
+                  {isTyping && <motion.span animate={{ opacity: [0, 1, 0] }} transition={{ repeat: Infinity, duration: 0.8 }} className="inline-block w-1.5 h-3 md:w-2 md:h-4 align-middle bg-emerald-500 ml-0.5" />}
                 </pre>
               </div>
             </div>
           </div>
+        </motion.div>
+
+        {/* SECOND CONNECTOR - Desktop */}
+        <div className="hidden lg:flex flex-col justify-center items-center w-[80px] h-16 shrink-0 relative">
+           <svg className="w-full h-full overflow-visible" preserveAspectRatio="none">
+             <defs>
+               <linearGradient id="beam-grad-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                 <stop offset="0%" stopColor="#10b981" stopOpacity="0.6" />
+                 <stop offset="100%" stopColor="#a855f7" stopOpacity="0.6" />
+               </linearGradient>
+             </defs>
+             <motion.path 
+               d="M 0,32 L 80,32" 
+               fill="none" 
+               stroke="url(#beam-grad-2)" 
+               strokeWidth="2"
+               strokeLinecap="round"
+               filter="url(#glow)"
+               initial={{ pathLength: 0 }}
+               animate={{ pathLength: 1 }}
+               transition={{ duration: 0.8, delay: 0.3, ease: "easeInOut" }}
+             />
+              <motion.circle r="2" fill="#fff" filter="url(#glow)">
+               <animateMotion dur="1.5s" repeatCount="indefinite" path="M 0,32 L 80,32" />
+             </motion.circle>
+           </svg>
         </div>
-      </SpotlightCard>
+        {/* Mobile Connector */}
+        <div className="flex lg:hidden justify-center py-2">
+          <div className="w-[2px] h-8 bg-gradient-to-b from-emerald-500/50 to-purple-500/50 rounded-full" />
+        </div>
+
+        {/* DECODER NODE */}
+        <motion.div 
+          layout
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="w-full lg:flex-1 lg:max-w-[340px] relative z-10"
+          transition={{ delay: 0.2 }}
+        >
+          <div className="relative h-full bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800/60 rounded-xl shadow-lg dark:shadow-2xl flex flex-col overflow-hidden">
+             <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-purple-500/50 to-transparent opacity-50" />
+
+             <div className="px-4 py-3 border-b border-zinc-100 dark:border-zinc-800/60 flex items-center justify-between bg-zinc-50 dark:bg-zinc-900/20">
+              <div className="flex items-center gap-2 text-[10px] md:text-xs font-bold text-purple-600 dark:text-purple-400 font-mono tracking-widest uppercase">
+                <Code2 className="w-3 h-3 md:w-3.5 md:h-3.5" />
+                Decoder::JSON
+              </div>
+               <div className="text-[9px] md:text-[10px] text-zinc-400 dark:text-zinc-600 font-mono">ZON.decode()</div>
+            </div>
+
+            <div className="p-4 flex-grow font-mono text-xs md:text-sm relative flex flex-col min-h-[120px] md:min-h-[160px]">
+              <label className="text-[9px] md:text-[10px] font-bold text-zinc-500 mb-1.5 block uppercase tracking-wider flex justify-between">
+                  <span>Output</span>
+                  <span className="text-zinc-400 dark:text-zinc-600">JSON</span>
+              </label>
+              
+              <div className="bg-zinc-100 dark:bg-[#0a0a0a] rounded-lg p-2.5 md:p-3 text-purple-700 dark:text-purple-300/80 border border-zinc-200 dark:border-zinc-800/80 flex-grow relative overflow-hidden text-[10px] md:text-xs leading-relaxed">
+                <pre className="whitespace-pre-wrap relative z-10">
+                  {!isTyping && scenario.decoded}
+                </pre>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+      </div>
     </div>
   )
 }
