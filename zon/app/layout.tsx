@@ -71,7 +71,6 @@ export const metadata: Metadata = {
 };
 
 import { ThemeProvider } from "@/components/theme-provider"
-import { Analytics } from '@vercel/analytics/next';
 
 export default function RootLayout({
   children,
@@ -97,7 +96,6 @@ export default function RootLayout({
             <ScrollToTop />
           </div>
         </ThemeProvider>
-        <Analytics />
       </body>
     </html>
   );
